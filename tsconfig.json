@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "rootDir": ".",
+    "allowSyntheticDefaultImports": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "removeComments": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "outDir": "target/dist/",
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": ["es6", "es7", "dom", "es2017"],
+    "jsx": "react",
+    "keyofStringsOnly": true,
+    "paths": {
+      "@common/*": ["components/common/*"],
+      "@constants/*": ["constants/*"]
+    }
+  },
+  "include": [
+    "./src/**/*.tsx",
+    "./src/**/*.ts",
+    "src/components/common/loadingIndicator"
+  ],
+  "exclude": [
+    "node_modules",
+    "target",
+    "test",
+    "webpack-config",
+    "translations",
+    "coverage"
+  ]
+}
