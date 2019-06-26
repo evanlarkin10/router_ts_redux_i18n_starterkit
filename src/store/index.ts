@@ -20,7 +20,7 @@ const reducer = combineReducers<ApplicationState>({
 });
 
 // Create a configure store function of type `ApplicationState`
-export default function configureStore(): Store<ApplicationState, any> {
+export function configureStore(): Store<ApplicationState, any> {
   const store = createStore(
     reducer,
     undefined,
@@ -28,3 +28,6 @@ export default function configureStore(): Store<ApplicationState, any> {
   );
   return store;
 }
+
+const store = configureStore();
+export default store;

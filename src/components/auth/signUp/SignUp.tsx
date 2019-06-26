@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Auth } from "aws-amplify";
+// import { Auth } from "aws-amplify";
 import { SignUpProps } from "./types";
 import {
   FormControl,
@@ -31,8 +31,8 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
   }
   handleSignUp = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const { username, name, email, password } = this.state;
-    Auth.signUp({
+    // const { username, name, email, password } = this.state;
+    /* Auth.signUp({
       username,
       password,
       attributes: {
@@ -43,7 +43,7 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
     })
       .then(data => console.log(data))
       .then(() => this.props.switchComponent("Verify")) // switches Sign Up to Verification
-      .catch(err => console.log(err));
+      .catch(err => console.log(err)); */
   };
 
   render() {

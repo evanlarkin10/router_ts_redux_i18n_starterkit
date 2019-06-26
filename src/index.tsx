@@ -8,20 +8,11 @@ import { pink, blue } from "@material-ui/core/colors";
 components in the application without passing it explicitly */
 import { Provider } from "react-redux";
 
-// Store type from Redux
-import { Store } from "redux";
-
-// Import the store function and state
-import configureStore from "./store";
-import { ApplicationState } from "./reducer";
+import store from "./store";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import "./index.css";
-import App from "./App";
-interface IProps {
-  store: Store<ApplicationState>;
-}
-
+import Routes from "./routes";
 /*
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
@@ -34,15 +25,14 @@ const theme = createMuiTheme({
 });
 
 // tslint:disable-next-line:variable-name
-const Root: React.SFC<IProps> = props => {
+const Root: React.SFC = () => {
   console.log("Enter Index");
-
   return (
-    <Provider store={props.store}>
+    <Provider store={store}>
       <Router>
         <MuiThemeProvider theme={theme}>
           <I18nextProvider i18n={i18next}>
-            <App />
+            <Routes />
           </I18nextProvider>
         </MuiThemeProvider>
       </Router>
@@ -50,10 +40,5 @@ const Root: React.SFC<IProps> = props => {
   );
 };
 
-// Generate the store
-const store = configureStore();
-
 // Render the App
-ReactDOM.render(<Root store={store} />, document.getElementById(
-  "root"
-) as HTMLElement);
+ReactDOM.render(<Root />, document.getElementById("root") as HTMLElement);

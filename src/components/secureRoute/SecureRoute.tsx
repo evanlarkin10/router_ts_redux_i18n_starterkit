@@ -7,7 +7,7 @@ export interface SecureRouteOwnProps extends RouteProps {
 export class SecureRoute extends Route {
   // if ever not logged in redirect away from secure route
   checkSession() {
-    return true;
+    return false;
   }
   render() {
     const authenticationPath = "/auth";
