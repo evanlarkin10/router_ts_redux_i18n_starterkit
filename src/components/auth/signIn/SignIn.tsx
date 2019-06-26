@@ -34,9 +34,13 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
   private handleSignIn = () => {
     console.log("Sign In");
   };
+  private toSignUp = () => {
+    this.props.switchComponent("SignUp");
+  };
 
   public render(): JSX.Element {
-    const classes = this.props.classes;
+    console.log("PORPS", this.props);
+    const { classes, t } = this.props;
 
     return (
       <div className={classes.container}>
@@ -77,8 +81,18 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               }
             />
           </FormControl>
+          <div>
+            <p>{t("no account")}</p>
+            <Button variant="outlined" className={classes.button}>
+              Create an Account
+            </Button>
+          </div>
           <div className={classes.actions}>
-            <Button variant="raised" className={classes.button}>
+            <Button
+              variant="raised"
+              className={classes.button}
+              onClick={() => this.toSignUp()}
+            >
               Cancel
             </Button>
             <Button
@@ -87,7 +101,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               color="primary"
               className={classes.button}
             >
-              Submit
+              Login
             </Button>
           </div>
         </Paper>

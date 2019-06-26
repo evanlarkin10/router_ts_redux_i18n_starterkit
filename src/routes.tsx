@@ -9,8 +9,8 @@ import {
   RouteComponentProps
 } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import SecureRoute from "./components/secureRoute";
-import Authentication from "components/authenticator";
+// import SecureRoute from "./components/secureRoute";
+// import Authentication from "components/authenticator";
 
 class Routes extends React.Component<RouteComponentProps> {
   render() {
@@ -22,8 +22,7 @@ class Routes extends React.Component<RouteComponentProps> {
           </Grid>
           <Grid item xs className="pageContent">
             <Switch>
-              <Route path="/auth" component={Authentication} />
-              <SecureRoute exact path="/" component={Dashboard} />
+              <Route exact path="/" component={Dashboard} />
             </Switch>
           </Grid>
         </Grid>

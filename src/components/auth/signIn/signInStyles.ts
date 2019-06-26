@@ -28,7 +28,7 @@ const signInStyles = (theme: Theme) =>
       marginTop: theme.spacing.unit * 3,
       display: "flex",
       flexDirection: "row",
-      alignContent: "center"
+      alignContent: "right"
     }),
     button: {
       marginRight: theme.spacing.unit

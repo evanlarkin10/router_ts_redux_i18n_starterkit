@@ -1,4 +1,4 @@
-import { ActionType, AppAction } from "./actions";
+import { AppAction } from "./actions";
 export interface ExampleState {
   myBool: boolean;
 }
@@ -8,15 +8,15 @@ export const initialState = {
 };
 
 export const exampleReducer = (
-  state: ExampleState = null,
+  state: ExampleState = initialState,
   action: AppAction
 ): ExampleState => {
   switch (action.type) {
-    case ActionType.SET_TRUE:
-      return { myBool: true };
-    case ActionType.SET_FALSE:
-      return null;
+    case "SET_TRUE":
+      return { ...state, myBool: true };
+    case "SET_FALSE":
+      return { ...state };
     default:
-      return state;
+      return initialState;
   }
 };

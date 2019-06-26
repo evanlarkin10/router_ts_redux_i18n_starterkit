@@ -1,8 +1,8 @@
 import { Action } from "redux";
 
 export enum ActionType {
-  SET_TRUE,
-  SET_FALSE
+  SET_TRUE = "SET_TRUE",
+  SET_FALSE = "SET_FALSE"
 }
 
 export interface AppAction extends Action<ActionType> {

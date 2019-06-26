@@ -13,6 +13,9 @@ class Example extends React.Component<ExampleProps, ExampleState> {
       stateItem: "my state item"
     };
   }
+  componentDidMount() {
+    this.props.setTrue();
+  }
   render() {
     return <div>test</div>;
   }

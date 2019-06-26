@@ -51,7 +51,7 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
     return (
       <div className={classes.container}>
         <Paper className={classes.paper}>
-          <h2>{"Login"}</h2>
+          <h2>{"Sign Up"}</h2>
           <FormControl
             required={true}
             fullWidth={true}

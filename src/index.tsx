@@ -12,7 +12,8 @@ import store from "./store";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
 import "./index.css";
-import Routes from "./routes";
+// import Routes from "./routes";
+import App from "./App";
 /*
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
@@ -32,7 +33,7 @@ const Root: React.SFC = () => {
       <Router>
         <MuiThemeProvider theme={theme}>
           <I18nextProvider i18n={i18next}>
-            <Routes />
+            <App />
           </I18nextProvider>
         </MuiThemeProvider>
       </Router>
