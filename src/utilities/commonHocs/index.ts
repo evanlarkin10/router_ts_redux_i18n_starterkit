@@ -9,7 +9,7 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import { ApplicationState } from "../../reducer";
-import loadingTranslations from "./loadingTranslations";
+// import loadingTranslations from "./loadingTranslations";
 
 type Comp<P> = React.ComponentClass<P> | React.SFC<P>;
 type HOC<O, P> = (C: Comp<O>) => Comp<P & React.HTMLProps<HTMLElement>>;
@@ -52,14 +52,13 @@ export const connects = <TOwnProps = {}, TStateProps = {}, TDispatchProps = {}>(
   component: Comp<TOwnProps>,
   hocs?: HOCs<TStateProps, TDispatchProps, TOwnProps>
 ) => {
-  const connectTranslate =
+  /* const connectTranslate =
     hocs && hocs.i18n
       ? loadingTranslations(
           hocs.i18n,
           hocs.i18nOptions ? hocs.i18nOptions : undefined
         )
-      : id;
-
+      : id; */
   const connectRedux =
     hocs && hocs.redux
       ? connect<TStateProps, TDispatchProps, TOwnProps, ApplicationState>(
@@ -85,7 +84,7 @@ export const connects = <TOwnProps = {}, TStateProps = {}, TDispatchProps = {}>(
     component,
     connectForm,
     connectRedux,
-    connectTranslate,
+    // connectTranslate,
     connectStyles,
     withRouter
   );

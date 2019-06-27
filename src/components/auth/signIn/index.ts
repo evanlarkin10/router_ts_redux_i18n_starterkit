@@ -4,7 +4,6 @@ import signInStyles from "./signInStyles";
 import { SignInOwnProps } from "./types";
 
 const hocs = {
-  i18n: "auth",
   styles: signInStyles
 };
 

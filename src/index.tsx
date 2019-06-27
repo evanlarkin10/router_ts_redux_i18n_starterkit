@@ -14,6 +14,8 @@ import i18next from "i18next";
 import "./index.css";
 // import Routes from "./routes";
 import App from "./App";
+import { I18n } from "aws-amplify";
+import translations from './translations/getTranslations'
 /*
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
@@ -24,10 +26,10 @@ const theme = createMuiTheme({
     secondary: pink
   }
 });
-
+I18n.putVocabularies(translations)
 // tslint:disable-next-line:variable-name
 const Root: React.SFC = () => {
-  console.log("Enter Index");
+  console.log("Enter Index", translations);
   return (
     <Provider store={store}>
       <Router>

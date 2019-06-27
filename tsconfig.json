@@ -31,7 +31,7 @@
     "target",
     "test",
     "webpack-config",
-    "translations",
+    "src/translations",
     "coverage"
   ]
 }

@@ -9,6 +9,7 @@ import {
 } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { SignInProps } from "./types";
+import {I18n} from 'aws-amplify'
 
 interface SignInState {
   email: string;
@@ -39,8 +40,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
   };
 
   public render(): JSX.Element {
-    console.log("PORPS", this.props);
-    const { classes, t } = this.props;
+    const { classes } = this.props;
 
     return (
       <div className={classes.container}>
@@ -82,7 +82,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
             />
           </FormControl>
           <div>
-            <p>{t("no account")}</p>
+            <p>{I18n.get("no_account")}</p>
             <Button variant="outlined" className={classes.button}>
               Create an Account
             </Button>
