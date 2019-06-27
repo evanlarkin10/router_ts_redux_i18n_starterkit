@@ -3,35 +3,25 @@ import { Theme } from "@material-ui/core";
 
 const signUpStyles = (theme: Theme) =>
   createStyles({
-    container: {
-      display: "flex",
-      justifyContent: "center"
+    body: {
+      backgroundColor: theme.palette.common.white,
     },
-    paper: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
-      width: "30%",
-      display: "flex",
-      flexDirection: "column",
-      alignContent: "center",
-      [theme.breakpoints.down("md")]: {
-        width: "100%"
-      }
-    }),
-    field: {
-      marginTop: theme.spacing.unit * 3
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
-    actions: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
-      display: "flex",
-      flexDirection: "row",
-      alignContent: "center"
-    }),
-    button: {
-      marginRight: theme.spacing.unit
-    }
+    avatar: {
+      margin: theme.spacing(1),
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing(3),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
   });
 export default signUpStyles;

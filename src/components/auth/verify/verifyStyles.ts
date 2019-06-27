@@ -10,7 +10,7 @@ const signUpStyles = (theme: Theme) =>
     paper: theme.mixins.gutters({
       paddingTop: 16,
       paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       width: "30%",
       display: "flex",
       flexDirection: "column",
@@ -20,18 +20,18 @@ const signUpStyles = (theme: Theme) =>
       }
     }),
     field: {
-      marginTop: theme.spacing.unit * 3
+      marginTop: theme.spacing(3)
     },
     actions: theme.mixins.gutters({
       paddingTop: 16,
       paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
+      marginTop: theme.spacing(3),
       display: "flex",
       flexDirection: "row",
       alignContent: "center"
     }),
     button: {
-      marginRight: theme.spacing.unit
+      marginRight: theme.spacing(1)
     }
   });
 export default signUpStyles;

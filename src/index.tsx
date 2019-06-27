@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
-import { createMuiTheme, MuiThemeProvider } from "@material-ui/core";
+import { createMuiTheme } from "@material-ui/core";
 import { pink, blue } from "@material-ui/core/colors";
 
 /* Make the store available to all container
@@ -20,6 +20,8 @@ import translations from './translations/getTranslations'
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
 */
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
+
 const theme = createMuiTheme({
   palette: {
     primary: blue,
@@ -33,11 +35,11 @@ const Root: React.SFC = () => {
   return (
     <Provider store={store}>
       <Router>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <I18nextProvider i18n={i18next}>
             <App />
           </I18nextProvider>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </Router>
     </Provider>
   );

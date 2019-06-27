@@ -55,7 +55,7 @@ export default class Verify extends React.Component<VerifyProps, VerifyState> {
           </FormControl>
           <div className={classes.actions}>
             <Button
-              variant="raised"
+              variant="outlined"
               className={classes.button}
               onClick={this.resendCode}
             >
@@ -63,7 +63,7 @@ export default class Verify extends React.Component<VerifyProps, VerifyState> {
             </Button>
             <Button
               onClick={this.handleVerify}
-              variant="raised"
+              variant="outlined"
               color="primary"
               className={classes.button}
             >

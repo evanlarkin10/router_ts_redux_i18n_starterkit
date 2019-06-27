@@ -5,7 +5,7 @@ const exampleStyles = (theme: Theme) =>
   createStyles({
     homeContent: {
       overflow: "auto",
-      paddingTop: theme.spacing.unit * 2
+      paddingTop: theme.spacing(2)
     }
   });
 export default exampleStyles;

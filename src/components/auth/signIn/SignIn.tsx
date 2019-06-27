@@ -3,10 +3,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { SignInProps } from "./types";
@@ -25,33 +24,29 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
     };
   }
 
-  /* private handleEmailAddressChange = (event: any) => {
-    this.setState({ email: event.target.value });
-  };
-
-  private handlePasswordChange = (event: any) => {
-    this.setState({ password: event.target.value });
-  };
-
-  private handleSignIn = () => {
-    console.log("Sign In");
+  private handleSignIn = (e: any) => {
+    e.preventDefault()
+    console.log("Sign In", this.state);
   };
   private toSignUp = () => {
     this.props.switchComponent("SignUp");
-  }; */
+  };
+  private toForgot = () => {
+    this.props.switchComponent("ForgotPassword");
+  };
 
   public render(): JSX.Element {
     const { classes } = this.props;
 
     return (
-      <div className={classes.container}>
+      <Container component="main" maxWidth="xs">
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            {I18n.get('sign_in')}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -60,10 +55,11 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={I18n.get('email')}
               name="email"
               autoComplete="email"
               autoFocus
+              onChange={(e: any) => { this.setState({ email: e.target.value }) }}
             />
             <TextField
               variant="outlined"
@@ -71,39 +67,36 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={I18n.get('password')}
               type="password"
               id="password"
               autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={(e: any) => { this.setState({ password: e.target.value }) }}
             />
             <Button
-              type="submit"
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={(e: any) => this.handleSignIn(e)}
             >
-              Sign In
+              {I18n.get('sign_in')}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
+                <Link component='button' variant="body2" onClick={() => this.toForgot()}>
+                  {I18n.get('forgot_password')}
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link component="button" variant="body2" onClick={() => this.toSignUp()}>
                   {I18n.get("no_account")}
                 </Link>
               </Grid>
             </Grid>
           </form>
         </div>
-      </div>
+      </Container>
     );
   }
 }
