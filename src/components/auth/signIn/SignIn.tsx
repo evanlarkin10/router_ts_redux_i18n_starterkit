@@ -1,15 +1,16 @@
 import * as React from "react";
-import {
-  FormControl,
-  InputLabel,
-  Input,
-  InputAdornment,
-  Button,
-  Icon
-} from "@material-ui/core";
-import Paper from "@material-ui/core/Paper";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
 import { SignInProps } from "./types";
-import {I18n} from 'aws-amplify'
+import { I18n } from 'aws-amplify'
 
 interface SignInState {
   email: string;
@@ -24,7 +25,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
     };
   }
 
-  private handleEmailAddressChange = (event: any) => {
+  /* private handleEmailAddressChange = (event: any) => {
     this.setState({ email: event.target.value });
   };
 
@@ -37,74 +38,71 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
   };
   private toSignUp = () => {
     this.props.switchComponent("SignUp");
-  };
+  }; */
 
   public render(): JSX.Element {
     const { classes } = this.props;
 
     return (
       <div className={classes.container}>
-        <Paper className={classes.paper}>
-          <h2>{"Login"}</h2>
-          <FormControl
-            required={true}
-            fullWidth={true}
-            className={classes.field}
-          >
-            <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input
-              value={this.state.email}
-              onChange={this.handleEmailAddressChange}
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign in
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
               id="email"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Icon>email</Icon>
-                </InputAdornment>
-              }
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
             />
-          </FormControl>
-          <FormControl
-            required={true}
-            fullWidth={true}
-            className={classes.field}
-          >
-            <InputLabel htmlFor="password">Password</InputLabel>
-            <Input
-              value={this.state.password}
-              onChange={this.handlePasswordChange}
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
               type="password"
               id="password"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Icon>lock</Icon>
-                </InputAdornment>
-              }
+              autoComplete="current-password"
             />
-          </FormControl>
-          <div>
-            <p>{I18n.get("no_account")}</p>
-            <Button variant="outlined" className={classes.button}>
-              Create an Account
-            </Button>
-          </div>
-          <div className={classes.actions}>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
             <Button
-              variant="raised"
-              className={classes.button}
-              onClick={() => this.toSignUp()}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={this.handleSignIn}
-              variant="raised"
+              type="submit"
+              fullWidth
+              variant="contained"
               color="primary"
-              className={classes.button}
+              className={classes.submit}
             >
-              Login
+              Sign In
             </Button>
-          </div>
-        </Paper>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link href="#" variant="body2">
+                  {I18n.get("no_account")}
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
       </div>
     );
   }

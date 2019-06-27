@@ -4,34 +4,28 @@ import { Theme } from "@material-ui/core";
 const signInStyles = (theme: Theme) =>
   createStyles({
     container: {
-      display: "flex",
-      justifyContent: "center"
+      justifyContent: "center",
+      width: '50%'
     },
-    paper: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
-      width: "30%",
-      display: "flex",
-      flexDirection: "column",
-      alignContent: "center",
-      [theme.breakpoints.down("md")]: {
-        width: "100%"
-      }
-    }),
-    field: {
-      marginTop: theme.spacing.unit * 3
+    body: {
+      backgroundColor: theme.palette.common.white,
     },
-    actions: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      marginTop: theme.spacing.unit * 3,
-      display: "flex",
-      flexDirection: "row",
-      alignContent: "right"
-    }),
-    button: {
-      marginRight: theme.spacing.unit
-    }
+    paper: {
+      marginTop: theme.spacing.unit * 2,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    avatar: {
+      margin: theme.spacing.unit / 4,
+      backgroundColor: theme.palette.secondary.main,
+    },
+    form: {
+      width: '100%', // Fix IE 11 issue.
+      marginTop: theme.spacing.unit / 4,
+    },
+    submit: {
+      margin: theme.spacing.unit,
+    },
   });
 export default signInStyles;
