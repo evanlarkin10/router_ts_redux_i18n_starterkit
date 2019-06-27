@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@hot-loader/react-dom": "^16.7.0",
     "aws-amplify": "^1.1.29",
     "aws-amplify-react": "^2.3.9",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-emotion": "^10.0.14",
     "classnames": "^2.2.6",
     "i18next": "^17.0.4",
     "i18next-xhr-backend": "^3.0.0",
@@ -14,6 +17,8 @@
     "querystring": "^0.2.0",
     "randomcolor": "^0.5.3",
     "react": "^16.7.0",
+    "react-app-rewire-hot-loader": "^2.0.1",
+    "react-app-rewired": "1.6.2",
     "react-dom": "^16.7.0",
     "react-hot-loader": "^4.11.1",
     "react-i18next": "8.1.2",
@@ -31,7 +36,7 @@
     "reselect": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
+    "start": "react-app-rewired start --scripts-version react-scripts-ts",
     "build": "react-scripts-ts build",
     "test": "react-scripts-ts test",
     "eject": "react-scripts-ts eject"
