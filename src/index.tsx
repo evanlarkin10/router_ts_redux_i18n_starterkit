@@ -22,7 +22,7 @@ and wraps the App component with Provider, giving props to containers
 */
 import ThemeProvider from '@material-ui/styles/ThemeProvider';
 
-const theme = createMuiTheme({
+export const theme = createMuiTheme({
   palette: {
     primary: blue,
     secondary: pink

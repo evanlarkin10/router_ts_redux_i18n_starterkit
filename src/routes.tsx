@@ -4,7 +4,7 @@ import Dashboard from "components/dashboard";
 import {
   Route,
   Switch,
-  // withRouter,
+  withRouter,
   RouteComponentProps
 } from "react-router-dom";
 import Header from "components/common/Header";
@@ -57,4 +57,4 @@ const hocs = {
   router: true
 };
 // withRouter must wrap Routes
-export default connects<{}>(Routes, hocs);
+export default connects<{}>(withRouter(Routes), hocs);

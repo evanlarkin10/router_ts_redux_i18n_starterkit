@@ -10,7 +10,7 @@ export class SecureRoute extends Route {
     return false;
   }
   render() {
-    const authenticationPath = "/auth";
+    const authenticationPath = "/";
     let redirectPath = "";
     if (!this.checkSession()) {
       redirectPath = authenticationPath;
