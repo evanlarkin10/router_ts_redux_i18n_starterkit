@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
 import {I18n} from 'aws-amplify'
 interface SignUpState {
   fname: string;
@@ -46,6 +46,7 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
       .then(data => console.log(data))
       .then(() => this.props.switchComponent("Verify")) // switches Sign Up to Verification
       .catch(err => console.log(err)); */
+      this.props.switchComponent('Verify')
   };
   toSignIn=()=>{
     this.props.switchComponent('SignIn')
@@ -53,9 +54,14 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
 
   render() {
     const classes = this.props.classes;
+    const authPhoto = require('../common/authPhoto.png')
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7}>
+      <img src={authPhoto} height='100%' width='100%'/>
+      </Grid>
+      <Grid item xs={12} sm={8} md={5} component={Paper}>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
@@ -147,9 +153,9 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
             </Grid>
           </form>
               </div>
-        </Container>
-    );    
+        </Grid>
+        </Grid>
+    );
   }
 }
-                              
-                                                                        
+

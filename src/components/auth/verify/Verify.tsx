@@ -1,77 +1,74 @@
 import * as React from "react";
-// import { Auth } from "aws-amplify";
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
 import { VerifyProps } from "./types";
-import {
-  FormControl,
-  InputLabel,
-  Input,
-  InputAdornment,
-  Button,
-  Icon,
-  Paper
-} from "@material-ui/core";
+import { I18n } from 'aws-amplify'
+
 interface VerifyState {
   code: string;
 }
-
-export default class Verify extends React.Component<VerifyProps, VerifyState> {
+class VerifyPage extends React.Component<VerifyProps, VerifyState> {
   constructor(props: VerifyProps) {
     super(props);
     this.state = {
-      code: ""
+      code: "",
     };
   }
-  handleVerify = (event: { preventDefault: () => void }) => {
-    event.preventDefault();
-    const { code } = this.state;
-    console.log(code);
-  };
 
-  resendCode = () => {
-    console.log("resendcode");
-  };
-  render() {
-    const classes = this.props.classes;
+  private verifyAccount = () => {
+    console.log('Verify Account')
+    this.props.switchComponent("SignIn");
+  }
+  public render(): JSX.Element {
+    const { classes } = this.props;
+    const authPhoto = require('../common/authPhoto.png')
     return (
-      <div className={classes.container}>
-        <Paper className={classes.paper}>
-          <h2>{"Login"}</h2>
-          <FormControl
-            required={true}
-            fullWidth={true}
-            className={classes.field}
-          >
-            <InputLabel htmlFor="username">Verification Code</InputLabel>
-            <Input
-              value={this.state.code}
-              onChange={event => this.setState({ code: event.target.value })}
-              id="username"
-              startAdornment={
-                <InputAdornment position="start">
-                  <Icon>email</Icon>
-                </InputAdornment>
-              }
+      <Grid container component="main" className={classes.root}>
+      <CssBaseline />
+      <Grid item xs={false} sm={4} md={7}>
+      <img src={authPhoto} height='100%' width='100%'/>
+      </Grid>
+      <Grid item xs={12} sm={8} md={5} component={Paper}>
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            {I18n.get('verify_account')}
+          </Typography>
+          <form className={classes.form} noValidate>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="code"
+              label={I18n.get('code')}
+              name="code"
+              autoComplete="code"
+              autoFocus
+              onChange={(e: any) => { this.setState({ code: e.target.value }) }}
             />
-          </FormControl>
-          <div className={classes.actions}>
             <Button
-              variant="outlined"
-              className={classes.button}
-              onClick={this.resendCode}
-            >
-              Resend Code
-            </Button>
-            <Button
-              onClick={this.handleVerify}
-              variant="outlined"
+              fullWidth
+              variant="contained"
               color="primary"
-              className={classes.button}
+              className={classes.submit}
+              onClick={() => this.verifyAccount()}
             >
-              Sign Up
+              {I18n.get('verify_account')}
             </Button>
-          </div>
-        </Paper>
-      </div>
+          </form>
+        </div>
+      </Grid >
+      </Grid >
     );
   }
 }
+export default VerifyPage;

@@ -8,32 +8,29 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
-import { SignInProps } from "./types";
+import { PasswordResetProps } from "./types";
 import { I18n } from 'aws-amplify'
 
-interface SignInState {
-  email: string;
-  password: string;
+interface PasswordResetState {
+  code: string;
+  newPassword: string;
 }
-class SignInPage extends React.Component<SignInProps, SignInState> {
-  constructor(props: SignInProps) {
+class PasswordResetPage extends React.Component<PasswordResetProps, PasswordResetState> {
+  constructor(props: PasswordResetProps) {
     super(props);
     this.state = {
-      email: "",
-      password: ""
+      code: "",
+      newPassword: ""
     };
   }
 
-  private handleSignIn = (e: any) => {
+  private handlePasswordReset = (e: any) => {
     e.preventDefault()
-    console.log("Sign In", this.state);
-    this.props.switchComponent("Authenticated");
+    console.log("Change Password", this.state);
+    this.props.switchComponent("SignIn");
   };
-  private toSignUp = () => {
-    this.props.switchComponent("SignUp");
-  };
-  private toForgot = () => {
-    this.props.switchComponent("ForgotPassword");
+  private toSignIn = () => {
+    this.props.switchComponent("SignIn");
   };
 
   public render(): JSX.Element {
@@ -51,7 +48,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            {I18n.get('sign_in')}
+            {I18n.get('Reset Password')}
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
@@ -59,51 +56,46 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label={I18n.get('email')}
-              name="email"
-              autoComplete="email"
+              id="code"
+              label={I18n.get('code')}
+              name="code"
+              autoComplete="code"
               autoFocus
-              onChange={(e: any) => { this.setState({ email: e.target.value }) }}
+              onChange={(e: any) => { this.setState({ code: e.target.value }) }}
             />
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
-              name="password"
-              label={I18n.get('password')}
-              type="password"
-              id="password"
+              name="new-password"
+              label={I18n.get('new_password')}
+              type="new-password"
+              id="new-password"
               autoComplete="current-password"
-              onChange={(e: any) => { this.setState({ password: e.target.value }) }}
+              onChange={(e: any) => { this.setState({ newPassword: e.target.value }) }}
             />
             <Button
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={(e: any) => this.handleSignIn(e)}
+              onClick={(e: any) => this.handlePasswordReset(e)}
             >
-              {I18n.get('sign_in')}
+              {I18n.get('reset_password')}
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link component='button' variant="body2" onClick={() => this.toForgot()}>
-                  {I18n.get('forgot_password?')}
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link component="button" variant="body2" onClick={() => this.toSignUp()}>
-                  {I18n.get("no_account")}
+                <Link component='button' variant="body2" onClick={() => this.toSignIn()}>
+                  {I18n.get('back_to_sign_in')}
                 </Link>
               </Grid>
             </Grid>
           </form>
         </div>
-        </Grid>
-    </Grid>
+      </Grid>
+      </Grid>
     );
   }
 }
-export default SignInPage;
+export default PasswordResetPage;

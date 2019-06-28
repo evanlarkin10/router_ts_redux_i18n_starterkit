@@ -1,10 +1,10 @@
 import ForgotPasswordPage from "./ForgotPassword";
 import { connects } from "utilities/commonHocs";
-import forgotPasswordStyles from "./forgotPasswordStyles";
+import authStyles from '../common/authStyles'
 import { ForgotPasswordOwnProps } from "./types";
 
 const hocs = {
-  styles: forgotPasswordStyles
+  styles: authStyles
 };
 
 export default connects<ForgotPasswordOwnProps>(ForgotPasswordPage, hocs);

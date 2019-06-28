@@ -3,8 +3,10 @@ import { checkAuth } from "utilities/checkAuth/CheckAuth";
 import SignIn from "../signIn";
 import SignUp from "../signUp";
 import Verify from "../verify";
-import ForgotPassword from "../ForgotPassword";
-import Routes from "routes";
+import Pricing from "../pricing";
+import PasswordReset from "../passwordReset";
+import Header from "../../common/Header";
+import ForgotPassword from "../forgotPassword";
 import { setAuthState } from "./actions";
 
 export interface AuthStateProps {
@@ -31,7 +33,8 @@ export default class Authentication extends React.Component<AuthProps> {
     switch (this.props.authState) {
       case "SignIn":
         return <SignIn switchComponent={this.switchComponent} />;
-
+      case "Pricing":
+        return <Pricing switchComponent={this.switchComponent} />;
       case "SignUp":
         return <SignUp switchComponent={this.switchComponent} />;
 
@@ -39,9 +42,11 @@ export default class Authentication extends React.Component<AuthProps> {
         return <Verify switchComponent={this.switchComponent} />;
       case "ForgotPassword":
         return <ForgotPassword switchComponent={this.switchComponent} />;
+      case "PasswordReset":
+        return <PasswordReset switchComponent={this.switchComponent} />;
 
       case "Authenticated":
-        return <Routes />;
+        return <Header />;
       default:
         return <SignUp switchComponent={this.switchComponent} />;
     }

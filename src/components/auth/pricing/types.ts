@@ -1,8 +1,8 @@
 import authStyles from '../common/authStyles'
 import StyledElement from "@common/StyledElement";
 
-export interface VerifyOwnProps {
+export interface PricingOwnProps {
   switchComponent: (status: any) => void;
 }
 
-export type VerifyProps = VerifyOwnProps & StyledElement<typeof authStyles>;
+export type PricingProps = PricingOwnProps & StyledElement<typeof authStyles>;

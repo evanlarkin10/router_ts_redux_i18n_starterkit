@@ -1,10 +1,10 @@
 import SignInPage from "./SignIn";
 import { connects } from "utilities/commonHocs";
-import signInStyles from "./signInStyles";
+import authStyles from '../common/authStyles'
 import { SignInOwnProps } from "./types";
 
 const hocs = {
-  styles: signInStyles
+  styles: authStyles
 };
 
 export default connects<SignInOwnProps>(SignInPage, hocs);

@@ -1,5 +1,5 @@
 const dict = {
     "next": "Next",
-    "no_account": "No Account? Click to create one."
+    "cancel" : "Cancel"
 };
 export default dict;

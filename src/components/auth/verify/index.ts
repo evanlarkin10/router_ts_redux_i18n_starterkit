@@ -1,11 +1,11 @@
 import verifyPage from "./Verify";
 import { connects } from "utilities/commonHocs";
-import signUpStyles from "./verifyStyles";
+import authStyles from '../common/authStyles'
 import { VerifyOwnProps } from "./types";
 
 const hocs = {
   i18n: "auth",
-  styles: signUpStyles
+  styles: authStyles
 };
 
 export default connects<VerifyOwnProps>(verifyPage, hocs);
