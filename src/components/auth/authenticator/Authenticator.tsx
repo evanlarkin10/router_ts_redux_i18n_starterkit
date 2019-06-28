@@ -3,6 +3,7 @@ import { checkAuth } from "utilities/checkAuth/CheckAuth";
 import SignIn from "../signIn";
 import SignUp from "../signUp";
 import Verify from "../verify";
+import ForgotPassword from "../ForgotPassword";
 import Routes from "routes";
 import { setAuthState } from "./actions";
 
@@ -36,6 +37,8 @@ export default class Authentication extends React.Component<AuthProps> {
 
       case "Verify":
         return <Verify switchComponent={this.switchComponent} />;
+      case "ForgotPassword":
+        return <ForgotPassword switchComponent={this.switchComponent} />;
 
       case "Authenticated":
         return <Routes />;

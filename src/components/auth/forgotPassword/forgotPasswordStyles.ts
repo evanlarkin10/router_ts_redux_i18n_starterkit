@@ -1,7 +1,7 @@
 import { createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
 
-const signInStyles = (theme: Theme) =>
+const forgotPasswordStyles = (theme: Theme) =>
   createStyles({
     container: {
       justifyContent: "center",
@@ -28,4 +28,4 @@ const signInStyles = (theme: Theme) =>
       margin: theme.spacing(3, 0, 2),
     },
   });
-export default signInStyles;
+export default forgotPasswordStyles;
