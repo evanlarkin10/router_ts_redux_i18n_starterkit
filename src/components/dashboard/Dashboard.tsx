@@ -1,13 +1,13 @@
 import * as React from "react";
 
-interface ExampleState {
+interface DashboardState {
   stateItem: string;
 }
 
-class Example extends React.Component<ExampleState> {
+class Dashbaord extends React.Component<DashboardState> {
   render() {
     return <div>Dashboard</div>;
   }
 }
 
-export default Example;
+export default Dashbaord;

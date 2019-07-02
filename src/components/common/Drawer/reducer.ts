@@ -4,7 +4,7 @@ export interface DrawerState {
 }
 
 export const initialState = {
-  drawerOpen: true
+  drawerOpen: false
 };
 
 export const drawerReducer = (

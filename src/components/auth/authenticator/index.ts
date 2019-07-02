@@ -21,4 +21,7 @@ const hocs = {
   }
 };
 
-export default connects<{}>(Authentication, hocs);
+export default connects<{}, AuthStateProps, AuthDispatchProps>(
+  Authentication,
+  hocs
+);

@@ -1,15 +1,15 @@
 import * as React from "react";
 import "./App.css";
+// import Authentication from "components/auth/authenticator";
+// import Routes from "./routes";
+import { hot } from "react-hot-loader/root";
 import Authentication from "components/auth/authenticator";
-import { hot } from 'react-hot-loader/root'
 class App extends React.Component {
   // get current authenticated user
 
   render() {
-    console.log("Render App");
-    return (
-      <Authentication />
-    );
+    console.log("Render App", this.props);
+    return <Authentication />;
   }
 }
 

@@ -4,7 +4,17 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { closeDrawer } from "./actions";
-import { mainListItems, secondaryListItems } from "./ListItems";
+import { secondaryListItems } from "./ListItems";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import { setAuthState } from "../../auth/authenticator/actions";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import PeopleIcon from "@material-ui/icons/People";
+import BarChartIcon from "@material-ui/icons/BarChart";
+import LayersIcon from "@material-ui/icons/Layers";
+import { I18n } from "aws-amplify";
 import { DrawerProps } from "./types";
 import clsx from "clsx";
 import * as React from "react";
@@ -14,10 +24,12 @@ export interface DrawerStateProps {
 }
 export interface DrawerDispatchProps {
   closeDrawer: typeof closeDrawer;
+  setAuthState: typeof setAuthState;
 }
 class Drawer extends React.Component<DrawerProps, {}> {
   handleDrawerClose = () => {
     this.props.closeDrawer();
+    this.forceUpdate();
   };
   render() {
     const { classes } = this.props;
@@ -38,7 +50,53 @@ class Drawer extends React.Component<DrawerProps, {}> {
           </IconButton>
         </div>
         <Divider />
-        <List>{mainListItems}</List>
+        <List>
+          <div>
+            <ListItem button>
+              <ListItemIcon>
+                <DashboardIcon
+                  onClick={() => this.props.history.push("/dashboard")}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={I18n.get("dashboard")}
+                onClick={() => this.props.history.push("/dashboard")}
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon
+                  onClick={() => this.props.history.push("/employees")}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={I18n.get("employees")}
+                onClick={() => this.props.history.push("/employees")}
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <ShoppingCartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Orders" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <BarChartIcon />
+              </ListItemIcon>
+              <ListItemText primary="Reports" />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <LayersIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary="Integrations"
+                onClick={() => this.props.setAuthState("SignIn")}
+              />
+            </ListItem>
+          </div>
+        </List>
         <Divider />
         <List>{secondaryListItems}</List>
       </MUIDrawer>

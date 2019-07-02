@@ -15,12 +15,12 @@ import "./index.css";
 // import Routes from "./routes";
 import App from "./App";
 import { I18n } from "aws-amplify";
-import translations from './translations/getTranslations'
+import translations from "./translations/getTranslations";
 /*
 Create a root component that receives the store via props
 and wraps the App component with Provider, giving props to containers
 */
-import ThemeProvider from '@material-ui/styles/ThemeProvider';
+import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
 export const theme = createMuiTheme({
   palette: {
@@ -28,7 +28,7 @@ export const theme = createMuiTheme({
     secondary: pink
   }
 });
-I18n.putVocabularies(translations)
+I18n.putVocabularies(translations);
 // tslint:disable-next-line:variable-name
 const Root: React.SFC = () => {
   console.log("Enter Index", translations);
