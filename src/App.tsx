@@ -8,7 +8,6 @@ class App extends React.Component {
   // get current authenticated user
 
   render() {
-    console.log("Render App", this.props);
     return <Authentication />;
   }
 }
