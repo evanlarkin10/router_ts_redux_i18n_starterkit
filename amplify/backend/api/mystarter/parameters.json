@@ -1,0 +1,10 @@
+{
+    "AppSyncApiName": "mystarter",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authmystarterf2b07dd2",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

@@ -1,0 +1,31 @@
+type Task 
+  @model 
+  @auth(rules: [
+      {allow: groups, groups: ["Managers"], queries: null, mutations: [create, update, delete]},
+      {allow: groups, groups: ["Employees"], queries: [get, list], mutations: null}
+    ])
+{
+  id: ID!
+  title: String!
+  description: String
+  status: String
+}
+type PrivateNote
+  @model
+  @auth(rules: [{allow: owner}])
+{
+  id: ID!
+  content: String!
+}
+
+type User
+  @model
+  @key(name: "identity_id", fields: ["identity_id"])
+{
+  id: ID
+  identity_id: String
+}
+
+input UpdateUserInput {
+  identity_id: String
+}
