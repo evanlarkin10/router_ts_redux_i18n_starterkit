@@ -15,7 +15,7 @@ export interface AuthStateProps {
   authState: string;
 }
 export interface AuthOwnProps {
-  authorized: boolean;
+  authorized: Promise<boolean>;
 }
 export interface AuthDispatchProps {
   setAuthState: typeof setAuthState;
@@ -25,7 +25,7 @@ type AuthProps = AuthStateProps & AuthDispatchProps & AuthOwnProps;
 export default class Authentication extends React.Component<
   AuthProps,
   AuthOwnProps
-> {
+  > {
   constructor(props: AuthProps) {
     super(props);
     this.state = {
@@ -33,14 +33,21 @@ export default class Authentication extends React.Component<
     };
   }
   componentDidMount() {
-    console.log("ComponentDidMount");
-    if (checkSession()) {
-      console.log("Set auth state Authenticated");
-      this.props.setAuthState("Authenticated");
+    this.checkAuthState()
+  }
+  async checkAuthState() {
+    try {
+      const result = await checkSession()
+      if(result){
+        this.props.setAuthState("Authenticated");
+      }
+      
+    }
+    catch (err) {
+      console.log(err)
     }
   }
   switchComponent = (status: string) => {
-    console.log("Set auth state", status);
     this.props.setAuthState(status);
     this.forceUpdate();
   };

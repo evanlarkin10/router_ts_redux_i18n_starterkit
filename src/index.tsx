@@ -31,7 +31,6 @@ export const theme = createMuiTheme({
 I18n.putVocabularies(translations);
 // tslint:disable-next-line:variable-name
 const Root: React.SFC = () => {
-  console.log("Enter Index", translations);
   return (
     <Provider store={store}>
       <Router>

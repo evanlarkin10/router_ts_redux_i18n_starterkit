@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { VerifyProps } from "./types";
-import { I18n } from 'aws-amplify'
+import { I18n, Auth } from 'aws-amplify'
 
 interface VerifyState {
   code: string;
@@ -22,7 +22,12 @@ class VerifyPage extends React.Component<VerifyProps, VerifyState> {
   }
 
   private verifyAccount = () => {
-    console.log('Verify Account')
+    Auth.verifyCurrentUserAttributeSubmit("email", this.state.code)
+      .then(() => {
+        this.props.switchComponent("SignIn");
+      }).catch(e => {
+        console.log(e)
+      });
     this.props.switchComponent("SignIn");
   }
   public render(): JSX.Element {
@@ -30,43 +35,48 @@ class VerifyPage extends React.Component<VerifyProps, VerifyState> {
     const authPhoto = require('../common/authPhoto.png')
     return (
       <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7}>
-      <img src={authPhoto} height='100%' width='100%'/>
-      </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {I18n.get('verify_account')}
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="code"
-              label={I18n.get('code')}
-              name="code"
-              autoComplete="code"
-              autoFocus
-              onChange={(e: any) => { this.setState({ code: e.target.value }) }}
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => this.verifyAccount()}
-            >
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7}>
+          <img src={authPhoto} height='100%' width='100%' />
+        </Grid>
+        <Grid item xs={12} sm={8} md={5} component={Paper}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
               {I18n.get('verify_account')}
-            </Button>
-          </form>
-        </div>
-      </Grid >
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="code"
+                label={I18n.get('code')}
+                name="code"
+                autoComplete="code"
+                autoFocus
+                onChange={(e: any) => { this.setState({ code: e.target.value }) }}
+                onKeyPress={(ev: any) => {
+                  if (ev.key === 'Enter') {
+                    this.verifyAccount()
+                  }
+                }}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => this.verifyAccount()}
+              >
+                {I18n.get('verify_account')}
+              </Button>
+            </form>
+          </div>
+        </Grid >
       </Grid >
     );
   }

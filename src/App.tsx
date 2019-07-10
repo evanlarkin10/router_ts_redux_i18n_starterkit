@@ -4,6 +4,14 @@ import "./App.css";
 // import Routes from "./routes";
 import { hot } from "react-hot-loader/root";
 import Authentication from "components/auth/authenticator";
+import Amplify from 'aws-amplify'
+import awsconfig from './aws-exports';
+Amplify.configure({
+  ...awsconfig,
+  Analytics: {
+    disabled: true
+  }
+});
 class App extends React.Component {
   // get current authenticated user
 

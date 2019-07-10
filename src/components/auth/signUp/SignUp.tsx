@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { Auth } from "aws-amplify";
 import { SignUpProps } from "./types";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -10,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { I18n } from "aws-amplify";
+import { I18n, Auth } from "aws-amplify";
 interface SignUpState {
   fname: string;
   lname: string;
@@ -33,20 +32,18 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
   handleSignUp = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log(this.state);
-    // const { username, name, email, password } = this.state;
-    /* Auth.signUp({
+    const { fname, lname, email, password } = this.state;
+    const username = email
+    Auth.signUp({
       username,
       password,
       attributes: {
-        email,
-        name
+        given_name: fname,
+        family_name: lname
       },
-      validationData: [] // optional
     })
-      .then(data => console.log(data))
       .then(() => this.props.switchComponent("Verify")) // switches Sign Up to Verification
-      .catch(err => console.log(err)); */
-    this.props.switchComponent("Verify");
+      .catch(err => console.log(err));
   };
   toSignIn = () => {
     this.props.switchComponent("SignIn");
@@ -141,6 +138,11 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
                     autoComplete="confirm-password"
                     onChange={(e: any) => {
                       this.setState({ confPassword: e.target.value });
+                    }}
+                    onKeyPress={(ev: any) => {
+                      if (ev.key === 'Enter') {
+                        this.handleSignUp(ev)
+                      }
                     }}
                   />
                 </Grid>

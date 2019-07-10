@@ -10,10 +10,14 @@ export interface SecureRouteOwnProps extends RouteProps {
 type SecureRouteProps = SecureRouteStateProps & SecureRouteOwnProps;
 export class SecureRoute extends Route<SecureRouteProps> {
   // if ever not logged in redirect away from secure route
-
+  async check() {
+    const result = await checkSession()
+    console.log("Route Check pass", result)
+    return result
+  }
   render() {
     const redirectPath = "/";
-    if (!checkSession()) {
+    if (this.props.authState !== 'Authenticated') {
       console.log("Not Authorized, Redirecting");
       const renderComponent = () => (
         <Redirect to={{ pathname: redirectPath }} />

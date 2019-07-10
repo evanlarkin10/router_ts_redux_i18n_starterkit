@@ -24,14 +24,15 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
     };
   }
 
-  private handleSignIn = (e: any) => {
+  private handleSignIn = async (e: any) => {
     e.preventDefault();
-    const result = login(this.state.email, this.state.password);
+    console.log('Handle Sign In', this.state)
+    const result = await login(this.state.email, this.state.password);
     if (result) {
       this.props.history.push("/dashboard");
       this.props.switchComponent("Authenticated");
     } else {
-      console.log("LOgin Failed");
+      console.log("Login Failed", result);
     }
   };
   private toSignUp = () => {
@@ -58,7 +59,7 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
             <Typography component="h1" variant="h5">
               {I18n.get("sign_in")}
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form} noValidate onSubmit={(e) => this.handleSignIn(e)}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -86,6 +87,11 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
                 onChange={(e: any) => {
                   this.setState({ password: e.target.value });
                 }}
+                onKeyPress={(ev: any) => {
+                  if (ev.key === 'Enter') {
+                    this.handleSignIn(ev)
+                  }
+                }}
               />
               <Button
                 fullWidth
@@ -96,27 +102,27 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
               >
                 {I18n.get("sign_in")}
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => this.toForgot()}
-                  >
-                    {I18n.get("forgot_password?")}
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => this.toSignUp()}
-                  >
-                    {I18n.get("no_account")}
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
+            <Grid container>
+              <Grid item xs>
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => this.toForgot()}
+                >
+                  {I18n.get("forgot_password?")}
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => this.toSignUp()}
+                >
+                  {I18n.get("no_account")}
+                </Link>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
       </Grid>

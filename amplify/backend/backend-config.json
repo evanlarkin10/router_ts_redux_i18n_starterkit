@@ -1,0 +1,8 @@
+{
+	"auth": {
+		"mystarterf2b07dd2": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation"
+		}
+	}
+}

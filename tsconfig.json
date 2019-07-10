@@ -2,6 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "rootDir": ".",
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
@@ -13,18 +14,28 @@
     "sourceMap": true,
     "module": "commonjs",
     "target": "es5",
-    "lib": ["es6", "es7", "dom", "es2017"],
+    "lib": [
+      "es6",
+      "es7",
+      "dom",
+      "es2017"
+    ],
     "jsx": "react",
     "keyofStringsOnly": true,
     "paths": {
-      "@common/*": ["components/common/*"],
-      "@constants/*": ["constants/*"]
+      "@common/*": [
+        "components/common/*"
+      ],
+      "@constants/*": [
+        "constants/*"
+      ]
     }
   },
   "include": [
     "./src/**/*.tsx",
     "./src/**/*.ts",
-    "src/components/common/loadingIndicator"
+    "src/components/common/loadingIndicator",
+    "src/aws-exports.js"
   ],
   "exclude": [
     "node_modules",
