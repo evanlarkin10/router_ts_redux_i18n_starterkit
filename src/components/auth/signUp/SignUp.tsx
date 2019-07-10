@@ -9,7 +9,10 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { I18n, Auth } from "aws-amplify";
+import { I18n, Auth, API, graphqlOperation } from "aws-amplify";
+import * as queries from "graphql/queries"
+import * as mutations from "graphql/mutations";
+
 interface SignUpState {
   fname: string;
   lname: string;
@@ -42,7 +45,30 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
         family_name: lname
       },
     })
-      .then(() => this.props.switchComponent("Verify")) // switches Sign Up to Verification
+      .then(() => {
+        // Create user record
+        API.graphql(graphqlOperation(queries.getUser))
+          .then(async (user: any) => {
+            console.log("USER:", user)
+            if (user.data.getUser == null) {
+              const identityUser = await Auth.currentCredentials();
+              const identityId = identityUser.identityId;
+
+              const input = {
+                identity_id: identityId,
+              };
+
+              API.graphql(graphqlOperation(mutations.createUser, { input }))
+
+            }
+          }
+          )
+          .catch((error: any) => {
+            console.log(error);
+          });
+
+        this.props.switchComponent("Verify")
+      })
       .catch(err => console.log(err));
   };
   toSignIn = () => {
