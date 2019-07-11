@@ -53,6 +53,8 @@ export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
     id
     identity_id
+    org_id
+    org_name
   }
 }
 `;
@@ -60,6 +62,8 @@ export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
     id
     identity_id
+    org_id
+    org_name
   }
 }
 `;
@@ -67,6 +71,8 @@ export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
     id
     identity_id
+    org_id
+    org_name
   }
 }
 `;

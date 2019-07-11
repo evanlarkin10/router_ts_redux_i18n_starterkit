@@ -36,10 +36,15 @@ export type DeletePrivateNoteInput = {
 export type CreateUserInput = {
   id?: string | null,
   identity_id?: string | null,
+  org_id?: number | null,
+  org_name?: string | null,
 };
 
 export type UpdateUserInput = {
+  id: string,
   identity_id?: string | null,
+  org_id?: number | null,
+  org_name?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -93,9 +98,23 @@ export type ModelPrivateNoteFilterInput = {
 export type ModelUserFilterInput = {
   id?: ModelIDFilterInput | null,
   identity_id?: ModelStringFilterInput | null,
+  org_id?: ModelIntFilterInput | null,
+  org_name?: ModelStringFilterInput | null,
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
+};
+
+export type ModelIntFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type CreateTaskMutationVariables = {
@@ -185,6 +204,8 @@ export type CreateUserMutation = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -197,6 +218,8 @@ export type UpdateUserMutation = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -209,6 +232,8 @@ export type DeleteUserMutation = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -285,6 +310,8 @@ export type GetUserQuery = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -301,6 +328,8 @@ export type ListUsersQuery = {
       __typename: "User",
       id: string | null,
       identity_id: string | null,
+      org_id: number | null,
+      org_name: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -365,6 +394,8 @@ export type OnCreateUserSubscription = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -373,6 +404,8 @@ export type OnUpdateUserSubscription = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };
 
@@ -381,5 +414,7 @@ export type OnDeleteUserSubscription = {
     __typename: "User",
     id: string | null,
     identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
   } | null,
 };

@@ -23,7 +23,8 @@ class VerifyPage extends React.Component<VerifyProps, VerifyState> {
 
   private verifyAccount = () => {
     Auth.verifyCurrentUserAttributeSubmit("email", this.state.code)
-      .then(() => {
+      .then((result) => {
+        console.log(result)
         this.props.switchComponent("SignIn");
       }).catch(e => {
         console.log(e)

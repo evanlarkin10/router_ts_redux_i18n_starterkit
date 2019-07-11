@@ -24,8 +24,6 @@ type User
 {
   id: ID
   identity_id: String
-}
-
-input UpdateUserInput {
-  identity_id: String
+  org_id: Int
+  org_name: String
 }

@@ -9,9 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import { I18n, Auth, API, graphqlOperation } from "aws-amplify";
-import * as queries from "graphql/queries"
-import * as mutations from "graphql/mutations";
+import { I18n, Auth } from "aws-amplify";
 
 interface SignUpState {
   fname: string;
@@ -19,6 +17,7 @@ interface SignUpState {
   email: string;
   password: string;
   confPassword: string;
+  org_name: string;
 }
 
 export default class SignUp extends React.Component<SignUpProps, SignUpState> {
@@ -29,47 +28,31 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
       lname: "",
       email: "",
       password: "",
-      confPassword: ""
+      confPassword: "",
+      org_name: "",
     };
   }
   handleSignUp = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    console.log(this.state);
-    const { fname, lname, email, password } = this.state;
-    const username = email
-    Auth.signUp({
-      username,
-      password,
-      attributes: {
-        given_name: fname,
-        family_name: lname
-      },
-    })
-      .then(() => {
-        // Create user record
-        API.graphql(graphqlOperation(queries.getUser))
-          .then(async (user: any) => {
-            console.log("USER:", user)
-            if (user.data.getUser == null) {
-              const identityUser = await Auth.currentCredentials();
-              const identityId = identityUser.identityId;
-
-              const input = {
-                identity_id: identityId,
-              };
-
-              API.graphql(graphqlOperation(mutations.createUser, { input }))
-
-            }
-          }
-          )
-          .catch((error: any) => {
-            console.log(error);
-          });
-
-        this.props.switchComponent("Verify")
+    const orgId = 1
+    const { fname, lname, email, password, org_name, confPassword } = this.state;
+    if (password === confPassword) {
+      const username = email
+      Auth.signUp({
+        username,
+        password,
+        attributes: {
+          org_name,
+          given_name: fname,
+          family_name: lname,
+          org_id: orgId,
+        },
       })
-      .catch(err => console.log(err));
+        .then(() => {
+          this.props.switchComponent("Verify")
+        })
+        .catch(err => console.log("err", err));
+    }
   };
   toSignIn = () => {
     this.props.switchComponent("SignIn");
@@ -164,6 +147,21 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
                     autoComplete="confirm-password"
                     onChange={(e: any) => {
                       this.setState({ confPassword: e.target.value });
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    name="org-name"
+                    label={I18n.get("org_name")}
+                    type="org-name"
+                    id="org-name"
+                    autoComplete="org-name"
+                    onChange={(e: any) => {
+                      this.setState({ org_name: e.target.value });
                     }}
                     onKeyPress={(ev: any) => {
                       if (ev.key === 'Enter') {

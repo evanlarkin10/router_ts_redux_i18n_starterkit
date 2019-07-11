@@ -21,7 +21,7 @@ import SecureRoute from "./components/secureRoute";
 import { selectAuthState } from "components/auth/authenticator/selectors";
 import { ApplicationState } from "reducer";
 import Employees from "components/employees";
-
+import { Auth } from "aws-amplify";
 const routerStyles = (theme: Theme) =>
   createStyles({
     appBarSpacer: theme.mixins.toolbar,
@@ -44,6 +44,9 @@ export type RouterProps = RouteComponentProps &
 // const renderAuth = () => <Authentication />;
 
 class Routes extends React.Component<RouterProps> {
+  componentDidMount() {
+    console.log("route mounted", Auth.currentAuthenticatedUser().then((result) => console.log(result)).catch((err) => console.log(err)))
+  }
   render() {
     const { classes } = this.props;
     return (

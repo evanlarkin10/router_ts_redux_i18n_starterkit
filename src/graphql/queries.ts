@@ -51,6 +51,8 @@ export const getUser = `query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     identity_id
+    org_id
+    org_name
   }
 }
 `;
@@ -63,6 +65,8 @@ export const listUsers = `query ListUsers(
     items {
       id
       identity_id
+      org_id
+      org_name
     }
     nextToken
   }
