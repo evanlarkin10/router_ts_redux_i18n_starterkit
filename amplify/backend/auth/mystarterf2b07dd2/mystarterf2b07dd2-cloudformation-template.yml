@@ -84,10 +84,10 @@ Parameters:
               
   userpoolClientGenerateSecret:
     Type: String
-              
+          
   userpoolClientRefreshTokenValidity:
-    Type: Number
-              
+    Type: String
+                  
   userpoolClientWriteAttributes:
     Type: CommaDelimitedList
             
@@ -129,7 +129,13 @@ Parameters:
                   
   usernameAttributes:
     Type: CommaDelimitedList
-    
+        
+  thirdPartyAuth:
+    Type: String
+            
+  hostedUI:
+    Type: String
+        
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
 
@@ -201,10 +207,10 @@ Resources:
       Policies:
         PasswordPolicy:
           MinimumLength: !Ref passwordPolicyMinLength
-          RequireLowercase: false
+          RequireLowercase: true
           RequireNumbers: false
           RequireSymbols: false
-          RequireUppercase: false
+          RequireUppercase: true
       
       UsernameAttributes: !Ref usernameAttributes
           
@@ -221,6 +227,9 @@ Resources:
     Properties:
       ClientName: mystarf2b07dd2_app_clientWeb
       
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
+      
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
     DependsOn: UserPool
@@ -230,6 +239,9 @@ Resources:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: !Ref userpoolClientName
+      
+      ReadAttributes: !Ref userpoolClientReadAttributes
+      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity

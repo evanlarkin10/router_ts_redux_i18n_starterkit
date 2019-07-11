@@ -19,11 +19,14 @@
     "policyName": "mystarf2b07dd2-sns-policy",
     "smsAuthenticationMessage": "Your authentication code is {####}",
     "smsVerificationMessage": "Your verification code is {####}",
-    "emailVerificationSubject": "Your verification code",
+    "emailVerificationSubject": "Email Verification",
     "emailVerificationMessage": "Your verification code is {####}",
-    "defaultPasswordPolicy": false,
+    "defaultPasswordPolicy": true,
     "passwordPolicyMinLength": 8,
-    "passwordPolicyCharacters": [],
+    "passwordPolicyCharacters": [
+        "Requires Lowercase",
+        "Requires Uppercase"
+    ],
     "requiredAttributes": [
         "email",
         "family_name",
@@ -31,12 +34,16 @@
     ],
     "userpoolClientName": "mystarf2b07dd2_app_client",
     "userpoolClientGenerateSecret": true,
-    "userpoolClientRefreshTokenValidity": 30,
+    "userpoolClientRefreshTokenValidity": "7",
     "userpoolClientWriteAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "given_name"
     ],
     "userpoolClientReadAttributes": [
-        "email"
+        "email",
+        "family_name",
+        "given_name"
     ],
     "mfaLambdaRole": "mystarf2b07dd2_totp_lambda_role",
     "mfaLambdaLogPolicy": "mystarf2b07dd2_totp_lambda_log_policy",
@@ -45,7 +52,7 @@
     "userpoolClientLambdaRole": "mystarf2b07dd2_userpoolclient_lambda_role",
     "userpoolClientLogPolicy": "mystarf2b07dd2_userpoolclient_lambda_log_policy",
     "userpoolClientLambdaPolicy": "mystarf2b07dd2_userpoolclient_lambda_iam_policy",
-    "userpoolClientSetAttributes": false,
+    "userpoolClientSetAttributes": true,
     "resourceName": "mystarterf2b07dd2",
     "authSelections": "identityPoolAndUserPool",
     "authRoleName": {
@@ -66,8 +73,10 @@
             "Arn"
         ]
     },
-    "useDefault": "default",
+    "useDefault": "manual",
     "usernameAttributes": [
         "email"
-    ]
+    ],
+    "thirdPartyAuth": false,
+    "hostedUI": false
 }

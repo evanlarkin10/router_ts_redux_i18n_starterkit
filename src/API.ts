@@ -95,28 +95,6 @@ export type ModelPrivateNoteFilterInput = {
   not?: ModelPrivateNoteFilterInput | null,
 };
 
-export type ModelUserFilterInput = {
-  id?: ModelIDFilterInput | null,
-  identity_id?: ModelStringFilterInput | null,
-  org_id?: ModelIntFilterInput | null,
-  org_name?: ModelStringFilterInput | null,
-  and?: Array< ModelUserFilterInput | null > | null,
-  or?: Array< ModelUserFilterInput | null > | null,
-  not?: ModelUserFilterInput | null,
-};
-
-export type ModelIntFilterInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  contains?: number | null,
-  notContains?: number | null,
-  between?: Array< number | null > | null,
-};
-
 export type CreateTaskMutationVariables = {
   input: CreateTaskInput,
 };
@@ -237,6 +215,16 @@ export type DeleteUserMutation = {
   } | null,
 };
 
+export type GetUserQuery = {
+  getUser:  {
+    __typename: "User",
+    id: string | null,
+    identity_id: string | null,
+    org_id: number | null,
+    org_name: string | null,
+  } | null,
+};
+
 export type GetTaskQueryVariables = {
   id: string,
 };
@@ -296,40 +284,6 @@ export type ListPrivateNotesQuery = {
       __typename: "PrivateNote",
       id: string,
       content: string,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
-export type GetUserQueryVariables = {
-  id: string,
-};
-
-export type GetUserQuery = {
-  getUser:  {
-    __typename: "User",
-    id: string | null,
-    identity_id: string | null,
-    org_id: number | null,
-    org_name: string | null,
-  } | null,
-};
-
-export type ListUsersQueryVariables = {
-  filter?: ModelUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListUsersQuery = {
-  listUsers:  {
-    __typename: "ModelUserConnection",
-    items:  Array< {
-      __typename: "User",
-      id: string | null,
-      identity_id: string | null,
-      org_id: number | null,
-      org_name: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,

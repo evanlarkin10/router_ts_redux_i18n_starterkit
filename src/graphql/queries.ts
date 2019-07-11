@@ -1,6 +1,15 @@
 // tslint:disable
 // this is an auto generated file. This will be overwritten
 
+export const getUser = `query GetUser {
+  getUser {
+    id
+    identity_id
+    org_id
+    org_name
+  }
+}
+`;
 export const getTask = `query GetTask($id: ID!) {
   getTask(id: $id) {
     id
@@ -42,31 +51,6 @@ export const listPrivateNotes = `query ListPrivateNotes(
     items {
       id
       content
-    }
-    nextToken
-  }
-}
-`;
-export const getUser = `query GetUser($id: ID!) {
-  getUser(id: $id) {
-    id
-    identity_id
-    org_id
-    org_name
-  }
-}
-`;
-export const listUsers = `query ListUsers(
-  $filter: ModelUserFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      identity_id
-      org_id
-      org_name
     }
     nextToken
   }

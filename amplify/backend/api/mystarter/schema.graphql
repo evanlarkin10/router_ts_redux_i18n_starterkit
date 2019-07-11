@@ -19,11 +19,17 @@ type PrivateNote
 }
 
 type User
-  @model
+  @model(
+    queries: null
+  )
   @key(name: "identity_id", fields: ["identity_id"])
 {
   id: ID
   identity_id: String
   org_id: Int
   org_name: String
+}
+
+type Query { 
+  getUser: User
 }

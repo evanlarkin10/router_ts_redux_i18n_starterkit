@@ -22,6 +22,8 @@ import { selectAuthState } from "components/auth/authenticator/selectors";
 import { ApplicationState } from "reducer";
 import Employees from "components/employees";
 import { Auth } from "aws-amplify";
+//  import * as queries from 'graphql/queries'
+// import * as mutations from 'graphql/mutations'
 const routerStyles = (theme: Theme) =>
   createStyles({
     appBarSpacer: theme.mixins.toolbar,
@@ -45,7 +47,31 @@ export type RouterProps = RouteComponentProps &
 
 class Routes extends React.Component<RouterProps> {
   componentDidMount() {
-    console.log("route mounted", Auth.currentAuthenticatedUser().then((result) => console.log(result)).catch((err) => console.log(err)))
+    Auth.currentCredentials()
+      .then((result) => console.log(result))
+
+    Auth.currentAuthenticatedUser()
+      .then((result) => console.log(result))
+
+    /*  API.graphql(graphqlOperation(queries.getUser))
+       .then(async (user: any) => {
+ 
+         if (user.data.getUser == null) {
+           const identity_user = await Auth.currentCredentials();
+           const identityId = identity_user.identityId;
+ 
+           let input = {
+             identity_id: identityId,
+             org_id: 1
+           };
+ 
+           API.graphql(graphqlOperation(mutations.createUser, { input: input }))
+ 
+         } 
+       })
+       .catch((error: any) => {
+         console.log(error);
+       }); */
   }
   render() {
     const { classes } = this.props;

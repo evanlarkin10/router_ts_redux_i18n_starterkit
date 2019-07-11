@@ -34,18 +34,19 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
   }
   handleSignUp = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    const orgId = 1
+    const orgId = "1"
     const { fname, lname, email, password, org_name, confPassword } = this.state;
+    const orgName = org_name
     if (password === confPassword) {
       const username = email
       Auth.signUp({
         username,
         password,
         attributes: {
-          org_name,
           given_name: fname,
           family_name: lname,
-          org_id: orgId,
+          'custom:org_id': orgId,
+          'custom:org_name': orgName
         },
       })
         .then(() => {

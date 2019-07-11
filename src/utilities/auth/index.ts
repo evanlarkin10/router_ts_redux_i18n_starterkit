@@ -60,3 +60,14 @@ export function setAuthCookie(value: String) {
     expires: 1
   });
 }
+
+export function getIdentity() {
+  let identity = ""
+  Auth.currentUserInfo()
+    .then((result) => {
+      identity = result.id
+    })
+    .catch((err) => console.log("ERR:", err))
+
+  return identity
+}
