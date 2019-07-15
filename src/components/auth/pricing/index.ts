@@ -1,10 +1,9 @@
 import PricingPage from "./Pricing";
 import { connects } from "utilities/commonHocs";
-import authStyles from '../common/authStyles'
-import { PricingOwnProps } from "./types";
+import { styles } from '../common/authStyles'
 
 const hocs = {
-  styles: authStyles
+  styles
 };
 
-export default connects<PricingOwnProps>(PricingPage, hocs);
+export default connects<{}>(PricingPage, hocs);

@@ -8,7 +8,6 @@ import { secondaryListItems } from "./ListItems";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import { setAuthState } from "../../auth/authenticator/actions";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
@@ -24,7 +23,6 @@ export interface DrawerStateProps {
 }
 export interface DrawerDispatchProps {
   closeDrawer: typeof closeDrawer;
-  setAuthState: typeof setAuthState;
 }
 class Drawer extends React.Component<DrawerProps, {}> {
   handleDrawerClose = () => {
@@ -92,7 +90,6 @@ class Drawer extends React.Component<DrawerProps, {}> {
               </ListItemIcon>
               <ListItemText
                 primary="Integrations"
-                onClick={() => this.props.setAuthState("SignIn")}
               />
             </ListItem>
           </div>

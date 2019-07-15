@@ -1,9 +1,9 @@
 import * as React from "react";
 import config from "./aws-exports";
-import CustomSignIn from "components/amplifyAuth/mySignIn";
-import CustomSignUp from "components/amplifyAuth/mySignUp";
-import CustomConfirmSignUp from "components/amplifyAuth/myConfirmSignUp";
-import CustomForgotPassword from "components/amplifyAuth/myForgotPassword";
+import CustomSignIn from "components/auth/mySignIn";
+import CustomSignUp from "components/auth/mySignUp";
+import CustomConfirmSignUp from "components/auth/myConfirmSignUp";
+import CustomForgotPassword from "components/auth/myForgotPassword";
 import App from "./App";
 import { Authenticator, SignIn, SignUp, ConfirmSignUp, ForgotPassword, Greetings } from "aws-amplify-react";
 

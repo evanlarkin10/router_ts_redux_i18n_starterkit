@@ -12,9 +12,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { openDrawer } from "../Drawer/actions";
 import { HeaderProps } from "./types";
 import clsx from "clsx";
-import { I18n } from "aws-amplify";
-import { logout } from "utilities/auth";
-import { setAuthState } from "../../auth/authenticator/actions";
+import { I18n, Auth } from "aws-amplify";
 
 export interface HeaderStateProps {
   drawerOpen: boolean;
@@ -24,7 +22,6 @@ export interface HeaderState {
 }
 export interface HeaderDispatchProps {
   openDrawer: typeof openDrawer;
-  setAuthState: typeof setAuthState;
 }
 class Header extends React.Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
@@ -37,11 +34,8 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.props.openDrawer();
   };
   signOut = () => {
-    const result = logout();
-    if (result) {
-      this.props.setAuthState("SignIn");
-      this.props.history.push("/");
-    }
+    Auth.signOut()
+    this.props.history.push('/')
   };
   handleAccountMenuOpen = (event: any) => {
     this.setState({ anchorAccount: event.target });
@@ -52,7 +46,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
   render() {
     const { classes, drawerOpen } = this.props;
     const { anchorAccount } = this.state;
-    console.log(this.props.location.pathname.split("/"));
     return (
       <AppBar
         position="absolute"

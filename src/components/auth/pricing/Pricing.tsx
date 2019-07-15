@@ -64,7 +64,6 @@ class PricingPage extends React.Component<PricingProps, PricingState> {
   }
   handleSelectTier=(tier : string)=>{
     console.log("selectedTier", tier)
-    this.props.switchComponent('SignUp')
   }
   public render(): JSX.Element {
     const { classes } = this.props;

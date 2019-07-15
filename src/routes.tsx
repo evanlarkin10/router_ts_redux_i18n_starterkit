@@ -16,9 +16,6 @@ import { createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
 import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
-import SecureRoute from "./components/secureRoute";
-import { selectAuthState } from "components/auth/authenticator/selectors";
-import { ApplicationState } from "reducer";
 import Employees from "components/employees";
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import * as queries from 'graphql/queries'
@@ -42,25 +39,12 @@ export type RouterProps = RouteComponentProps &
   StyleElement<typeof routerStyles> &
   RouterStateProps;
 
-// const renderAuth = () => <Authentication />;
-
 class Routes extends React.Component<RouterProps> {
   componentDidMount() {
-    Auth.currentCredentials()
-      .then((result) => console.log('creds', result))
-
-    Auth.currentAuthenticatedUser()
-      .then((result) => console.log('auth', result))
-
-    Auth.currentUserInfo()
-      .then((result) => console.log('info', result))
-
     API.graphql(graphqlOperation(queries.getUser))
       .then(async (user: any) => {
-        console.log(user.data.getUser)
         if (user.data.getUser === null) {
           const identity_user = await Auth.currentUserInfo();
-          console.log("identity user", identity_user)
           const input = {
             identity_id: identity_user.id,
             org_id: identity_user.attributes["custom:org_id"],
@@ -70,7 +54,6 @@ class Routes extends React.Component<RouterProps> {
             last_name: identity_user.attributes.family_name,
             email_verified: identity_user.attributes.email_verified
           };
-          console.log('make query:', input)
           API.graphql(graphqlOperation(mutations.createUser, { input }))
         }
       })
@@ -91,8 +74,8 @@ class Routes extends React.Component<RouterProps> {
             <div className={classes.appBarSpacer} />
             <Switch>
               <Redirect exact from="/" to="/dashboard" />
-              <SecureRoute path="/dashboard" component={Dashboard} />
-              <SecureRoute path="/employees" component={Employees} />
+              <Route path="/dashboard" component={Dashboard} />
+              <Route path="/employees" component={Employees} />
               <Route path="" component={NotFoundPage} />
             </Switch>
           </main>
@@ -102,14 +85,7 @@ class Routes extends React.Component<RouterProps> {
   }
 }
 
-const mapStateToProps = (state: ApplicationState): RouterStateProps => ({
-  authState: selectAuthState(state)
-});
-
 const hocs = {
-  redux: {
-    mapStateToProps
-  },
   styles: routerStyles,
   router: true
 };

@@ -1,63 +1,61 @@
-import { createStyles } from "@material-ui/core/styles";
+import { createStyles } from '@material-ui/styles';
 import { Theme } from "@material-ui/core";
 
-const authStyles = (theme: Theme) =>
-  createStyles({
+export const styles = ({ palette, spacing, mixins }: Theme) => createStyles({
     container: {
-      justifyContent: "center",
-      width: '50%'
+        justifyContent: "center",
+        width: '50%'
     },
     root: {
-      height: '100vh',
+        height: '100vh',
     },
     image: {
-      backgroundImage: `url(require("./authPhoto.png"))`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
+        backgroundImage: `url(require("./authPhoto.png"))`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
     },
     body: {
-      backgroundColor: theme.palette.common.white,
+        backgroundColor: palette.common.white,
     },
     paper: {
-      margin: theme.spacing(4),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+        margin: spacing(4),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     avatar: {
-      margin: theme.spacing(4),
-      backgroundColor: theme.palette.secondary.main,
+        margin: spacing(4),
+        backgroundColor: palette.secondary.main,
     },
     form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing(4),
+        width: '100%', // Fix IE 11 issue.
+        marginTop: spacing(4),
     },
     submit: {
-      margin: theme.spacing(3, 0, 2),
+        margin: spacing(3, 0, 2),
     },
     field: {
-      marginTop: theme.spacing(3)
+        marginTop: spacing(3)
     },
-    actions: theme.mixins.gutters({
-      paddingTop: 16,
-      paddingBottom: 16,
-      marginTop: theme.spacing(3),
-      display: "flex",
-      flexDirection: "row",
-      alignContent: "center"
+    actions: mixins.gutters({
+        paddingTop: 16,
+        paddingBottom: 16,
+        marginTop: spacing(3),
+        display: "flex",
+        flexDirection: "row",
+        alignContent: "center"
     }),
     button: {
-      marginRight: theme.spacing(1)
+        marginRight: spacing(1)
     },
     cardHeader: {
-      backgroundColor: theme.palette.grey[200],
+        backgroundColor: palette.grey[200],
     },
     cardPricing: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'baseline',
-      marginBottom: theme.spacing(2),
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'baseline',
+        marginBottom: spacing(2),
     },
-  });
-export default authStyles;
+});
