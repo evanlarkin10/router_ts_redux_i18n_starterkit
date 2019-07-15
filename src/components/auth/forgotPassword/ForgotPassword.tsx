@@ -36,48 +36,48 @@ class ForgotPasswordPage extends React.Component<ForgotPasswordProps, ForgotPass
     const authPhoto = require('../common/authPhoto.png')
     return (
       <Grid container component="main" className={classes.root}>
-      <CssBaseline />
-      <Grid item xs={false} sm={4} md={7}>
-      <img src={authPhoto} height='100%' width='100%'/>
-      </Grid>
-      <Grid item xs={12} sm={8} md={5} component={Paper}>
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            {I18n.get('forgot_password')}
-          </Typography>
-          <form className={classes.form} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label={I18n.get('email')}
-              name="email"
-              autoComplete="email"
-              autoFocus
-              onChange={(e: any) => { this.setState({ email: e.target.value }) }}
-            />
-            <Button
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-              onClick={() => this.handleSendResetCode()}
-            >
-              {I18n.get('send_reset_code')}
-            </Button>
+        <CssBaseline />
+        <Grid item xs={false} sm={4} md={7}>
+          <img src={authPhoto} height='100%' width='100%' />
+        </Grid>
+        <Grid item xs={12} sm={8} md={5} component={Paper}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockOutlinedIcon />
+            </Avatar>
+            <Typography component="h1" variant="h5">
+              {I18n.get('forgot_password')}
+            </Typography>
+            <form className={classes.form} noValidate>
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label={I18n.get('email')}
+                name="email"
+                autoComplete="email"
+                autoFocus
+                onChange={(e: any) => { this.setState({ email: e.target.value }) }}
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={() => this.handleSendResetCode()}
+              >
+                {I18n.get('send_reset_code')}
+              </Button>
+            </form>
             <Grid item>
               <Link component="button" variant="body2" onClick={() => this.toSignIn()}>
                 {I18n.get("cancel")}
               </Link>
             </Grid>
-          </form>
-        </div>
-      </Grid >
+          </div>
+        </Grid >
       </Grid >
     );
   }

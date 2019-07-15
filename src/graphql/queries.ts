@@ -5,6 +5,10 @@ export const getUser = `query GetUser {
   getUser {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }

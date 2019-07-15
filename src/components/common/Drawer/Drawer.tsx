@@ -35,7 +35,7 @@ class Drawer extends React.Component<DrawerProps, {}> {
     const { classes } = this.props;
     return (
       <MUIDrawer
-        variant="permanent"
+        variant="persistent"
         classes={{
           paper: clsx(
             classes.drawerPaper,

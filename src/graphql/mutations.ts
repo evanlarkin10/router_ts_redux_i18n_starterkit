@@ -53,6 +53,10 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }
@@ -62,6 +66,10 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
   updateUser(input: $input) {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }
@@ -71,6 +79,10 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   deleteUser(input: $input) {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }

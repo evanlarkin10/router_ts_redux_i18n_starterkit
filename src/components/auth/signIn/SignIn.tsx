@@ -10,7 +10,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { SignInProps } from "./types";
 import { I18n } from "aws-amplify";
-import { login } from "utilities/auth";
+import { login, getUser } from "utilities/auth";
+import { UserDto } from 'redux/UserAPI/types'
 interface SignInState {
   email: string;
   password: string;
@@ -30,6 +31,8 @@ class SignInPage extends React.Component<SignInProps, SignInState> {
     const result = await login(this.state.email, this.state.password);
     if (result) {
       this.props.history.push("/dashboard");
+      const user: UserDto = await getUser()
+      this.props.setUser(user)
       this.props.switchComponent("Authenticated");
     } else {
       console.log("Login Failed", result);

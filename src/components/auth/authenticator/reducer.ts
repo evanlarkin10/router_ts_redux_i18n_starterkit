@@ -1,5 +1,6 @@
 import { AppAction } from "./actions";
 import { DEFAULT_STATE } from "./constants";
+
 export interface AuthState {
   authState: string;
 }

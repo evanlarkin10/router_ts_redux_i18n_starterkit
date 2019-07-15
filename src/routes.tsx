@@ -16,14 +16,13 @@ import { createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
 import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
-// import Authentication from "components/auth/authenticator";
 import SecureRoute from "./components/secureRoute";
 import { selectAuthState } from "components/auth/authenticator/selectors";
 import { ApplicationState } from "reducer";
 import Employees from "components/employees";
-import { Auth } from "aws-amplify";
-//  import * as queries from 'graphql/queries'
-// import * as mutations from 'graphql/mutations'
+import { Auth, API, graphqlOperation } from "aws-amplify";
+import * as queries from 'graphql/queries'
+import * as mutations from 'graphql/mutations'
 const routerStyles = (theme: Theme) =>
   createStyles({
     appBarSpacer: theme.mixins.toolbar,
@@ -48,30 +47,37 @@ export type RouterProps = RouteComponentProps &
 class Routes extends React.Component<RouterProps> {
   componentDidMount() {
     Auth.currentCredentials()
-      .then((result) => console.log(result))
+      .then((result) => console.log('creds', result))
 
     Auth.currentAuthenticatedUser()
-      .then((result) => console.log(result))
+      .then((result) => console.log('auth', result))
 
-    /*  API.graphql(graphqlOperation(queries.getUser))
-       .then(async (user: any) => {
- 
-         if (user.data.getUser == null) {
-           const identity_user = await Auth.currentCredentials();
-           const identityId = identity_user.identityId;
- 
-           let input = {
-             identity_id: identityId,
-             org_id: 1
-           };
- 
-           API.graphql(graphqlOperation(mutations.createUser, { input: input }))
- 
-         } 
-       })
-       .catch((error: any) => {
-         console.log(error);
-       }); */
+    Auth.currentUserInfo()
+      .then((result) => console.log('info', result))
+
+    API.graphql(graphqlOperation(queries.getUser))
+      .then(async (user: any) => {
+        console.log(user.data.getUser)
+        if (user.data.getUser === null) {
+          const identity_user = await Auth.currentUserInfo();
+          console.log("identity user", identity_user)
+          const input = {
+            identity_id: identity_user.id,
+            org_id: identity_user.attributes["custom:org_id"],
+            org_name: identity_user.attributes['custom:org_name'],
+            email: identity_user.attributes.email,
+            first_name: identity_user.attributes.given_name,
+            last_name: identity_user.attributes.family_name,
+            email_verified: identity_user.attributes.email_verified
+          };
+          console.log('make query:', input)
+          API.graphql(graphqlOperation(mutations.createUser, { input }))
+        }
+      })
+      .catch((error: any) => {
+        console.log(error);
+        this.props.history.push('/')
+      });
   }
   render() {
     const { classes } = this.props;

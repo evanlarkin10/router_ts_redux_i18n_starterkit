@@ -53,6 +53,10 @@ export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }
@@ -62,6 +66,10 @@ export const onUpdateUser = `subscription OnUpdateUser {
   onUpdateUser {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }
@@ -71,6 +79,10 @@ export const onDeleteUser = `subscription OnDeleteUser {
   onDeleteUser {
     id
     identity_id
+    first_name
+    last_name
+    email
+    email_verified
     org_id
     org_name
   }

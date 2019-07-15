@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Redirect, Route, RouteProps } from "react-router";
+import { Route, RouteProps } from "react-router";
 import { checkSession } from "utilities/auth";
 export interface SecureRouteStateProps {
   authState: String;
@@ -16,16 +16,17 @@ export class SecureRoute extends Route<SecureRouteProps> {
     return result
   }
   render() {
-    const redirectPath = "/";
-    if (this.props.authState !== 'Authenticated') {
-      console.log("Not Authorized, Redirecting");
-      const renderComponent = () => (
-        <Redirect to={{ pathname: redirectPath }} />
-      );
-      return (
-        <Route {...this.props} component={renderComponent} render={null} />
-      );
-    }
+    console.log("Render secure")
+    // const redirectPath = "/";
+    /*     if (this.props.authState !== 'Authenticated') {
+          console.log("Not Authorized, Redirecting");
+          const renderComponent = () => (
+            <Redirect to={{ pathname: redirectPath }} />
+          );
+          return (
+            <Route {...this.props} component={renderComponent} render={null} />
+          );
+        } */
     return <Route {...this.props} />;
   }
 }

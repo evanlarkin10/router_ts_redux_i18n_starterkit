@@ -52,7 +52,7 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
         .then(() => {
           this.props.switchComponent("Verify")
         })
-        .catch(err => console.log("err", err));
+        .catch((err: any) => console.log("err", err));
     }
   };
   toSignIn = () => {
@@ -181,18 +181,18 @@ export default class SignUp extends React.Component<SignUpProps, SignUpState> {
               >
                 {I18n.get("sign_up")}
               </Button>
-              <Grid container justify="flex-end">
-                <Grid item>
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => this.toSignIn()}
-                  >
-                    {I18n.get("have_account")}
-                  </Link>
-                </Grid>
-              </Grid>
             </form>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => this.toSignIn()}
+                >
+                  {I18n.get("have_account")}
+                </Link>
+              </Grid>
+            </Grid>
           </div>
         </Grid>
       </Grid>

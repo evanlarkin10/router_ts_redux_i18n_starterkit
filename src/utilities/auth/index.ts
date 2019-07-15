@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify";
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "./constants";
-
+import { UserDto } from 'redux/UserAPI/types'
 export async function checkSession() {
   return await Auth.currentAuthenticatedUser()
     .then(() => { return true; })
@@ -61,13 +61,27 @@ export function setAuthCookie(value: String) {
   });
 }
 
-export function getIdentity() {
-  let identity = ""
-  Auth.currentUserInfo()
-    .then((result) => {
-      identity = result.id
-    })
-    .catch((err) => console.log("ERR:", err))
-
-  return identity
+export async function getUser() {
+  let user: UserDto = {
+    email: null,
+    first_name: null,
+    last_name: null,
+    org_id: null,
+    org_name: null,
+    identity_id: null
+  }
+  try {
+    const result = await Auth.currentUserInfo()
+    user = {
+      identity_id: result.id,
+      email: result.attributes.email,
+      first_name: result.attributes.given_name,
+      last_name: result.attributes.family_name,
+      org_id: result.attributes.org_id,
+      org_name: result.attributes.org_name,
+    }
+  } catch (err) {
+    console.log(err)
+  }
+  return user
 }

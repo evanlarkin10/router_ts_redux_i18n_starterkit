@@ -43,7 +43,8 @@
     "userpoolClientReadAttributes": [
         "email",
         "family_name",
-        "given_name"
+        "given_name",
+        "email_verified"
     ],
     "mfaLambdaRole": "mystarf2b07dd2_totp_lambda_role",
     "mfaLambdaLogPolicy": "mystarf2b07dd2_totp_lambda_log_policy",

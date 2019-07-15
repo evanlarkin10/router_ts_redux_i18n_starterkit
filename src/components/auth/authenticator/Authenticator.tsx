@@ -9,7 +9,7 @@ import PasswordReset from "../passwordReset";
 import ForgotPassword from "../forgotPassword";
 import { setAuthState } from "./actions";
 // import { Redirect } from "react-router";
-import Routes from "routes";
+import App from "App";
 
 export interface AuthStateProps {
   authState: string;
@@ -38,10 +38,10 @@ export default class Authentication extends React.Component<
   async checkAuthState() {
     try {
       const result = await checkSession()
-      if(result){
+      if (result) {
         this.props.setAuthState("Authenticated");
       }
-      
+
     }
     catch (err) {
       console.log(err)
@@ -68,7 +68,7 @@ export default class Authentication extends React.Component<
       case "PasswordReset":
         return <PasswordReset switchComponent={this.switchComponent} />;
       case "Authenticated":
-        return <Routes />;
+        return <App />;
       default:
         return <SignUp switchComponent={this.switchComponent} />;
     }
