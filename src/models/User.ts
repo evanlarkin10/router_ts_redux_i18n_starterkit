@@ -1,6 +1,3 @@
-import { UserDto } from "redux/UserAPI/types"
-
-
 export interface UserDto {
     identity_id: string;
     email: string;
@@ -10,6 +7,9 @@ export interface UserDto {
     org_name: string;
 }
 
+export interface POSPreferences {
+    layouts: Object[]
+}
 
 export default class User implements UserDto {
     public identity_id: string;
@@ -19,11 +19,29 @@ export default class User implements UserDto {
     public org_id: number;
     public org_name: string;
 
-    /* constructor(user?: UserDto) {
+    constructor(user?: UserDto) {
         if (user) {
-            Object.keys(user).map((key: keyof UserDto) => {
-                this[key] = user[key]
-            })
+            this.email = user.email
+            this.first_name = user.first_name
+            this.last_name = user.last_name
+            this.org_id = user.org_id
+            this.org_name = user.org_name
+            this.identity_id = user.identity_id
         }
-    } */
+    }
+    get dto(): UserDto {
+        return Object.assign({}, this)
+    }
+    static *loadPreferences() {
+        const response: any = {} // get from db
+        const preferences = JSON.parse(response)
+        const prefs = JSON.stringify(preferences)
+        yield localStorage.setItem("POSKEY", prefs)
+    }
+    static *savePreferences() {
+        const response: any = {} // get from db
+        const preferences = JSON.parse(response)
+        const prefs = JSON.stringify(preferences)
+        yield localStorage.setItem("POSKEY", prefs)
+    }
 }

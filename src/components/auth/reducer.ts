@@ -11,7 +11,7 @@ try {
 } catch (e) {
     console.log(e)
 }
-export interface UserState {
+export interface AuthState {
     user: User;
 }
 
@@ -19,10 +19,10 @@ export const initialState = {
     user: userModal
 };
 
-export const userReducer = (
-    state: UserState = initialState,
+export const authReducer = (
+    state: AuthState = initialState,
     action: AppAction
-): UserState => {
+): AuthState => {
     switch (action.type) {
         case "SET_USER":
             return { ...state, user: action.payload };

@@ -12,6 +12,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
+import Icon from '@material-ui/core/Icon';
 import LayersIcon from "@material-ui/icons/Layers";
 import { I18n } from "aws-amplify";
 import { DrawerProps } from "./types";
@@ -70,6 +71,18 @@ class Drawer extends React.Component<DrawerProps, {}> {
               <ListItemText
                 primary={I18n.get("employees")}
                 onClick={() => this.props.history.push("/employees")}
+              />
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <Icon
+                  className={'fa fa-cash-register'}
+                  onClick={() => this.props.history.push("/pos")}
+                />
+              </ListItemIcon>
+              <ListItemText
+                primary={I18n.get("point_of_sale")}
+                onClick={() => this.props.history.push("/pos")}
               />
             </ListItem>
             <ListItem button>

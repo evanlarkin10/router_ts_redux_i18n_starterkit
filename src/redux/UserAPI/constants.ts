@@ -1,1 +1,1 @@
-export const USER_REDUCER_NAME = 'user'
+export const USER_REDUCER_NAME = 'userReducer'

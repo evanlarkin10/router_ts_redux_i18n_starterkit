@@ -8,8 +8,8 @@ import {
   withRouter,
   RouteComponentProps
 } from "react-router-dom";
-import Header from "components/common/Header";
-import Drawer from "components/common/Drawer";
+import Header from "components/common/header";
+import Drawer from "@common/drawer";
 import NotFoundPage from "components/common/NotFoundPage";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createStyles } from "@material-ui/core/styles";
@@ -17,7 +17,12 @@ import { Theme } from "@material-ui/core";
 import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
 import Employees from "components/employees";
+import POS from "components/pos";
 import { Auth, API, graphqlOperation } from "aws-amplify";
+import LoadingIndicator from 'components/common/loadingIndicator'
+import { UserDto } from 'models/User'
+import * as Cookie from "js-cookie";
+import { COOKIE_USER_KEY } from "utilities/auth/constants";
 import * as queries from 'graphql/queries'
 import * as mutations from 'graphql/mutations'
 const routerStyles = (theme: Theme) =>
@@ -32,6 +37,10 @@ const routerStyles = (theme: Theme) =>
       display: "flex"
     }
   });
+
+interface RouterState {
+  isLoading: boolean
+}
 interface RouterStateProps {
   authState: String;
 }
@@ -39,8 +48,15 @@ export type RouterProps = RouteComponentProps &
   StyleElement<typeof routerStyles> &
   RouterStateProps;
 
-class Routes extends React.Component<RouterProps> {
+class Routes extends React.Component<RouterProps, RouterState> {
+  constructor(props: any) {
+    super(props)
+    this.state = {
+      isLoading: true
+    }
+  }
   componentDidMount() {
+    console.log("Routes mounted")
     API.graphql(graphqlOperation(queries.getUser))
       .then(async (user: any) => {
         if (user.data.getUser === null) {
@@ -55,6 +71,10 @@ class Routes extends React.Component<RouterProps> {
             email_verified: identity_user.attributes.email_verified
           };
           API.graphql(graphqlOperation(mutations.createUser, { input }))
+            .then((result: any) => this.setPreferences(result))
+        }
+        else {
+          this.getPreferences(user.data)
         }
       })
       .catch((error: any) => {
@@ -62,10 +82,23 @@ class Routes extends React.Component<RouterProps> {
         this.props.history.push('/')
       });
   }
+  async getPreferences(user: UserDto) {
+    Cookie.set(COOKIE_USER_KEY, user, {
+      expires: 1
+    });
+    this.setState({ isLoading: false })
+  }
+  async setPreferences(user: UserDto) {
+    Cookie.set(COOKIE_USER_KEY, user, {
+      expires: 1
+    });
+    this.setState({ isLoading: false })
+  }
   render() {
     const { classes } = this.props;
+    console.log(this.state.isLoading)
     return (
-      <>
+      <>{!this.state.isLoading &&
         <div className={classes.root}>
           <CssBaseline />
           <Header />
@@ -76,10 +109,15 @@ class Routes extends React.Component<RouterProps> {
               <Redirect exact from="/" to="/dashboard" />
               <Route path="/dashboard" component={Dashboard} />
               <Route path="/employees" component={Employees} />
+              <Route path="/pos" component={POS} />
               <Route path="" component={NotFoundPage} />
             </Switch>
           </main>
         </div>
+      }
+        {
+          this.state.isLoading && <LoadingIndicator />
+        }
       </>
     );
   }

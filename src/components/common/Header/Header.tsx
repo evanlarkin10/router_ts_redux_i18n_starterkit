@@ -9,10 +9,12 @@ import Menu from "@material-ui/core/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MenuItem from "@material-ui/core/MenuItem";
-import { openDrawer } from "../Drawer/actions";
+import { openDrawer } from "../drawer/actions";
 import { HeaderProps } from "./types";
 import clsx from "clsx";
 import { I18n, Auth } from "aws-amplify";
+import { COOKIE_USER_KEY } from "utilities/auth/constants";
+import Cookies from 'js-cookie'
 
 export interface HeaderStateProps {
   drawerOpen: boolean;
@@ -34,6 +36,7 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.props.openDrawer();
   };
   signOut = () => {
+    Cookies.remove(COOKIE_USER_KEY)
     Auth.signOut()
     this.props.history.push('/')
   };
