@@ -1,30 +1,30 @@
 import * as React from "react";
-import { WidthProvider, Responsive } from "react-grid-layout";
 import * as _ from "lodash";
 import 'react-grid-layout/css/styles.css'
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
+import Fab from '@material-ui/core/Fab';
+import EditIcon from '@material-ui/icons/Edit';
 import 'react-resizable/css/styles.css'
-import { registerButtons, POSProps } from './types'
-const ResponsiveReactGridLayout = WidthProvider(Responsive);
-// const originalLayouts = getFromLS("layouts") || {};
-/**
- * This layout demonstrates how to use a grid with a dynamic number of elements.
- */
+import { POSProps } from './types'
+import * as RGL from "react-grid-layout";
+import WidthProvider = RGL.WidthProvider
+import LoadingIndicator from "@common/loadingIndicator";
+const ReactGridLayout = WidthProvider(RGL);
+
 export interface POSState {
   newCounter: number;
   items: any[];
   cols: any;
-  layout: any;
-  layouts: any;
+  layout: any[];
   breakpoint: any;
 }
 
 class POS extends React.Component<POSProps, POSState> {
   static defaultProps = {
     className: "layout",
-    cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+    cols: 12,
     rowHeight: 100
   };
 
@@ -32,18 +32,20 @@ class POS extends React.Component<POSProps, POSState> {
     super(props);
 
     this.state = {
-      items: registerButtons,
+      items: this.props.layout,
       newCounter: 1,
       cols: null,
       breakpoint: null,
-      layout: null,
-      layouts: JSON.parse(JSON.stringify({})) // originalLayouts))
+      layout: this.props.layout,
     };
 
     this.onAddItem = this.onAddItem.bind(this);
-    this.onBreakpointChange = this.onBreakpointChange.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.onRemoveItem = this.onRemoveItem.bind(this);
+  }
+  componentDidMount() {
+    console.log(this.props)
+    this.props.loadPOS()
   }
 
   createElement(el: any) {
@@ -85,19 +87,15 @@ class POS extends React.Component<POSProps, POSState> {
     });
   }
 
-  // We're using the cols coming back from this to calculate where to add new items.
-  onBreakpointChange(breakpoint: any, cols: any) {
-    this.setState({
-      breakpoint,
-      cols
-    });
+  onLayoutChange(layout: any[]) {
+    if (this.props.isEditing) {
+      console.log('Layout change and save', layout)
+      this.props.savePOSPreferences(layout);
+      this.setState({ layout });
+    }
   }
-
-  onLayoutChange(layout: any, layouts: any) {
-    // this.props.onLayoutChange(layout);
-    console.log('Layout change', layout, layouts)
-    // saveToLS("layouts", layouts);
-    this.setState({ layout });
+  onResize() {
+    console.log('resize')
   }
 
   onRemoveItem(i: any) {
@@ -106,44 +104,34 @@ class POS extends React.Component<POSProps, POSState> {
   }
 
   render() {
-    console.log(this.state.layout)
+    const { classes } = this.props
     return (
-      <div>
-        <button onClick={this.onAddItem}>Add Item</button>
-        <ResponsiveReactGridLayout
-          onLayoutChange={(layout, layouts) => this.onLayoutChange(layout, layouts)}
-          onBreakpointChange={this.onBreakpointChange}
-          {...this.props}
-        >
-          {_.map(this.state.items, el => this.createElement(el))}
-        </ResponsiveReactGridLayout>
-      </div>
+      <>
+        {
+          !this.props.isLoadingPOS &&
+          <div style={{ backgroundColor: 'red' }}>
+            <button onClick={this.onAddItem}>Add Item</button>
+            <Fab color="primary" aria-label="Edit" className={classes.fab}>
+              <EditIcon />
+            </Fab>
+            <ReactGridLayout
+              layout={this.state.layout}
+              onLayoutChange={(layout: any[]) => this.onLayoutChange(layout)}
+              onResize={() => this.onResize()}
+              autoSize={true}
+              {...this.props}
+            >
+              {_.map(this.state.items, el => this.createElement(el))}
+            </ReactGridLayout>
+          </div>
+        }
+        {
+          this.props.isLoadingPOS && <LoadingIndicator />
+        }
+      </>
     );
-  }
-}
 
-/* function getFromLS(key: any) {
-  let ls = {};
-  if (global.localStorage) {
-    try {
-      ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {};
-    } catch (e) {
-      // Ignore
-    }
-  }
-  return ls[key];
-}
-
-function saveToLS(key: any, value: any) {
-  if (global.localStorage) {
-    global.localStorage.setItem(
-      "rgl-8",
-      JSON.stringify({
-        [key]: value
-      })
-    );
   }
 }
- */
 
 export default POS;

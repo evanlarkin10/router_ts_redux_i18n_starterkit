@@ -1,8 +1,8 @@
-import { AppAction } from "./actions";
-import User from "models/User"
+// import { AppAction } from "./actions";
+import { Action } from 'typescript-fsa'
+import User, { UserDto } from "models/User"
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
-import { UserDto } from 'redux/UserAPI/types'
 
 let userModal = null
 const userCookie = Cookie.get(COOKIE_USER_KEY)
@@ -13,19 +13,27 @@ try {
 }
 export interface UserState {
     user: User;
+    isLoadingUser: boolean;
 }
 
 export const initialState = {
-    user: userModal
+    user: userModal,
+    isLoadingUser: false
 };
 
 export const userReducer = (
     state: UserState = initialState,
-    action: AppAction
+    action: Action<any>
 ): UserState => {
     switch (action.type) {
-        case "SET_USER":
+        case "userReducer/LOAD_USER_STARTED":
+            return { ...state };
+        case "userReducer/LOAD_USER_DONE":
             return { ...state, user: action.payload };
+        case "userReducer/LOAD_USER_FAILED":
+            console.log(action.payload)
+        case "userReducer/SET_LOADING_USER":
+            return { ...state, isLoadingUser: action.payload };
         default:
             return initialState;
     }

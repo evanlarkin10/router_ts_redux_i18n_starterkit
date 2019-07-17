@@ -42,10 +42,10 @@ export type CreateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
+  preferences?: string | null,
 };
 
 export type UpdateUserInput = {
-  id: string,
   identity_id?: string | null,
   first_name?: string | null,
   last_name?: string | null,
@@ -53,6 +53,7 @@ export type UpdateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
+  preferences?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -196,6 +197,7 @@ export type CreateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -214,6 +216,7 @@ export type UpdateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -232,6 +235,7 @@ export type DeleteUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -246,6 +250,7 @@ export type GetUserQuery = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -378,6 +383,7 @@ export type OnCreateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -392,6 +398,7 @@ export type OnUpdateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };
 
@@ -406,5 +413,6 @@ export type OnDeleteUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
   } | null,
 };

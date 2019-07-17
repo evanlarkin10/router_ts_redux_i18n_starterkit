@@ -59,6 +59,7 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;
@@ -72,6 +73,7 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;
@@ -85,6 +87,7 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;

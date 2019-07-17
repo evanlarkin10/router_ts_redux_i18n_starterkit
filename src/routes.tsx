@@ -18,13 +18,10 @@ import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
 import Employees from "components/employees";
 import POS from "components/pos";
-import { Auth, API, graphqlOperation } from "aws-amplify";
 import LoadingIndicator from 'components/common/loadingIndicator'
-import { UserDto } from 'models/User'
-import * as Cookie from "js-cookie";
-import { COOKIE_USER_KEY } from "utilities/auth/constants";
-import * as queries from 'graphql/queries'
-import * as mutations from 'graphql/mutations'
+import { loadUser } from 'redux/UserAPI/actions'
+import { selectIsLoadingUser } from "redux/UserAPI/selectors";
+import { ApplicationState } from 'reducer'
 const routerStyles = (theme: Theme) =>
   createStyles({
     appBarSpacer: theme.mixins.toolbar,
@@ -38,17 +35,11 @@ const routerStyles = (theme: Theme) =>
     }
   });
 
-interface RouterState {
-  isLoading: boolean
-}
-interface RouterStateProps {
-  authState: String;
-}
 export type RouterProps = RouteComponentProps &
   StyleElement<typeof routerStyles> &
-  RouterStateProps;
+  RouterDispatchProps & RouterStateProps;
 
-class Routes extends React.Component<RouterProps, RouterState> {
+class Routes extends React.Component<RouterProps, {}> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -57,48 +48,14 @@ class Routes extends React.Component<RouterProps, RouterState> {
   }
   componentDidMount() {
     console.log("Routes mounted")
-    API.graphql(graphqlOperation(queries.getUser))
-      .then(async (user: any) => {
-        if (user.data.getUser === null) {
-          const identity_user = await Auth.currentUserInfo();
-          const input = {
-            identity_id: identity_user.id,
-            org_id: identity_user.attributes["custom:org_id"],
-            org_name: identity_user.attributes['custom:org_name'],
-            email: identity_user.attributes.email,
-            first_name: identity_user.attributes.given_name,
-            last_name: identity_user.attributes.family_name,
-            email_verified: identity_user.attributes.email_verified
-          };
-          API.graphql(graphqlOperation(mutations.createUser, { input }))
-            .then((result: any) => this.setPreferences(result))
-        }
-        else {
-          this.getPreferences(user.data)
-        }
-      })
-      .catch((error: any) => {
-        console.log(error);
-        this.props.history.push('/')
-      });
-  }
-  async getPreferences(user: UserDto) {
-    Cookie.set(COOKIE_USER_KEY, user, {
-      expires: 1
-    });
-    this.setState({ isLoading: false })
-  }
-  async setPreferences(user: UserDto) {
-    Cookie.set(COOKIE_USER_KEY, user, {
-      expires: 1
-    });
-    this.setState({ isLoading: false })
+    this.props.loadUser()
+
   }
   render() {
     const { classes } = this.props;
-    console.log(this.state.isLoading)
+    console.log(this.props.isLoadingUser)
     return (
-      <>{!this.state.isLoading &&
+      <>{!this.props.isLoadingUser &&
         <div className={classes.root}>
           <CssBaseline />
           <Header />
@@ -116,14 +73,33 @@ class Routes extends React.Component<RouterProps, RouterState> {
         </div>
       }
         {
-          this.state.isLoading && <LoadingIndicator />
+          this.props.isLoadingUser && <LoadingIndicator />
         }
       </>
     );
   }
 }
 
+export interface RouterStateProps {
+  isLoadingUser: Boolean
+}
+export interface RouterDispatchProps {
+  loadUser: typeof loadUser.started;
+}
+const mapStateToProps = (state: ApplicationState): RouterStateProps => ({
+  isLoadingUser: selectIsLoadingUser(state)
+});
+
+
+const mapDispatchToProps: RouterDispatchProps = {
+  loadUser: loadUser.started,
+};
+
 const hocs = {
+  redux: {
+    mapStateToProps,
+    mapDispatchToProps
+  },
   styles: routerStyles,
   router: true
 };

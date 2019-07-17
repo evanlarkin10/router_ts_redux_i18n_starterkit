@@ -11,9 +11,10 @@ Redux Thunk middleware allows you to write action creators that return a functio
 */
 import thunk from "redux-thunk";
 import { rootReducer, ApplicationState } from "../reducer";
-
+import createSagaMiddleware from 'redux-saga'
+import { sagaCtx } from './getSagas'
 const composeEnhancers = composeWithDevTools({});
-
+const sagaMiddleware = createSagaMiddleware();
 // Create the root reducer
 const reducer = combineReducers<ApplicationState>({
   ...rootReducer
@@ -24,10 +25,13 @@ export function configureStore(): Store<ApplicationState, any> {
   const store = createStore(
     reducer,
     undefined,
-    composeEnhancers(applyMiddleware(thunk))
+    composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
   );
+
+  const defaultSagas = sagaCtx.keys().map((key) => sagaCtx(key).default)
+  defaultSagas.map(sagaMiddleware.run)
+
   return store;
 }
-
 const store = configureStore();
 export default store;

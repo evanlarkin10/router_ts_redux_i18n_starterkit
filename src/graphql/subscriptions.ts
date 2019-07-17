@@ -59,6 +59,7 @@ export const onCreateUser = `subscription OnCreateUser {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;
@@ -72,6 +73,7 @@ export const onUpdateUser = `subscription OnUpdateUser {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;
@@ -85,6 +87,7 @@ export const onDeleteUser = `subscription OnDeleteUser {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;

@@ -11,6 +11,7 @@ export const getUser = `query GetUser {
     email_verified
     org_id
     org_name
+    preferences
   }
 }
 `;

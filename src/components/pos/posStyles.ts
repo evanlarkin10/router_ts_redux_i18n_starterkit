@@ -1,6 +1,6 @@
 import { createStyles } from "@material-ui/core/styles";
-// import { Theme } from "@material-ui/core";
-const POSStyles = () =>// theme: Theme) =>
+import { Theme } from "@material-ui/core";
+const POSStyles = (theme: Theme) =>
     createStyles({
         removeStyle: {
             right: "2px",
@@ -25,6 +25,10 @@ const POSStyles = () =>// theme: Theme) =>
         cardContent: {
             alignItems: 'center',
             justifyContent: 'center',
+        },
+        fab: {
+            margin: theme.spacing(1),
+            alignSelf: 'right'
         },
     });
 export default POSStyles;
