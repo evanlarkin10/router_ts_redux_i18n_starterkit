@@ -1,19 +1,19 @@
 import posStyles from "./posStyles";
 import StyledElement from "@common/StyledElement";
 // import { WidthProvider, Responsive } from "react-grid-layout";
-import { WidthProviderProps, Layout, ReactGridLayoutProps, ResponsiveProps } from "react-grid-layout"
-import { loadPOS, savePOSPreferences, setEditingPOS } from "./actions";
+import { WidthProviderProps, ReactGridLayoutProps, ResponsiveProps } from "react-grid-layout"
+import { loadPOS, savePOSPreferences, setEditingPOS, setLoadingPOS } from "./actions";
 export type POSProps = ReactGridLayoutProps & StyledElement<typeof posStyles> & ResponsiveProps & WidthProviderProps & any & POSStateProps & POSDispatchProps & {};
 
 export interface POSStateProps {
     isLoadingPOS: boolean;
-    isEditingPOS: boolean;
-    layout: Layout[];
+    layout: any;
 }
 export interface POSDispatchProps {
     loadPOS: typeof loadPOS.started;
-    savePOSPreferences: typeof savePOSPreferences.started
-    setEditing: typeof setEditingPOS
+    savePOSPreferences: typeof savePOSPreferences.started;
+    setEditing: typeof setEditingPOS;
+    setLoading: typeof setLoadingPOS;
 }
 
 export const registerButtons = [

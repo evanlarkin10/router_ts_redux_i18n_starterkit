@@ -1,4 +1,4 @@
-import { AppAction } from "./actions";
+import { Action } from "typescript-fsa";
 export interface DrawerState {
   drawerOpen: boolean;
 }
@@ -9,12 +9,12 @@ export const initialState = {
 
 export const drawerReducer = (
   state: DrawerState = initialState,
-  action: AppAction
+  action: Action<any>
 ): DrawerState => {
   switch (action.type) {
-    case "OPEN_DRAWER":
+    case "drawerReducer/OPEN_DRAWER":
       return { ...state, drawerOpen: true };
-    case "CLOSE_DRAWER":
+    case "drawerReducer/CLOSE_DRAWER":
       return { ...state, drawerOpen: false };
     default:
       return initialState;

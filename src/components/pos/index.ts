@@ -3,19 +3,19 @@ import POS from "./POS";
 import POSStyles from './posStyles'
 import { POSDispatchProps, POSStateProps } from './types'
 import { ApplicationState } from 'reducer'
-import { selectIsLoadingPOS, selectIsEditingPOS, selectLayout } from "./selectors";
-import { loadPOS, savePOSPreferences, setEditingPOS } from './actions'
+import { selectIsLoadingPOS, selectLayout } from "./selectors";
+import { loadPOS, savePOSPreferences, setEditingPOS, setLoadingPOS } from './actions'
 
 const mapStateToProps = (state: ApplicationState): POSStateProps => ({
     isLoadingPOS: selectIsLoadingPOS(state),
-    isEditingPOS: selectIsEditingPOS(state),
     layout: selectLayout(state)
 });
 
 const mapDispatchToProps: POSDispatchProps = {
     loadPOS: loadPOS.started,
     savePOSPreferences: savePOSPreferences.started,
-    setEditing: setEditingPOS
+    setEditing: setEditingPOS,
+    setLoading: setLoadingPOS
 };
 
 const hocs = {

@@ -6,10 +6,12 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
 import 'react-resizable/css/styles.css'
 import { POSProps } from './types'
 import * as RGL from "react-grid-layout";
 import WidthProvider = RGL.WidthProvider
+// import Layout = RGL.Layout
 import LoadingIndicator from "@common/loadingIndicator";
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -19,6 +21,7 @@ export interface POSState {
   cols: any;
   layout: any[];
   breakpoint: any;
+  isEditing: boolean;
 }
 
 class POS extends React.Component<POSProps, POSState> {
@@ -30,13 +33,13 @@ class POS extends React.Component<POSProps, POSState> {
 
   constructor(props: any) {
     super(props);
-
     this.state = {
       items: this.props.layout,
       newCounter: 1,
       cols: null,
       breakpoint: null,
       layout: this.props.layout,
+      isEditing: false
     };
 
     this.onAddItem = this.onAddItem.bind(this);
@@ -44,10 +47,8 @@ class POS extends React.Component<POSProps, POSState> {
     this.onRemoveItem = this.onRemoveItem.bind(this);
   }
   componentDidMount() {
-    console.log(this.props)
-    this.props.loadPOS()
+    console.log("Props on mount", this.props)
   }
-
   createElement(el: any) {
     const i = el.add ? "+" : el.i;
     const { classes } = this.props
@@ -88,11 +89,14 @@ class POS extends React.Component<POSProps, POSState> {
   }
 
   onLayoutChange(layout: any[]) {
-    if (this.props.isEditing) {
-      console.log('Layout change and save', layout)
-      this.props.savePOSPreferences(layout);
+    if (this.state.isEditing) {
       this.setState({ layout });
     }
+  }
+  saveLayout() {
+    this.props.setLoading(true)
+    this.props.savePOSPreferences(this.state.layout)
+    this.setState({ isEditing: false })
   }
   onResize() {
     console.log('resize')
@@ -104,15 +108,19 @@ class POS extends React.Component<POSProps, POSState> {
   }
 
   render() {
+    console.log("state", this.state.layout[12].x, "props", this.props.layout[12].x)
     const { classes } = this.props
     return (
       <>
         {
           !this.props.isLoadingPOS &&
-          <div style={{ backgroundColor: 'red' }}>
+          <div style={{ backgroundColor: 'grey' }}>
             <button onClick={this.onAddItem}>Add Item</button>
-            <Fab color="primary" aria-label="Edit" className={classes.fab}>
+            <Fab color="primary" aria-label="Edit" className={classes.fab} onClick={() => this.setState({ isEditing: true })}>
               <EditIcon />
+            </Fab>
+            <Fab color="primary" aria-label="Save" className={classes.fab} onClick={() => this.saveLayout()}>
+              <SaveIcon />
             </Fab>
             <ReactGridLayout
               layout={this.state.layout}

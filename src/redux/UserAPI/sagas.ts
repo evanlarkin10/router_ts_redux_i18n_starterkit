@@ -1,15 +1,17 @@
 
 import { takeLatest, put } from 'redux-saga/effects'
-import { loadUser, setLoading } from './actions'
+import { setUser } from './actions'
 import * as queries from 'graphql/queries'
 import * as mutations from 'graphql/mutations'
 import { Auth, API, graphqlOperation } from "aws-amplify";
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
-
-export function* handleLoadUser() {
-    yield put(setLoading(true))
+import User, { UserDto } from "models/User"
+// Not used?
+export function* handleSetUser() {
     try {
+        console.log("handlesetUser begin")
+        // yield put(setLoading(true))
         let user = null
         const result = yield API.graphql(graphqlOperation(queries.getUser))
         if (result.data.getUser === null) {
@@ -36,19 +38,24 @@ export function* handleLoadUser() {
         else {
             // user record already made
             user = result
-            Cookie.set(COOKIE_USER_KEY, user, {
+            console.log('set cookie')
+            Cookie.set(COOKIE_USER_KEY, user.data.getUser, {
                 expires: 1
             });
 
         }
-        yield put(loadUser.done(user))
+        console.log("setUser.done")
+        const newUser = new User(JSON.parse(Cookie.get(COOKIE_USER_KEY)) as UserDto)
+        yield put(setUser.done({ result: newUser }))
+        console.log("handlesetUser done")
     }
     catch (error) {
-        yield put(loadUser.failed({ params: null, error: "Failed getting user" }))
+        console.log("error", error)
+        yield put(setUser.failed({ params: null, error: "Failed getting user" }))
     }
-    yield put(setLoading(false))
+    // yield put(setLoading(false))
 }
 
 export default function* () {
-    yield takeLatest(loadUser.started, handleLoadUser)
+    yield takeLatest(setUser.started, handleSetUser)
 }

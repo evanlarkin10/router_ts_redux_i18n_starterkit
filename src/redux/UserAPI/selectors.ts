@@ -7,8 +7,8 @@ export const selectUser = (state: ApplicationState) => {
         : null;
 };
 
-export const selectIsLoadingUser = (state: ApplicationState) => {
-    return state[USER_REDUCER_NAME].isLoadingUser
-        ? state[USER_REDUCER_NAME].isLoadingUser
+export const selectIsSettingUser = (state: ApplicationState) => {
+    return state[USER_REDUCER_NAME].isSettingUser
+        ? state[USER_REDUCER_NAME].isSettingUser
         : null;
 };

@@ -19,8 +19,8 @@ import { connects } from "utilities/commonHocs";
 import Employees from "components/employees";
 import POS from "components/pos";
 import LoadingIndicator from 'components/common/loadingIndicator'
-import { loadUser } from 'redux/UserAPI/actions'
-import { selectIsLoadingUser } from "redux/UserAPI/selectors";
+import { setUser } from 'redux/UserAPI/actions'
+import { selectIsSettingUser } from "redux/UserAPI/selectors";
 import { ApplicationState } from 'reducer'
 const routerStyles = (theme: Theme) =>
   createStyles({
@@ -43,19 +43,20 @@ class Routes extends React.Component<RouterProps, {}> {
   constructor(props: any) {
     super(props)
     this.state = {
-      isLoading: true
+      isSetting: true
     }
   }
   componentDidMount() {
     console.log("Routes mounted")
-    this.props.loadUser()
+    // Do I need to? initial state is cookie
+    this.props.setUser()
 
   }
   render() {
     const { classes } = this.props;
-    console.log(this.props.isLoadingUser)
+    console.log(this.props.isSettingUser)
     return (
-      <>{!this.props.isLoadingUser &&
+      <>{!this.props.isSettingUser &&
         <div className={classes.root}>
           <CssBaseline />
           <Header />
@@ -73,7 +74,7 @@ class Routes extends React.Component<RouterProps, {}> {
         </div>
       }
         {
-          this.props.isLoadingUser && <LoadingIndicator />
+          this.props.isSettingUser && <LoadingIndicator />
         }
       </>
     );
@@ -81,18 +82,18 @@ class Routes extends React.Component<RouterProps, {}> {
 }
 
 export interface RouterStateProps {
-  isLoadingUser: Boolean
+  isSettingUser: Boolean
 }
 export interface RouterDispatchProps {
-  loadUser: typeof loadUser.started;
+  setUser: typeof setUser.started;
 }
 const mapStateToProps = (state: ApplicationState): RouterStateProps => ({
-  isLoadingUser: selectIsLoadingUser(state)
+  isSettingUser: selectIsSettingUser(state)
 });
 
 
 const mapDispatchToProps: RouterDispatchProps = {
-  loadUser: loadUser.started,
+  setUser: setUser.started,
 };
 
 const hocs = {

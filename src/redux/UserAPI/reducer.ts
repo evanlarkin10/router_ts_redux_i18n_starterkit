@@ -4,21 +4,23 @@ import User, { UserDto } from "models/User"
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
 
-let userModal = null
+let userModal: any = null
 const userCookie = Cookie.get(COOKIE_USER_KEY)
 try {
-    userModal = userCookie ? new User(JSON.parse(userCookie).getUser as UserDto) : null;
+
+    userModal = Cookie.get(COOKIE_USER_KEY) ? new User(JSON.parse(userCookie) as UserDto) : null;
+    console.log("Cookie", userModal)
 } catch (e) {
     console.log(e)
 }
 export interface UserState {
     user: User;
-    isLoadingUser: boolean;
+    isSettingUser: boolean;
 }
 
 export const initialState = {
-    user: userModal,
-    isLoadingUser: false
+    user: Cookie.get(COOKIE_USER_KEY) ? new User(JSON.parse(userCookie) as UserDto) : null,
+    isSettingUser: false
 };
 
 export const userReducer = (
@@ -26,14 +28,14 @@ export const userReducer = (
     action: Action<any>
 ): UserState => {
     switch (action.type) {
-        case "userReducer/LOAD_USER_STARTED":
+        case "userReducer/SET_USER_STARTED":
             return { ...state };
-        case "userReducer/LOAD_USER_DONE":
-            return { ...state, user: action.payload };
-        case "userReducer/LOAD_USER_FAILED":
+        case "userReducer/SET_USER_DONE":
+            return { ...state, user: action.payload.result };
+        case "userReducer/SET_USER_FAILED":
             console.log(action.payload)
         case "userReducer/SET_LOADING_USER":
-            return { ...state, isLoadingUser: action.payload };
+            return { ...state, isSettingUser: action.payload };
         default:
             return initialState;
     }
