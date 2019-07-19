@@ -79,22 +79,21 @@ class POS extends React.Component<POSProps, POSState> {
     );
   }
 
-  onAddItem() {
+  onAddItem(label: string) {
     /*eslint no-console: 0*/
     console.log("adding", "n" + this.state.newCounter);
-    this.props.openAddModal();
-    /* this.setState({
+    this.setState({
       // Add a new item. It must have a unique key!
       items: this.state.items.concat({
-        i: "n" + this.state.newCounter,
+        i: label,
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity, // puts it at the bottom
-        w: 2,
-        h: 2
+        w: 1,
+        h: 1
       }),
       // Increment the counter to ensure key is always unique.
       newCounter: this.props.layout.length
-    }); */
+    }); 
   }
 
   onLayoutChange(layout: any[]) {
@@ -136,7 +135,7 @@ class POS extends React.Component<POSProps, POSState> {
                     color="primary"
                     aria-label="Add"
                     className={classes.fab}
-                    onClick={() => this.onAddItem()}
+                    onClick={() => this.props.openAddModal()}
                   >
                     <AddIcon />
                   </Fab>
@@ -189,7 +188,7 @@ class POS extends React.Component<POSProps, POSState> {
             >
               {_.map(this.state.items, el => this.createElement(el))}
             </ReactGridLayout>
-            <AddButtonModal />
+            <AddButtonModal addToPOS={(label: string)=>this.onAddItem(label)}/>
           </div>
         )}
         {this.props.isLoadingPOS && <LoadingIndicator />}

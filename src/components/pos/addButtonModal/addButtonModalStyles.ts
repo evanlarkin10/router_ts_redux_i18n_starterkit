@@ -8,6 +8,11 @@ const addButtonModalStyles = (theme: Theme) =>
     title: {
       marginLeft: theme.spacing(2),
       flex: 1
-    }
+    },
+    textField: {
+      marginLeft: theme.spacing(1),
+      marginRight: theme.spacing(1),
+      width: 200,
+    },
   });
 export default addButtonModalStyles;

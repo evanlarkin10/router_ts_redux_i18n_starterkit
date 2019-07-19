@@ -5,7 +5,8 @@ import { selectAddModalOpen } from "../selectors";
 import { openAddButtonModal, closeAddButtonModal } from "../actions";
 import AddButtonModal, {
   AddButtonDispatchProps,
-  AddButtonStateProps
+  AddButtonStateProps,
+  AddButtonModalOwnProps
 } from "./AddButtonModal";
 
 const mapStateToProps = (state: ApplicationState): AddButtonStateProps => ({
@@ -25,7 +26,7 @@ const hocs = {
   styles: addButtonModalStyles
 };
 
-export default connects<{}, AddButtonStateProps, AddButtonDispatchProps>(
+export default connects<AddButtonModalOwnProps, AddButtonStateProps, AddButtonDispatchProps>(
   AddButtonModal,
   hocs
 );

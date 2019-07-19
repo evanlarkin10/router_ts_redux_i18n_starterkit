@@ -6,6 +6,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
 import CloseIcon from "@material-ui/icons/Close";
 // import Slide from '@material-ui/core/Slide';
 // import { TransitionProps } from '@material-ui/core/transitions';
@@ -16,6 +17,9 @@ import { openAddButtonModal, closeAddButtonModal } from "../actions";
     return <Slide direction="up" ref={ref} {...props} />;
 });
  */
+export interface AddButtonModalState {
+  buttonLabel: string;
+}
 export interface AddButtonStateProps {
   addModalOpen: boolean;
 }
@@ -23,17 +27,27 @@ export interface AddButtonDispatchProps {
   openAddModal: typeof openAddButtonModal;
   closeAddModal: typeof closeAddButtonModal;
 }
+export interface AddButtonModalOwnProps{
+  addToPOS: (label:string)=>(void)
+}
 
 export type AddButtonModalProps = StyledElememt<typeof addButtonModalStyles> &
-  AddButtonStateProps &
+  AddButtonStateProps &AddButtonModalOwnProps& 
   AddButtonDispatchProps;
 
-class AddButtonModal extends React.Component<AddButtonModalProps, {}> {
+class AddButtonModal extends React.Component<AddButtonModalProps, AddButtonModalState> {
+  constructor(props: AddButtonModalProps){
+    super(props)
+    this.state={
+      buttonLabel:''
+    }
+  }
   handleClose() {
     this.props.closeAddModal();
   }
   handleSave() {
     console.log("save");
+    this.props.addToPOS(this.state.buttonLabel)
     this.props.closeAddModal();
   }
   render() {
@@ -59,11 +73,19 @@ class AddButtonModal extends React.Component<AddButtonModalProps, {}> {
                 {I18n.get("add_button_to_pos")}
               </Typography>
               <Button color="inherit" onClick={() => this.handleSave()}>
-                {I18n.get("save")}
+                {I18n.get("create_button")}
               </Button>
             </Toolbar>
           </AppBar>
-          <div>Stepper</div>
+          <TextField
+            required
+            id="standard-required"
+            label="Button Label"
+            defaultValue="Button Label"
+            className={classes.textField}
+            onChange={(e: any)=>this.setState({buttonLabel: e.target.value })}
+            margin="normal"
+          />
         </Dialog>
       </div>
     );
