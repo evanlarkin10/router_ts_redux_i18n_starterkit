@@ -3,8 +3,8 @@ import {
   ExampleState,
   exampleReducer
 } from "components/common/exampleComponent/reducer";
-import { DrawerState, drawerReducer } from "@common/drawer/reducer";
-import { DRAWER_REDUCER_NAME } from "@common/drawer/constants";
+import { DrawerState, drawerReducer } from "components/common/drawer/reducer";
+import { DRAWER_REDUCER_NAME } from "components/common/drawer/constants";
 import { UserState, userReducer } from "redux/UserAPI/reducer";
 import { USER_REDUCER_NAME } from "redux/UserAPI/constants";
 import { POSState, posReducer } from "components/pos/reducer";

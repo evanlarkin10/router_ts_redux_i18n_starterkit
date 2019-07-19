@@ -9,7 +9,7 @@ import withStyles, {
 } from "@material-ui/core/styles/withStyles";
 import { withRouter } from "react-router-dom";
 import { ApplicationState } from "../../reducer";
-import { Theme } from '@material-ui/core'
+import { Theme } from "@material-ui/core";
 // import loadingTranslations from "./loadingTranslations";
 
 type Comp<P> = React.ComponentClass<P> | React.SFC<P>;
@@ -26,9 +26,7 @@ export interface StyleConnectorWithOptions {
   styles: StyleRulesCallback<Theme, {}> | StyleRules;
   options: WithStylesOptions<Theme>;
 }
-export type StyleConnector =
-  | (StyleRules) | any
-  | StyleConnectorWithOptions;
+export type StyleConnector = (StyleRules) | any | StyleConnectorWithOptions;
 function isStyleConnectorWithOptions(
   connector: StyleConnector
 ): connector is StyleConnectorWithOptions {
@@ -63,9 +61,9 @@ export const connects = <TOwnProps = {}, TStateProps = {}, TDispatchProps = {}>(
   const connectRedux =
     hocs && hocs.redux
       ? connect<TStateProps, TDispatchProps, TOwnProps, ApplicationState>(
-        hocs.redux.mapStateToProps,
-        hocs.redux.mapDispatchToProps
-      )
+          hocs.redux.mapStateToProps,
+          hocs.redux.mapDispatchToProps
+        )
       : connect();
   const connectForm = hocs && hocs.form ? reduxForm(hocs.form) : id;
 

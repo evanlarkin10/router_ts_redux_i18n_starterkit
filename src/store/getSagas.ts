@@ -1,1 +1,1 @@
-export const sagaCtx = require.context('../', true, /sagas.ts/)
+export const sagaCtx = require.context("../", true, /sagas.ts/);

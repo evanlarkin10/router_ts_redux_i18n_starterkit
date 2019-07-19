@@ -1,5 +1,6 @@
 const dict = {
     "next": "Next",
-    "cancel" : "Cancel"
+    "cancel" : "Cancel",
+    "save":"Save"
 };
 export default dict;

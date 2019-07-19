@@ -1,18 +1,26 @@
 import * as React from "react";
 import * as _ from "lodash";
-import 'react-grid-layout/css/styles.css'
-import Card from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import CardContent from '@material-ui/core/CardContent';
-import Fab from '@material-ui/core/Fab';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import 'react-resizable/css/styles.css'
-import { POSProps } from './types'
+import "react-grid-layout/css/styles.css";
+import Card from "@material-ui/core/Card";
+import Typography from "@material-ui/core/Typography";
+// import AppBar from '@material-ui/core/AppBar';
+import { Toolbar } from "@material-ui/core";
+import CardContent from "@material-ui/core/CardContent";
+import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
+import CancelIcon from "@material-ui/icons/Cancel";
+import AddIcon from "@material-ui/icons/Add";
+import SaveIcon from "@material-ui/icons/Save";
+import "react-resizable/css/styles.css";
+import { POSProps } from "./types";
 import * as RGL from "react-grid-layout";
-import WidthProvider = RGL.WidthProvider
+import WidthProvider = RGL.WidthProvider;
 // import Layout = RGL.Layout
+
 import LoadingIndicator from "@common/loadingIndicator";
+import { BUTTON_HEIGHT } from "./constants";
+import AddButtonModal from "./addButtonModal";
+
 const ReactGridLayout = WidthProvider(RGL);
 
 export interface POSState {
@@ -27,15 +35,15 @@ export interface POSState {
 class POS extends React.Component<POSProps, POSState> {
   static defaultProps = {
     className: "layout",
-    cols: 12,
-    rowHeight: 100
+    cols: 10,
+    rowHeight: BUTTON_HEIGHT
   };
 
   constructor(props: any) {
     super(props);
     this.state = {
       items: this.props.layout,
-      newCounter: 1,
+      newCounter: this.props.layout.length,
       cols: null,
       breakpoint: null,
       layout: this.props.layout,
@@ -46,26 +54,26 @@ class POS extends React.Component<POSProps, POSState> {
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.onRemoveItem = this.onRemoveItem.bind(this);
   }
-  componentDidMount() {
-    console.log("Props on mount", this.props)
-  }
+
   createElement(el: any) {
+    console.log("Create item");
     const i = el.add ? "+" : el.i;
-    const { classes } = this.props
+    const { classes } = this.props;
     return (
-      <div key={i} data-grid={el} className={classes.gridItem}>
+      <div key={i} className={classes.gridItem}>
         <Card className={classes.card}>
           <CardContent className={classes.cardContent}>
-            <Typography className={classes.title}>
+            {!el.static && this.state.isEditing && (
+              <Typography className={classes.deleteButton}>X</Typography>
+            )}
+            <Typography
+              className={el.static ? classes.number : classes.title}
+              align="center"
+              display="block"
+            >
               {i}
             </Typography>
-            {!el.static &&
-              <Typography className={classes.title}>
-                X
-            </Typography>
-            }
           </CardContent>
-
         </Card>
       </div>
     );
@@ -74,7 +82,8 @@ class POS extends React.Component<POSProps, POSState> {
   onAddItem() {
     /*eslint no-console: 0*/
     console.log("adding", "n" + this.state.newCounter);
-    this.setState({
+    this.props.openAddModal();
+    /* this.setState({
       // Add a new item. It must have a unique key!
       items: this.state.items.concat({
         i: "n" + this.state.newCounter,
@@ -84,22 +93,27 @@ class POS extends React.Component<POSProps, POSState> {
         h: 2
       }),
       // Increment the counter to ensure key is always unique.
-      newCounter: this.state.newCounter + 1
-    });
+      newCounter: this.props.layout.length
+    }); */
   }
 
   onLayoutChange(layout: any[]) {
+    console.log("Layout change");
     if (this.state.isEditing) {
       this.setState({ layout });
     }
   }
-  saveLayout() {
-    this.props.setLoading(true)
-    this.props.savePOSPreferences(this.state.layout)
-    this.setState({ isEditing: false })
-  }
-  onResize() {
-    console.log('resize')
+  async saveLayout() {
+    try {
+      this.props.savePOSPreferences(this.state.layout);
+      this.props.setLoading(true);
+      this.setState({ isEditing: false });
+    } catch {
+      console.log("Error saving");
+    } finally {
+      // window.location.reload()
+      console.log("finally");
+    }
   }
 
   onRemoveItem(i: any) {
@@ -108,37 +122,79 @@ class POS extends React.Component<POSProps, POSState> {
   }
 
   render() {
-    console.log("state", this.state.layout[12].x, "props", this.props.layout[12].x)
-    const { classes } = this.props
+    console.log("state", this.state.layout, "\nprops", this.props.layout);
+    console.log("items", this.state.items);
+    const { classes } = this.props;
     return (
       <>
-        {
-          !this.props.isLoadingPOS &&
-          <div style={{ backgroundColor: 'grey' }}>
-            <button onClick={this.onAddItem}>Add Item</button>
-            <Fab color="primary" aria-label="Edit" className={classes.fab} onClick={() => this.setState({ isEditing: true })}>
-              <EditIcon />
-            </Fab>
-            <Fab color="primary" aria-label="Save" className={classes.fab} onClick={() => this.saveLayout()}>
-              <SaveIcon />
-            </Fab>
+        {!this.props.isLoadingPOS && (
+          <div>
+            <Toolbar className={classes.toolbar}>
+              {this.state.isEditing ? (
+                <>
+                  <Fab
+                    color="primary"
+                    aria-label="Add"
+                    className={classes.fab}
+                    onClick={() => this.onAddItem()}
+                  >
+                    <AddIcon />
+                  </Fab>
+                  <Fab
+                    color="primary"
+                    aria-label="Save"
+                    className={classes.fab}
+                    onClick={() => this.saveLayout()}
+                  >
+                    <SaveIcon />
+                  </Fab>
+                  <Fab
+                    color="primary"
+                    aria-label="Cancel"
+                    className={classes.fab}
+                    onClick={() =>
+                      this.setState({
+                        layout: this.props.layout,
+                        isEditing: false
+                      })
+                    }
+                  >
+                    <CancelIcon />
+                  </Fab>
+                </>
+              ) : (
+                <>
+                  <Fab
+                    color="primary"
+                    aria-label="Edit"
+                    className={classes.fab}
+                    onClick={() => this.setState({ isEditing: true })}
+                  >
+                    <EditIcon />
+                  </Fab>
+                </>
+              )}
+            </Toolbar>
+
             <ReactGridLayout
+              {...this.props}
+              className={"layout"}
               layout={this.state.layout}
               onLayoutChange={(layout: any[]) => this.onLayoutChange(layout)}
-              onResize={() => this.onResize()}
+              // onResize={() => this.onResize()}
+              isDraggable={this.state.isEditing}
+              isRearrangeable={this.state.isEditing}
+              isResizable={this.state.isEditing}
               autoSize={true}
-              {...this.props}
             >
               {_.map(this.state.items, el => this.createElement(el))}
             </ReactGridLayout>
+            <AddButtonModal />
           </div>
-        }
-        {
-          this.props.isLoadingPOS && <LoadingIndicator />
-        }
+        )}
+        {this.props.isLoadingPOS && <LoadingIndicator />}
       </>
     );
-
   }
 }
 

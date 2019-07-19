@@ -1,1 +1,5 @@
-export const translations = require.context('../../translations', true, /\.json/)
+export const translations = require.context(
+  "../../translations",
+  true,
+  /\.json/
+);

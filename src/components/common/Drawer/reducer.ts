@@ -1,4 +1,6 @@
 import { Action } from "typescript-fsa";
+import reducerRegistry from 'reducer/reducerRegistry'
+import { DRAWER_REDUCER_NAME } from './constants'
 export interface DrawerState {
   drawerOpen: boolean;
 }
@@ -11,6 +13,7 @@ export const drawerReducer = (
   state: DrawerState = initialState,
   action: Action<any>
 ): DrawerState => {
+  console.log("drawer reducer", state, action)
   switch (action.type) {
     case "drawerReducer/OPEN_DRAWER":
       return { ...state, drawerOpen: true };
@@ -20,3 +23,4 @@ export const drawerReducer = (
       return initialState;
   }
 };
+reducerRegistry.register(DRAWER_REDUCER_NAME, drawerReducer)

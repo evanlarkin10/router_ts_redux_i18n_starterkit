@@ -34,7 +34,7 @@ class Drawer extends React.Component<DrawerProps, {}> {
     const { classes } = this.props;
     return (
       <MUIDrawer
-        variant="persistent"
+        variant="permanent"
         classes={{
           paper: clsx(
             classes.drawerPaper,
@@ -75,10 +75,8 @@ class Drawer extends React.Component<DrawerProps, {}> {
             </ListItem>
             <ListItem button>
               <ListItemIcon>
-                <Icon
-                  className={'fa fa-cash-register'}
-                  onClick={() => this.props.history.push("/pos")}
-                />
+                <Icon className={"fa fa-cash-register"} onClick={() => this.props.history.push("/pos")} />
+
               </ListItemIcon>
               <ListItemText
                 primary={I18n.get("point_of_sale")}
