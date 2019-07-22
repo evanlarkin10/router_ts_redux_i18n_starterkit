@@ -9,14 +9,15 @@ const POSStyles = (theme: Theme) =>
       cursor: "pointer"
     },
     title: {
-      fontSize: 25,
-      height: "100%"
+      fontSize: 20,
+      height: "100%",
+      marginTop: BUTTON_HEIGHT / 4
     },
     number: {
       fontSize: 30,
       fontWeight: "bold",
       height: "100%",
-      marginTop: BUTTON_HEIGHT / 5
+      marginTop: BUTTON_HEIGHT / 4
     },
     deleteButton: {
       fontSize: 18,
@@ -39,6 +40,11 @@ const POSStyles = (theme: Theme) =>
       height: "100%",
       width: "100%"
     },
+    amountField: {
+      marginLeft: theme.spacing(3),
+      marginRight: theme.spacing(3),
+      width: "90%"
+    },
     fab: {
       margin: theme.spacing(1),
       alignSelf: "right"
@@ -47,10 +53,30 @@ const POSStyles = (theme: Theme) =>
       justifyContent: "flex-end",
       flexDirection: "column",
       top: "auto",
-      right: 20,
-      bottom: 20,
+      right: -5,
+      bottom: 5,
       left: "auto",
       position: "fixed"
+    },
+    cashField: {
+      color: "black",
+      fontSize: 25,
+      fontWeight: "bold"
+    },
+    receipt: {
+      float: "left",
+      height: "100%",
+      width: "100%",
+      padding: 5
+    },
+    receiptAmount: {
+      fontSize: 14,
+      fontWeight: "bold",
+      float: "right",
+      paddingBottom: 5
+    },
+    receiptTitle: {
+      fontSize: 14
     }
   });
 export default POSStyles;

@@ -14,7 +14,7 @@ import { HeaderProps } from "./types";
 import clsx from "clsx";
 import { I18n, Auth } from "aws-amplify";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
-import Cookies from 'js-cookie'
+import * as Cookies from "js-cookie";
 
 export interface HeaderStateProps {
   drawerOpen: boolean;
@@ -36,9 +36,9 @@ class Header extends React.Component<HeaderProps, HeaderState> {
     this.props.openDrawer();
   };
   signOut = () => {
-    Cookies.remove(COOKIE_USER_KEY)
-    Auth.signOut()
-    this.props.history.push('/')
+    Cookies.remove(COOKIE_USER_KEY);
+    Auth.signOut();
+    this.props.history.push("/");
   };
   handleAccountMenuOpen = (event: any) => {
     this.setState({ anchorAccount: event.target });
@@ -76,7 +76,6 @@ class Header extends React.Component<HeaderProps, HeaderState> {
           >
             {I18n.get(this.props.location.pathname.split("/")[1])}
           </Typography>
-
           <IconButton color="inherit" onClick={this.handleAccountMenuOpen}>
             <Badge color="secondary">
               <AccountCircleIcon />

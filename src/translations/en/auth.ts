@@ -20,6 +20,7 @@ const dict = {
     "back_to_sign_in": "Back to Sign In",
     "verify_account": "Verify Account",
     "pricing": "Pricing",
-    "pricing_message": "Select the subscription that is right for you"
+    "pricing_message": "Select the subscription that is right for you",
+    "organization_name":"Organization Name"
 };
 export default dict

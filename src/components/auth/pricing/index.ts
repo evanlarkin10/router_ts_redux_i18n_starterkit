@@ -1,6 +1,6 @@
 import PricingPage from "./Pricing";
 import { connects } from "utilities/commonHocs";
-import { styles } from '../common/authStyles'
+import { styles } from "../common/authStyles";
 
 const hocs = {
   styles

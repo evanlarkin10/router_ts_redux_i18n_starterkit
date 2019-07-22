@@ -32,7 +32,6 @@ export const userReducer = (
   state: UserState = initialState,
   action: Action<any>
 ): UserState => {
-  console.log("Action: ", state, action);
   switch (action.type) {
     case "userReducer/SET_USER_STARTED":
       return { ...state };

@@ -13,10 +13,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import addButtonModalStyles from "./addButtonModalStyles";
 import StyledElememt from "components/common/StyledElement";
 import { openAddButtonModal, closeAddButtonModal } from "../actions";
-/* const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
- */
+
 export interface AddButtonModalState {
   buttonLabel: string;
 }
@@ -36,7 +33,7 @@ export type AddButtonModalProps = StyledElememt<typeof addButtonModalStyles> &
   AddButtonDispatchProps;
 
 class AddButtonModal extends React.Component<AddButtonModalProps, AddButtonModalState> {
-  constructor(props: AddButtonModalProps){
+  constructor(props: any){
     super(props)
     this.state={
       buttonLabel:''
@@ -56,7 +53,7 @@ class AddButtonModal extends React.Component<AddButtonModalProps, AddButtonModal
       <div>
         <Dialog
           fullScreen
-          open={this.props.addModalOpen}
+          open={this.props.addModalOpen?true:false}
           onClose={() => this.handleClose()}
         >
           <AppBar className={classes.appBar}>

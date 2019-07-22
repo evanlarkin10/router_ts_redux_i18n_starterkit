@@ -9,11 +9,13 @@ export interface POSState {
   isLoadingPOS: boolean;
   layout: Layout[];
   addModalOpen: boolean;
+  paymentTypeModalOpen: boolean;
 }
 
 export const initialState = {
   isLoadingPOS: false,
   addModalOpen: false,
+  paymentTypeModalOpen: false,
   layout: Cookie.get(COOKIE_USER_KEY)
     ? JSON.parse(
         new User(JSON.parse(Cookie.get(COOKIE_USER_KEY)) as UserDto).preferences
@@ -25,7 +27,6 @@ export const posReducer = (
   state: POSState = initialState,
   action: Action<any>
 ): POSState => {
-  console.log("ACTION", state, action);
   switch (action.type) {
     case "posReducer/SAVE_POS_PREFERENCES_STARTED":
       return { ...state, isLoadingPOS: true };
@@ -41,6 +42,10 @@ export const posReducer = (
       return { ...state, addModalOpen: true };
     case "posReducer/CLOSE_ADD_MODAL_BUTTON":
       return { ...state, addModalOpen: false };
+    case "posReducer/OPEN_PAYMENT_TYPE_MODAL":
+      return { ...state, paymentTypeModalOpen: true };
+    case "posReducer/CLOSE_PAYMENT_TYPE_MODAL":
+      return { ...state, paymentTypeModalOpen: false };
     default:
       return initialState;
   }

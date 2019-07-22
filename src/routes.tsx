@@ -18,10 +18,10 @@ import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
 import Employees from "components/employees";
 import POS from "components/pos";
-import LoadingIndicator from 'components/common/loadingIndicator'
-import { setUser } from 'redux/UserAPI/actions'
+import LoadingIndicator from "components/common/loadingIndicator";
+import { setUser } from "redux/UserAPI/actions";
 import { selectIsSettingUser } from "redux/UserAPI/selectors";
-import { ApplicationState } from 'reducer'
+import { ApplicationState } from "reducer";
 const routerStyles = (theme: Theme) =>
   createStyles({
     appBarSpacer: theme.mixins.toolbar,
@@ -37,52 +37,50 @@ const routerStyles = (theme: Theme) =>
 
 export type RouterProps = RouteComponentProps &
   StyleElement<typeof routerStyles> &
-  RouterDispatchProps & RouterStateProps;
+  RouterDispatchProps &
+  RouterStateProps;
 
 class Routes extends React.Component<RouterProps, {}> {
   constructor(props: any) {
-    super(props)
+    super(props);
     this.state = {
       isSetting: true
-    }
+    };
   }
   componentDidMount() {
-    console.log("Routes mounted")
+    console.log("Routes mounted");
     // Do I need to? initial state is cookie
-    this.props.setUser()
-
+    this.props.setUser();
   }
   render() {
     const { classes } = this.props;
-    console.log(this.props.isSettingUser)
     return (
-      <>{!this.props.isSettingUser &&
-        <div className={classes.root}>
-          <CssBaseline />
-          <Header />
-          <Drawer />
-          <main className={classes.content}>
-            <div className={classes.appBarSpacer} />
-            <Switch>
-              <Redirect exact from="/" to="/dashboard" />
-              <Route path="/dashboard" component={Dashboard} />
-              <Route path="/employees" component={Employees} />
-              <Route path="/pos" component={POS} />
-              <Route path="" component={NotFoundPage} />
-            </Switch>
-          </main>
-        </div>
-      }
-        {
-          this.props.isSettingUser && <LoadingIndicator />
-        }
+      <>
+        {!this.props.isSettingUser && (
+          <div className={classes.root}>
+            <CssBaseline />
+            <Header />
+            <Drawer />
+            <main className={classes.content}>
+              <div className={classes.appBarSpacer} />
+              <Switch>
+                <Redirect exact from="/" to="/dashboard" />
+                <Route path="/dashboard" component={Dashboard} />
+                <Route path="/employees" component={Employees} />
+                <Route path="/pos" component={POS} />
+                <Route path="" component={NotFoundPage} />
+              </Switch>
+            </main>
+          </div>
+        )}
+        {this.props.isSettingUser && <LoadingIndicator />}
       </>
     );
   }
 }
 
 export interface RouterStateProps {
-  isSettingUser: Boolean
+  isSettingUser: Boolean;
 }
 export interface RouterDispatchProps {
   setUser: typeof setUser.started;
@@ -91,9 +89,8 @@ const mapStateToProps = (state: ApplicationState): RouterStateProps => ({
   isSettingUser: selectIsSettingUser(state)
 });
 
-
 const mapDispatchToProps: RouterDispatchProps = {
-  setUser: setUser.started,
+  setUser: setUser.started
 };
 
 const hocs = {

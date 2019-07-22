@@ -6,24 +6,30 @@ import { ApplicationState } from "reducer";
 import {
   selectIsLoadingPOS,
   selectLayout,
-  selectAddModalOpen
+  selectAddModalOpen,
+  selectPaymentTypeModal
 } from "./selectors";
 import {
   setEditingPOS,
   setLoadingPOS,
   savePOSPreferences,
   openAddButtonModal,
-  closeAddButtonModal
+  closeAddButtonModal,
+  openPaymentTypeModal,
+  closePaymentTypeModal
 } from "./actions";
 // import { savePOSPreferences } from 'redux/UserAPI/actions'
 
 const mapStateToProps = (state: ApplicationState): POSStateProps => ({
   isLoadingPOS: selectIsLoadingPOS(state),
   layout: selectLayout(state),
-  addModalOpen: selectAddModalOpen(state)
+  addModalOpen: selectAddModalOpen(state),
+  paymentTypeModalOpen: selectPaymentTypeModal(state)
 });
 
 const mapDispatchToProps: POSDispatchProps = {
+  openPaymentTypeModal,
+  closePaymentTypeModal,
   savePOSPreferences: savePOSPreferences.started,
   setEditing: setEditingPOS,
   setLoading: setLoadingPOS,

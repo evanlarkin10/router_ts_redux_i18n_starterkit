@@ -13,7 +13,6 @@ export const drawerReducer = (
   state: DrawerState = initialState,
   action: Action<any>
 ): DrawerState => {
-  console.log("drawer reducer", state, action)
   switch (action.type) {
     case "drawerReducer/OPEN_DRAWER":
       return { ...state, drawerOpen: true };
