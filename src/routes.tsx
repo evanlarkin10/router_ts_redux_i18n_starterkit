@@ -18,6 +18,7 @@ import StyleElement from "components/common/StyledElement";
 import { connects } from "utilities/commonHocs";
 import Employees from "components/employees";
 import POS from "components/pos";
+import MyAccount from "components/myAccount";
 import LoadingIndicator from "components/common/loadingIndicator";
 import { setUser } from "redux/UserAPI/actions";
 import { selectIsSettingUser } from "redux/UserAPI/selectors";
@@ -68,6 +69,7 @@ class Routes extends React.Component<RouterProps, {}> {
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/employees" component={Employees} />
                 <Route path="/pos" component={POS} />
+                <Route path="/account" component={MyAccount} />
                 <Route path="" component={NotFoundPage} />
               </Switch>
             </main>

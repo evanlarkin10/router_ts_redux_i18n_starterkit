@@ -88,11 +88,15 @@ class Header extends React.Component<HeaderProps, HeaderState> {
             open={Boolean(anchorAccount)}
             onClose={this.handleAccountMenuClose}
           >
-            <MenuItem onClick={this.handleAccountMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={this.handleAccountMenuClose}>
-              My account
+            <MenuItem
+              onClick={() => {
+                this.setState({ anchorAccount: null });
+                this.props.history.push("/account");
+              }}
+            >
+              {I18n.get("my_account")}
             </MenuItem>
-            <MenuItem onClick={this.signOut}>Logout</MenuItem>
+            <MenuItem onClick={this.signOut}>{I18n.get("logout")}</MenuItem>
           </Menu>
 
           <IconButton color="inherit">
