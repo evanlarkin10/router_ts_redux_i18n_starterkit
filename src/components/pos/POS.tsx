@@ -2,6 +2,7 @@ import * as React from "react";
 import { I18n } from "aws-amplify";
 import * as _ from "lodash";
 import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
 import {
   Paper,
   Fab,
@@ -14,7 +15,6 @@ import {
   Divider
 } from "@material-ui/core";
 import { Add, Save, Cancel, Edit } from "@material-ui/icons";
-import "react-resizable/css/styles.css";
 import { POSProps, POSState, ReceiptItem } from "./types";
 import * as RGL from "react-grid-layout";
 import WidthProvider = RGL.WidthProvider;
@@ -113,7 +113,12 @@ class POS extends React.Component<POSProps, POSState> {
     const { classes } = this.props;
     return (
       <>
-        <Card className={classes.card}>
+        <Card
+          className={classes.card}
+          onClick={() =>
+            this.addButtonCharge({ amount: el.amount, label: el.i })
+          }
+        >
           <CardContent className={classes.cardContent}>
             {this.state.isEditing && (
               <Typography
@@ -148,11 +153,31 @@ class POS extends React.Component<POSProps, POSState> {
       });
     }
   }
-  onAddItem(label: string) {
+  addButtonCharge(item: { label: string; amount: number }) {
+    const receipt = this.state.receiptItems;
+    console.log(item);
+    const subtotal = this.state.total;
+    // Override button price if one is entered
+    if (this.state.amount !== "") {
+      receipt.push({
+        amount: parseFloat(this.state.amount),
+        title: item.label
+      });
+    } else {
+      receipt.push({ amount: item.amount, title: item.label });
+    }
+    this.setState({
+      total: subtotal,
+      receiptItems: receipt,
+      amount: ""
+    });
+  }
+  onAddItem(label: string, amount: number) {
     /*eslint no-console: 0*/
     this.setState({
       // Add a new item. It must have a unique key!
       items: this.state.items.concat({
+        amount,
         i: label,
         x: (this.state.items.length * 2) % (this.state.cols || 12),
         y: Infinity, // puts it at the bottom
@@ -160,6 +185,8 @@ class POS extends React.Component<POSProps, POSState> {
         h: 1
       })
     });
+    const newItem = this.state.items[this.state.items.length - 1];
+    this.setState({ layout: this.state.layout.concat(newItem) });
   }
   renderReceipt(el: ReceiptItem, index: number) {
     const { classes } = this.props;
@@ -215,6 +242,7 @@ class POS extends React.Component<POSProps, POSState> {
 
   render() {
     const { classes } = this.props;
+    console.log(this.state.layout);
     return (
       <>
         {!this.props.isLoadingPOS && (
@@ -223,7 +251,7 @@ class POS extends React.Component<POSProps, POSState> {
               id="outlined-bare"
               className={classes.amountField}
               disabled={true}
-              value={this.state.amount}
+              value={"$" + this.state.amount}
               margin="normal"
               variant="outlined"
               InputProps={{
@@ -274,7 +302,9 @@ class POS extends React.Component<POSProps, POSState> {
                   {_.map(this.state.items, el => this.createElement(el))}
                 </ReactGridLayout>
                 <AddButtonModal
-                  addToPOS={(label: string) => this.onAddItem(label)}
+                  addToPOS={(label: string, amount: number) =>
+                    this.onAddItem(label, amount)
+                  }
                 />
                 <PaymentTypeModal
                   processTransaction={(paymentMethod: any) =>

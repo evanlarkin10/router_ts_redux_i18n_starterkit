@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 import { POS_REDUCER_NAME } from "./constants";
-import { Layout } from "react-grid-layout";
+import { POSLayout } from "./types";
 import User from "models/User";
 const actionCreator = actionCreatorFactory(POS_REDUCER_NAME);
 export enum ActionType {
@@ -15,7 +15,7 @@ export enum ActionType {
 
 export const setLoadingPOS = actionCreator<Boolean>(ActionType.SET_LOADING_POS);
 export const setEditingPOS = actionCreator<Boolean>(ActionType.SET_EDITING_POS);
-export const savePOSPreferences = actionCreator.async<Layout, User, string>(
+export const savePOSPreferences = actionCreator.async<POSLayout, User, string>(
   ActionType.SAVE_POS_PREFERENCES
 );
 export const openPaymentTypeModal = actionCreator<void>(

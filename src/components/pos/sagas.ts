@@ -5,15 +5,16 @@ import { API, graphqlOperation } from "aws-amplify";
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
 import User, { UserDto } from "models/User";
-import { Layout } from "react-grid-layout";
+import { POSLayout } from "./types";
 import { Action } from "typescript-fsa";
 import { handleSetUser } from "redux/UserAPI/sagas";
-export function* handleSavePreferences(action: Action<Layout>) {
+export function* handleSavePreferences(action: Action<POSLayout>) {
   console.log("Save Preferences handle start");
   try {
     const input = {
       preferences: JSON.stringify(action.payload)
     };
+    console.log("Input", input);
     yield API.graphql(graphqlOperation(mutations.updateUser, { input }));
     console.log("set user call");
     yield call(handleSetUser);

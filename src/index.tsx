@@ -23,13 +23,15 @@ and wraps the App component with Provider, giving props to containers
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 // import Authentication from "components/auth/authenticator";
 import AppWithAuth from "AppWithAuth";
+import { responsiveFontSizes } from "@material-ui/core/styles";
 
-export const theme = createMuiTheme({
+let theme = createMuiTheme({
   palette: {
     primary: blue,
     secondary: pink
   }
 });
+theme = responsiveFontSizes(theme);
 I18n.putVocabularies(translations);
 // tslint:disable-next-line:variable-name
 const Root: React.SFC = () => {

@@ -1,21 +1,33 @@
 import * as React from "react";
 import { I18n } from "aws-amplify";
-import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
+import {
+  Card,
+  CardContent,
+  AppBar,
+  Dialog,
+  Button,
+  TextField,
+  IconButton,
+  Typography,
+  Toolbar,
+  InputAdornment
+} from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
-// import Slide from '@material-ui/core/Slide';
-// import { TransitionProps } from '@material-ui/core/transitions';
-import addButtonModalStyles from "./addButtonModalStyles";
-import StyledElememt from "components/common/StyledElement";
 import { openAddButtonModal, closeAddButtonModal } from "../actions";
+import * as RGL from "react-grid-layout";
+import WidthProvider = RGL.WidthProvider;
+const ReactGridLayout = WidthProvider(RGL);
+import "react-grid-layout/css/styles.css";
+import "react-resizable/css/styles.css";
+import { AddButtonModalProps } from "./index";
+import { BUTTON_HEIGHT } from "../constants";
 
+export type FormFields = {
+  label: string;
+  amount: number;
+};
 export interface AddButtonModalState {
-  buttonLabel: string;
+  formValues: FormFields;
 }
 export interface AddButtonStateProps {
   addModalOpen: boolean;
@@ -24,36 +36,89 @@ export interface AddButtonDispatchProps {
   openAddModal: typeof openAddButtonModal;
   closeAddModal: typeof closeAddButtonModal;
 }
-export interface AddButtonModalOwnProps{
-  addToPOS: (label:string)=>(void)
+export interface AddButtonModalOwnProps {
+  addToPOS: (label: string, amount:number) => void;
+  className?: string;
+  cols?: number;
+  rowHeight?: number;
 }
 
-export type AddButtonModalProps = StyledElememt<typeof addButtonModalStyles> &
-  AddButtonStateProps &AddButtonModalOwnProps& 
-  AddButtonDispatchProps;
-
-class AddButtonModal extends React.Component<AddButtonModalProps, AddButtonModalState> {
-  constructor(props: any){
-    super(props)
-    this.state={
-      buttonLabel:''
-    }
+class AddButtonModal extends React.Component<
+  AddButtonModalProps,
+  AddButtonModalState
+> {
+  static defaultProps = {
+    className: "layout",
+    cols: 10,
+    rowHeight: BUTTON_HEIGHT
+  };
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      formValues: {
+        label: "Label",
+        amount: 0.0
+      }
+    };
   }
   handleClose() {
     this.props.closeAddModal();
   }
   handleSave() {
     console.log("save");
-    this.props.addToPOS(this.state.buttonLabel)
+    this.props.addToPOS(
+      this.state.formValues.label,
+      this.state.formValues.amount
+    );
     this.props.closeAddModal();
   }
+  renderLabelField = () => {
+    return (
+      <TextField
+        required
+        variant="outlined"
+        id="sdfgsdfgsdfg"
+        label="Button Label"
+        name="label"
+        type="text"
+        value={this.state.formValues.label}
+        onChange={this.handleOnChange}
+        margin="normal"
+      />
+    );
+  };
+  renderAmountField = () => {
+    return (
+      <TextField
+        variant="outlined"
+        label="Amount"
+        id="amount"
+        name="amount"
+        type="number"
+        value={this.state.formValues.amount}
+        onChange={this.handleOnChange}
+        InputProps={{
+          startAdornment: <InputAdornment position="start">$</InputAdornment>
+        }}
+      />
+    );
+  };
+  handleOnChange = (event: any) => {
+    console.log(event);
+    const formValues = this.state.formValues as any;
+    const key = event.target.name;
+    const value = event.target.value;
+    formValues[key] = value;
+    this.setState({ formValues });
+  };
   render() {
+    console.log("render");
     const { classes } = this.props;
     return (
       <div>
         <Dialog
           fullScreen
-          open={this.props.addModalOpen?true:false}
+          open={this.props.addModalOpen ? true : false}
           onClose={() => this.handleClose()}
         >
           <AppBar className={classes.appBar}>
@@ -74,15 +139,59 @@ class AddButtonModal extends React.Component<AddButtonModalProps, AddButtonModal
               </Button>
             </Toolbar>
           </AppBar>
-          <TextField
-            required
-            id="standard-required"
-            label="Button Label"
-            defaultValue="Button Label"
-            className={classes.textField}
-            onChange={(e: any)=>this.setState({buttonLabel: e.target.value })}
-            margin="normal"
-          />
+          <div className={classes.container}>
+            <div style={{ flex: 4 }}>
+              <Typography variant={"h6"}>Button Details</Typography>
+              <form noValidate autoComplete="off">
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  {this.renderLabelField()}
+                  {this.renderAmountField()}
+                </div>
+              </form>
+            </div>
+            <div style={{ flex: 2 }}>
+              <Typography variant={"h6"}>Preview</Typography>
+              <ReactGridLayout
+                {...this.props}
+                className={"layout"}
+                layout={[
+                  {
+                    w: 1,
+                    h: 1,
+                    x: 0,
+                    y: 0,
+                    i: this.state.formValues.label,
+                    moved: false,
+                    static: false
+                  }
+                ]}
+                maxRows={4}
+                cols={4}
+                isDraggable={true}
+                isRearrangeable={true}
+                isResizable={true}
+                rowHeight={BUTTON_HEIGHT}
+                autoSize={true}
+              >
+                <div
+                  key={this.state.formValues.label}
+                  className={classes.gridItem}
+                >
+                  <Card className={classes.card}>
+                    <CardContent className={classes.cardContent}>
+                      <Typography
+                        className={classes.buttonTitle}
+                        align="center"
+                        display="block"
+                      >
+                        {this.state.formValues.label}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </div>
+              </ReactGridLayout>
+            </div>
+          </div>
         </Dialog>
       </div>
     );

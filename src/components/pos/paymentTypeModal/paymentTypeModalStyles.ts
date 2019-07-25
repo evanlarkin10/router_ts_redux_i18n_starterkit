@@ -1,5 +1,6 @@
 import { createStyles } from "@material-ui/core/styles";
 import { Theme } from "@material-ui/core";
+
 const addButtonModalStyles = (theme: Theme) =>
   createStyles({
     root: {
@@ -15,6 +16,19 @@ const addButtonModalStyles = (theme: Theme) =>
     modalTitle: {
       fontSize: 14,
       fontWeight: "bold"
+    },
+    paper: {
+      padding: theme.spacing(3, 2),
+      marginBottom: 15,
+      alignItems: "center",
+      width: 400
+    },
+    paperSelected: {
+      padding: theme.spacing(3, 2),
+      marginBottom: 15,
+      alignItems: "center",
+      width: 400,
+      backgroundColor: theme.palette.primary.main
     }
   });
 export default addButtonModalStyles;

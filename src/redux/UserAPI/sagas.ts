@@ -6,9 +6,8 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
 import User, { UserDto } from "models/User";
-import { Layout } from "react-grid-layout";
+import { POSLayout, registerButtons } from "components/pos/types";
 import { Action } from "typescript-fsa";
-import { registerButtons } from "components/pos/types";
 // Not used?
 export function* handleSetUser() {
   try {
@@ -52,7 +51,7 @@ export function* handleSetUser() {
   // yield put(setLoading(false))
 }
 
-export function* handleSavePreferences(action: Action<Layout>) {
+export function* handleSavePreferences(action: Action<POSLayout>) {
   try {
     const input = {
       preferences: JSON.stringify(action.payload)

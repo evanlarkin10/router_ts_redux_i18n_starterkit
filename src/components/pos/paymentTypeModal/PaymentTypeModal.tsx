@@ -6,7 +6,8 @@ import {
   DialogContent,
   DialogActions,
   DialogTitle,
-  Typography
+  Typography,
+  Paper
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -18,6 +19,7 @@ import { openPaymentTypeModal, closePaymentTypeModal } from "../actions";
 
 export interface PaymentTypeModalState {
   buttonLabel: string;
+  selected: number;
 }
 export interface PaymentTypeStateProps {
   paymentModalOpen: boolean;
@@ -42,7 +44,8 @@ class PaymentTypeModal extends React.Component<
   constructor(props: any) {
     super(props);
     this.state = {
-      buttonLabel: ""
+      buttonLabel: "",
+      selected: null
     };
   }
   handleClose() {
@@ -50,7 +53,23 @@ class PaymentTypeModal extends React.Component<
   }
   handleSubmit() {
     this.props.closePaymentTypeModal();
-    this.props.processTransaction("Visa");
+    let selection = "";
+    console.log(this.state.selected);
+    switch (this.state.selected) {
+      case 0:
+        selection = "Visa";
+        break;
+      case 1:
+        selection = "Mastercard";
+        break;
+      case 2:
+        selection = "Cash";
+        break;
+      default:
+        selection = "Cash";
+    }
+    this.setState({ selected: null });
+    this.props.processTransaction(selection);
   }
   render() {
     const { classes } = this.props;
@@ -73,14 +92,49 @@ class PaymentTypeModal extends React.Component<
             </IconButton>
           </DialogTitle>
           <DialogContent dividers>
-            <Typography gutterBottom>
-              Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-              dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-              ac consectetur ac, vestibulum at eros.
-            </Typography>
+            <Paper
+              className={
+                this.state.selected === 0
+                  ? classes.paperSelected
+                  : classes.paper
+              }
+              onClick={() => this.setState({ selected: 0 })}
+            >
+              <Typography variant="h5" component="h3">
+                Visa
+              </Typography>
+            </Paper>
+            <Paper
+              className={
+                this.state.selected === 1
+                  ? classes.paperSelected
+                  : classes.paper
+              }
+              onClick={() => this.setState({ selected: 1 })}
+            >
+              <Typography variant="h5" component="h3">
+                Mastercard
+              </Typography>
+            </Paper>
+            <Paper
+              className={
+                this.state.selected === 2
+                  ? classes.paperSelected
+                  : classes.paper
+              }
+              onClick={() => this.setState({ selected: 2 })}
+            >
+              <Typography variant="h5" component="h3">
+                Cash
+              </Typography>
+            </Paper>
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => this.handleSubmit()} color="primary">
+            <Button
+              disabled={this.state.selected === null}
+              onClick={() => this.handleSubmit()}
+              color="primary"
+            >
               Process Transaction
             </Button>
           </DialogActions>

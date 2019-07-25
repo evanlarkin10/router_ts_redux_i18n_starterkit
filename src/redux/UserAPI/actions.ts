@@ -1,6 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 import { USER_REDUCER_NAME } from "./constants";
-import { Layout } from "react-grid-layout";
+import { POSLayout } from "components/pos/types";
 import User from "models/User";
 const actionCreator = actionCreatorFactory(USER_REDUCER_NAME);
 export enum ActionType {
@@ -15,6 +15,6 @@ export const setUser = actionCreator.async<void, User, string>(
   ActionType.SET_USER
 );
 
-export const savePOSPreferences = actionCreator.async<Layout, User, string>(
+export const savePOSPreferences = actionCreator.async<POSLayout, User, string>(
   ActionType.SAVE_POS_PREFERENCES
 );

@@ -8,6 +8,16 @@ import AddButtonModal, {
   AddButtonStateProps,
   AddButtonModalOwnProps
 } from "./AddButtonModal";
+import { WidthProviderProps, ReactGridLayoutProps } from "react-grid-layout";
+import StyledElememt from "components/common/StyledElement";
+
+export type AddButtonModalProps = StyledElememt<typeof addButtonModalStyles> &
+  AddButtonStateProps &
+  AddButtonModalOwnProps &
+  AddButtonDispatchProps &
+  ReactGridLayoutProps &
+  WidthProviderProps &
+  any & {};
 
 const mapStateToProps = (state: ApplicationState): AddButtonStateProps => ({
   addModalOpen: selectAddModalOpen(state)
@@ -26,7 +36,8 @@ const hocs = {
   styles: addButtonModalStyles
 };
 
-export default connects<AddButtonModalOwnProps, AddButtonStateProps, AddButtonDispatchProps>(
-  AddButtonModal,
-  hocs
-);
+export default connects<
+  AddButtonModalOwnProps,
+  AddButtonStateProps,
+  AddButtonDispatchProps
+>(AddButtonModal, hocs);
