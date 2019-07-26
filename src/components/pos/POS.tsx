@@ -142,7 +142,7 @@ class POS extends React.Component<POSProps, POSState> {
     );
   }
   addCustomCharge() {
-    if (this.state.amount) {
+    if (this.state.amount && !this.state.isEditing) {
       const receipt = this.state.receiptItems;
       const subtotal = parseFloat(this.state.amount) + this.state.total;
       receipt.push({ amount: parseFloat(this.state.amount), title: "Custom" });
