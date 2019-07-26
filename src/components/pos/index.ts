@@ -5,7 +5,7 @@ import { POSDispatchProps, POSStateProps } from "./types";
 import { ApplicationState } from "reducer";
 import {
   selectIsLoadingPOS,
-  selectLayout,
+  selectLayouts,
   selectAddModalOpen,
   selectPaymentTypeModal
 } from "./selectors";
@@ -22,7 +22,7 @@ import {
 
 const mapStateToProps = (state: ApplicationState): POSStateProps => ({
   isLoadingPOS: selectIsLoadingPOS(state),
-  layout: selectLayout(state),
+  layouts: selectLayouts(state),
   addModalOpen: selectAddModalOpen(state),
   paymentTypeModalOpen: selectPaymentTypeModal(state)
 });

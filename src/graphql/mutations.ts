@@ -91,3 +91,24 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
   }
 }
 `;
+export const createPreferences = `mutation CreatePreferences($input: CreatePreferencesInput!) {
+  createPreferences(input: $input) {
+    user_id
+    preferences
+  }
+}
+`;
+export const updatePreferences = `mutation UpdatePreferences($input: UpdatePreferencesInput!) {
+  updatePreferences(input: $input) {
+    user_id
+    preferences
+  }
+}
+`;
+export const deletePreferences = `mutation DeletePreferences($input: DeletePreferencesInput!) {
+  deletePreferences(input: $input) {
+    user_id
+    preferences
+  }
+}
+`;

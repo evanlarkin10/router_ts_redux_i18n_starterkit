@@ -15,6 +15,13 @@ export const getUser = `query GetUser {
   }
 }
 `;
+export const getPreferences = `query GetPreferences {
+  getPreferences {
+    user_id
+    preferences
+  }
+}
+`;
 export const getTask = `query GetTask($id: ID!) {
   getTask(id: $id) {
     id

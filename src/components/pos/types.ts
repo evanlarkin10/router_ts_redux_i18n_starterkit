@@ -26,6 +26,7 @@ export type POSProps = ReactGridLayoutProps &
 export interface POSState {
   items: POSLayout[];
   cols: any;
+  layouts: { lg: POSLayout[] };
   layout: POSLayout[];
   breakpoint: any;
   isEditing: boolean;
@@ -39,7 +40,7 @@ export type ReceiptItem = {
 };
 export interface POSStateProps {
   isLoadingPOS: boolean;
-  layout: POSLayout[];
+  layouts: { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
   addModalOpen: boolean;
   paymentTypeModalOpen: boolean;
 }

@@ -91,3 +91,24 @@ export const onDeleteUser = `subscription OnDeleteUser {
   }
 }
 `;
+export const onCreatePreferences = `subscription OnCreatePreferences {
+  onCreatePreferences {
+    user_id
+    preferences
+  }
+}
+`;
+export const onUpdatePreferences = `subscription OnUpdatePreferences {
+  onUpdatePreferences {
+    user_id
+    preferences
+  }
+}
+`;
+export const onDeletePreferences = `subscription OnDeletePreferences {
+  onDeletePreferences {
+    user_id
+    preferences
+  }
+}
+`;

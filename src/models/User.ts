@@ -1,3 +1,9 @@
+export const PREFERENCES_KEY = "preferences";
+import { Layouts } from "react-grid-layout";
+import { setUserPreferences } from "redux/UserAPI/actions";
+import { put } from "redux-saga/effects";
+import { API, graphqlOperation } from "aws-amplify";
+import * as queries from "graphql/queries";
 export interface UserDto {
   identity_id: string;
   email: string;
@@ -8,8 +14,15 @@ export interface UserDto {
   preferences: string;
 }
 
+export interface UserPreferenceDto {
+  preferences: string;
+}
 export interface POSPreferences {
-  layout: Object[];
+  layouts: Layouts;
+}
+
+export interface UserPreferences {
+  pos?: POSPreferences;
 }
 
 export default class User implements UserDto {
@@ -36,15 +49,23 @@ export default class User implements UserDto {
     return Object.assign({}, this);
   }
   static *loadPreferences() {
-    const response: any = {}; // get from db
-    const preferences = JSON.parse(response);
+    const response: any = yield API.graphql(
+      graphqlOperation(queries.getPreferences)
+    );
+    const preferences = JSON.parse(response.data.getPreferences);
     const prefs = JSON.stringify(preferences);
-    yield localStorage.setItem("POSKEY", prefs);
+    yield localStorage.setItem(PREFERENCES_KEY, prefs);
+    return response;
   }
-  static *savePreferences() {
-    const response: any = {}; // get from db
-    const preferences = JSON.parse(response);
-    const prefs = JSON.stringify(preferences);
-    yield localStorage.setItem("POSKEY", prefs);
+  static *savePreferences(preferences: string) {
+    console.log(preferences); // payload
+    const response: any = {}; // save from db
+    yield localStorage.setItem(PREFERENCES_KEY, response.preferences);
+    return response;
+  }
+  static *updatePreferences(preferences: UserPreferences) {
+    const stringPreferences = JSON.stringify(preferences);
+    const result = yield User.savePreferences(stringPreferences);
+    yield put(setUserPreferences(result));
   }
 }

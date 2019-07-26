@@ -1,5 +1,5 @@
 import { takeLatest, put } from "redux-saga/effects";
-import { setUser, savePOSPreferences } from "./actions";
+import { setUser, savePOSPreferences, setUserPreferences } from "./actions";
 import * as queries from "graphql/queries";
 import * as mutations from "graphql/mutations";
 import { Auth, API, graphqlOperation } from "aws-amplify";
@@ -8,6 +8,7 @@ import { COOKIE_USER_KEY } from "utilities/auth/constants";
 import User, { UserDto } from "models/User";
 import { POSLayout, registerButtons } from "components/pos/types";
 import { Action } from "typescript-fsa";
+import { DEFAULT_PREFERENCES } from "./types";
 // Not used?
 export function* handleSetUser() {
   try {
@@ -23,17 +24,27 @@ export function* handleSetUser() {
         first_name: identity_user.attributes.given_name,
         last_name: identity_user.attributes.family_name,
         email_verified: identity_user.attributes.email_verified,
-        preferences: registerButtons
+        preferences: JSON.stringify(registerButtons)
       };
-      API.graphql(graphqlOperation(mutations.createUser, { input })).then(
-        () => {
+      // Set User
+      yield API.graphql(graphqlOperation(mutations.createUser, { input })).then(
+        (createdUser: any) => {
           // created new user record
-          user = result;
-          Cookie.set(COOKIE_USER_KEY, result, {
+          Cookie.set(COOKIE_USER_KEY, createdUser, {
             expires: 1
           });
         }
       );
+      // Set Preferences
+      const prefs = {
+        preferences: JSON.stringify(DEFAULT_PREFERENCES)
+      };
+      console.log(prefs);
+      yield API.graphql(
+        graphqlOperation(mutations.createPreferences, { input: prefs })
+      )
+        .then((result: any) => console.log("save pref result", result))
+        .catch((err: any) => console.log(err));
     } else {
       // user record already made
       user = result;
@@ -41,16 +52,26 @@ export function* handleSetUser() {
         expires: 1
       });
     }
+
     const newUser = new User(JSON.parse(
       Cookie.get(COOKIE_USER_KEY)
     ) as UserDto);
+
+    yield handleLoadUserPreferences();
     yield put(setUser.done({ result: newUser }));
   } catch (error) {
+    console.log("error", error, Cookie.get(COOKIE_USER_KEY));
     yield put(setUser.failed({ params: null, error: "Failed getting user" }));
   }
   // yield put(setLoading(false))
 }
 
+function* handleLoadUserPreferences() {
+  const result = yield User.loadPreferences();
+  if (result) {
+    yield put(setUserPreferences(result));
+  }
+}
 export function* handleSavePreferences(action: Action<POSLayout>) {
   try {
     const input = {

@@ -46,6 +46,21 @@ input UpdateUserInput {
   preferences: String
 }
 
+type Preferences
+  @model(
+    queries: null
+  )
+  @key(name: "user_id", fields: ["user_id"])
+{
+  user_id: ID
+  preferences: String
+}
+
+input UpdatePreferencesInput {
+  preferences: String
+}
+
 type Query { 
   getUser: User
+  getPreferences: Preferences
 }

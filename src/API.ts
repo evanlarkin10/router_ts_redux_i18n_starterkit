@@ -60,6 +60,19 @@ export type DeleteUserInput = {
   id?: string | null,
 };
 
+export type CreatePreferencesInput = {
+  user_id?: string | null,
+  preferences?: string | null,
+};
+
+export type UpdatePreferencesInput = {
+  preferences?: string | null,
+};
+
+export type DeletePreferencesInput = {
+  id?: string | null,
+};
+
 export type ModelTaskFilterInput = {
   id?: ModelIDFilterInput | null,
   title?: ModelStringFilterInput | null,
@@ -239,6 +252,42 @@ export type DeleteUserMutation = {
   } | null,
 };
 
+export type CreatePreferencesMutationVariables = {
+  input: CreatePreferencesInput,
+};
+
+export type CreatePreferencesMutation = {
+  createPreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type UpdatePreferencesMutationVariables = {
+  input: UpdatePreferencesInput,
+};
+
+export type UpdatePreferencesMutation = {
+  updatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type DeletePreferencesMutationVariables = {
+  input: DeletePreferencesInput,
+};
+
+export type DeletePreferencesMutation = {
+  deletePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    preferences: string | null,
+  } | null,
+};
+
 export type GetUserQuery = {
   getUser:  {
     __typename: "User",
@@ -250,6 +299,14 @@ export type GetUserQuery = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type GetPreferencesQuery = {
+  getPreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
     preferences: string | null,
   } | null,
 };
@@ -413,6 +470,30 @@ export type OnDeleteUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type OnCreatePreferencesSubscription = {
+  onCreatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type OnUpdatePreferencesSubscription = {
+  onUpdatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    preferences: string | null,
+  } | null,
+};
+
+export type OnDeletePreferencesSubscription = {
+  onDeletePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
     preferences: string | null,
   } | null,
 };

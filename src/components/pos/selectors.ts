@@ -7,8 +7,10 @@ export const selectIsLoadingPOS = (state: ApplicationState) => {
     : null;
 };
 
-export const selectLayout = (state: ApplicationState) => {
-  return state[POS_REDUCER_NAME].layout ? state[POS_REDUCER_NAME].layout : null;
+export const selectLayouts = (state: ApplicationState) => {
+  return state[POS_REDUCER_NAME].layouts
+    ? state[POS_REDUCER_NAME].layouts
+    : null;
 };
 
 export const selectAddModalOpen = (state: ApplicationState) => {

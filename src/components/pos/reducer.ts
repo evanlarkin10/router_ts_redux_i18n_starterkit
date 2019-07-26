@@ -7,7 +7,7 @@ import User, { UserDto } from "models/User";
 import { POSLayout } from "./types";
 export interface POSState {
   isLoadingPOS: boolean;
-  layout: POSLayout[];
+  layouts: { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
   addModalOpen: boolean;
   paymentTypeModalOpen: boolean;
 }
@@ -16,7 +16,7 @@ export const initialState = {
   isLoadingPOS: false,
   addModalOpen: false,
   paymentTypeModalOpen: false,
-  layout: Cookie.get(COOKIE_USER_KEY)
+  layouts: Cookie.get(COOKIE_USER_KEY)
     ? JSON.parse(
         new User(JSON.parse(Cookie.get(COOKIE_USER_KEY)) as UserDto).preferences
       )
@@ -31,7 +31,7 @@ export const posReducer = (
     case "posReducer/SAVE_POS_PREFERENCES_STARTED":
       return { ...state, isLoadingPOS: true };
     case "posReducer/SAVE_POS_PREFERENCES_DONE":
-      return { ...state, isLoadingPOS: false, layout: action.payload.params };
+      return { ...state, isLoadingPOS: false, layouts: action.payload.params };
     case "posReducer/SAVE_POS_PREFERENCES_FAILED":
       return { ...state, isLoadingPOS: false };
 
