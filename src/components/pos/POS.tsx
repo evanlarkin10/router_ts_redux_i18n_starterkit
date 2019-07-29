@@ -45,7 +45,7 @@ class POS extends React.Component<POSProps, POSState> {
   constructor(props: any) {
     super(props);
     this.state = {
-      items: this.props.layouts.lg,
+      items: this.props.layouts.md,
       cols: null,
       breakpoint: null,
       layouts: this.props.layouts,
@@ -210,12 +210,9 @@ class POS extends React.Component<POSProps, POSState> {
     );
   }
   onLayoutChange(layout: any, layouts: any) {
-    // this.props.onLayoutChange(layout);
-    console.log("ON CHANGE\nLayout", layout, "\nLAYOUTS", layouts);
     this.setState({ layout, layouts });
   }
   onBreakpointChange(breakpoint: any, cols: any) {
-    console.log("BREAKPOINT");
     this.setState({
       breakpoint,
       cols
@@ -246,7 +243,6 @@ class POS extends React.Component<POSProps, POSState> {
       newLayouts.lg = this.state.layout;
     }
     try {
-      console.log("NEW", newLayouts);
       this.props.savePOSPreferences(newLayouts);
       this.setState({ isEditing: false });
     } catch {

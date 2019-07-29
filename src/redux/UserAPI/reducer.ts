@@ -23,7 +23,7 @@ let preferences = DEFAULT_PREFERENCES;
 try {
   if (preferencesLocalStorage) {
     console.log("get local storage", preferencesLocalStorage);
-    preferences = { pos: JSON.parse(preferencesLocalStorage) };
+    preferences = { pos: JSON.parse(JSON.parse(preferencesLocalStorage).pos) };
   }
 } catch (e) {
   User.updatePreferences(DEFAULT_PREFERENCES);
@@ -66,7 +66,7 @@ export const userReducer = (
       console.log(action);
       return {
         ...state,
-        preferences: JSON.parse(action.payload)
+        preferences: { pos: JSON.parse(JSON.parse(action.payload).pos) }
       };
 
     case "userReducer/SET_LOADING_USER":

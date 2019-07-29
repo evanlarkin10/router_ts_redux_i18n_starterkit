@@ -53,11 +53,14 @@ export default class User implements UserDto {
     const response: any = yield API.graphql(
       graphqlOperation(queries.getPreferences)
     );
-    const preferences = JSON.parse(response.data.getPreferences);
-    const prefs = JSON.stringify(preferences);
-    console.log("SET PREF LOCAL, ", prefs);
-    yield localStorage.setItem(PREFERENCES_KEY, prefs);
-    return response;
+    const preferences = JSON.parse(
+      response.data.getPreferences.pos_preferences
+    );
+
+    const pos_prefs = JSON.stringify(preferences);
+    const all_prefs = JSON.stringify({ pos: pos_prefs });
+    yield localStorage.setItem(PREFERENCES_KEY, all_prefs);
+    return all_prefs;
   }
   static *savePreferences(preferences: string) {
     const input = {
@@ -69,8 +72,7 @@ export default class User implements UserDto {
     const posPreferences = JSON.parse(
       response.data.updatePreferences.pos_preferences
     );
-    const prefs = JSON.stringify(posPreferences);
-    console.log("SET PREF LOCAL, ", prefs);
+    const prefs = JSON.stringify({ pos: posPreferences });
     yield localStorage.setItem(PREFERENCES_KEY, prefs);
     return response;
   }
