@@ -1,9 +1,10 @@
 export const PREFERENCES_KEY = "preferences";
-import { Layouts } from "react-grid-layout";
+import { POSLayout } from "components/pos/types";
 import { setUserPreferences } from "redux/UserAPI/actions";
 import { put } from "redux-saga/effects";
 import { API, graphqlOperation } from "aws-amplify";
 import * as queries from "graphql/queries";
+import * as mutations from "graphql/mutations";
 export interface UserDto {
   identity_id: string;
   email: string;
@@ -18,7 +19,7 @@ export interface UserPreferenceDto {
   preferences: string;
 }
 export interface POSPreferences {
-  layouts: Layouts;
+  layouts: { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
 }
 
 export interface UserPreferences {
@@ -54,18 +55,28 @@ export default class User implements UserDto {
     );
     const preferences = JSON.parse(response.data.getPreferences);
     const prefs = JSON.stringify(preferences);
+    console.log("SET PREF LOCAL, ", prefs);
     yield localStorage.setItem(PREFERENCES_KEY, prefs);
     return response;
   }
   static *savePreferences(preferences: string) {
-    console.log(preferences); // payload
-    const response: any = {}; // save from db
-    yield localStorage.setItem(PREFERENCES_KEY, response.preferences);
+    const input = {
+      pos_preferences: JSON.stringify(JSON.parse(preferences).pos)
+    };
+    const response: any = yield API.graphql(
+      graphqlOperation(mutations.updatePreferences, { input })
+    );
+    const posPreferences = JSON.parse(
+      response.data.updatePreferences.pos_preferences
+    );
+    const prefs = JSON.stringify(posPreferences);
+    console.log("SET PREF LOCAL, ", prefs);
+    yield localStorage.setItem(PREFERENCES_KEY, prefs);
     return response;
   }
   static *updatePreferences(preferences: UserPreferences) {
     const stringPreferences = JSON.stringify(preferences);
-    const result = yield User.savePreferences(stringPreferences);
-    yield put(setUserPreferences(result));
+    yield User.savePreferences(stringPreferences);
+    yield put(setUserPreferences(stringPreferences));
   }
 }

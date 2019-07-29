@@ -11,14 +11,13 @@ export const getUser = `query GetUser {
     email_verified
     org_id
     org_name
-    preferences
   }
 }
 `;
 export const getPreferences = `query GetPreferences {
   getPreferences {
     user_id
-    preferences
+    pos_preferences
   }
 }
 `;

@@ -12,11 +12,11 @@ import {
 import {
   setEditingPOS,
   setLoadingPOS,
-  savePOSPreferences,
   openAddButtonModal,
   closeAddButtonModal,
   openPaymentTypeModal,
-  closePaymentTypeModal
+  closePaymentTypeModal,
+  savePOSPreferences
 } from "./actions";
 // import { savePOSPreferences } from 'redux/UserAPI/actions'
 
@@ -29,8 +29,8 @@ const mapStateToProps = (state: ApplicationState): POSStateProps => ({
 
 const mapDispatchToProps: POSDispatchProps = {
   openPaymentTypeModal,
+  savePOSPreferences,
   closePaymentTypeModal,
-  savePOSPreferences: savePOSPreferences.started,
   setEditing: setEditingPOS,
   setLoading: setLoadingPOS,
   openAddModal: openAddButtonModal,

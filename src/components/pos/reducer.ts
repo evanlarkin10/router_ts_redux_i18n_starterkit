@@ -1,13 +1,8 @@
 import { Action } from "typescript-fsa";
 import { POS_REDUCER_NAME } from "./constants";
 import reducerRegistry from "reducer/reducerRegistry";
-import * as Cookie from "js-cookie";
-import { COOKIE_USER_KEY } from "utilities/auth/constants";
-import User, { UserDto } from "models/User";
-import { POSLayout } from "./types";
 export interface POSState {
   isLoadingPOS: boolean;
-  layouts: { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
   addModalOpen: boolean;
   paymentTypeModalOpen: boolean;
 }
@@ -15,12 +10,7 @@ export interface POSState {
 export const initialState = {
   isLoadingPOS: false,
   addModalOpen: false,
-  paymentTypeModalOpen: false,
-  layouts: Cookie.get(COOKIE_USER_KEY)
-    ? JSON.parse(
-        new User(JSON.parse(Cookie.get(COOKIE_USER_KEY)) as UserDto).preferences
-      )
-    : null
+  paymentTypeModalOpen: false
 };
 
 export const posReducer = (
@@ -28,13 +18,6 @@ export const posReducer = (
   action: Action<any>
 ): POSState => {
   switch (action.type) {
-    case "posReducer/SAVE_POS_PREFERENCES_STARTED":
-      return { ...state, isLoadingPOS: true };
-    case "posReducer/SAVE_POS_PREFERENCES_DONE":
-      return { ...state, isLoadingPOS: false, layouts: action.payload.params };
-    case "posReducer/SAVE_POS_PREFERENCES_FAILED":
-      return { ...state, isLoadingPOS: false };
-
     case "posReducer/SET_LOADING_POS":
       return { ...state, isLoadingPOS: action.payload };
 
@@ -44,6 +27,8 @@ export const posReducer = (
       return { ...state, addModalOpen: false };
     case "posReducer/OPEN_PAYMENT_TYPE_MODAL":
       return { ...state, paymentTypeModalOpen: true };
+    case "posReducer/CLOSE_PAYMENT_TYPE_MODAL":
+      return { ...state, paymentTypeModalOpen: false };
     case "posReducer/CLOSE_PAYMENT_TYPE_MODAL":
       return { ...state, paymentTypeModalOpen: false };
     default:

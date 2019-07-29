@@ -12,9 +12,12 @@ import {
   openAddButtonModal,
   closeAddButtonModal,
   openPaymentTypeModal,
-  closePaymentTypeModal
+  closePaymentTypeModal,
+  savePOSPreferences
 } from "./actions";
-import { savePOSPreferences } from "redux/UserAPI/actions";
+export const SM_COL = 6;
+export const MD_COL = 8;
+export const LG_COL = 10;
 export type POSProps = ReactGridLayoutProps &
   StyledElement<typeof posStyles> &
   ResponsiveProps &
@@ -26,7 +29,7 @@ export type POSProps = ReactGridLayoutProps &
 export interface POSState {
   items: POSLayout[];
   cols: any;
-  layouts: { lg: POSLayout[] };
+  layouts: POSLayouts;
   layout: POSLayout[];
   breakpoint: any;
   isEditing: boolean;
@@ -40,25 +43,25 @@ export type ReceiptItem = {
 };
 export interface POSStateProps {
   isLoadingPOS: boolean;
-  layouts: { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
+  layouts: POSLayouts;
   addModalOpen: boolean;
   paymentTypeModalOpen: boolean;
 }
 export interface POSDispatchProps {
-  savePOSPreferences: typeof savePOSPreferences.started;
   setEditing: typeof setEditingPOS;
   setLoading: typeof setLoadingPOS;
   openAddModal: typeof openAddButtonModal;
   closeAddModal: typeof closeAddButtonModal;
   openPaymentTypeModal: typeof openPaymentTypeModal;
   closePaymentTypeModal: typeof closePaymentTypeModal;
+  savePOSPreferences: typeof savePOSPreferences;
 }
 
 interface customLayout {
-  amount: number;
+  amount?: number;
 }
 export type POSLayout = Layout & customLayout;
-
+export type POSLayouts = { lg: POSLayout[]; md: POSLayout[]; sm: POSLayout[] };
 export const registerButtons = [
   {
     i: "Custom",

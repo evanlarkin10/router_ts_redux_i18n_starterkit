@@ -22,7 +22,8 @@ const preferencesLocalStorage = localStorage.getItem(PREFERENCES_KEY);
 let preferences = DEFAULT_PREFERENCES;
 try {
   if (preferencesLocalStorage) {
-    preferences = JSON.parse(preferencesLocalStorage);
+    console.log("get local storage", preferencesLocalStorage);
+    preferences = { pos: JSON.parse(preferencesLocalStorage) };
   }
 } catch (e) {
   User.updatePreferences(DEFAULT_PREFERENCES);
@@ -62,7 +63,11 @@ export const userReducer = (
       return state;
 
     case "userReducer/SET_USER_PREFERENCES":
-      return { ...state, preferences: JSON.parse(action.payload.preferences) };
+      console.log(action);
+      return {
+        ...state,
+        preferences: JSON.parse(action.payload)
+      };
 
     case "userReducer/SET_LOADING_USER":
       return { ...state, isSettingUser: action.payload };

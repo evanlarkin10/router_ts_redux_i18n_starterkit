@@ -1,6 +1,6 @@
 import { ApplicationState } from "reducer";
 import { POS_REDUCER_NAME } from "./constants";
-
+import { USER_REDUCER_NAME } from "redux/UserAPI/constants";
 export const selectIsLoadingPOS = (state: ApplicationState) => {
   return state[POS_REDUCER_NAME].isLoadingPOS
     ? state[POS_REDUCER_NAME].isLoadingPOS
@@ -8,8 +8,8 @@ export const selectIsLoadingPOS = (state: ApplicationState) => {
 };
 
 export const selectLayouts = (state: ApplicationState) => {
-  return state[POS_REDUCER_NAME].layouts
-    ? state[POS_REDUCER_NAME].layouts
+  return state[USER_REDUCER_NAME].preferences.pos.layouts
+    ? state[USER_REDUCER_NAME].preferences.pos.layouts
     : null;
 };
 

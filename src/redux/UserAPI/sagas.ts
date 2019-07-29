@@ -6,7 +6,7 @@ import { Auth, API, graphqlOperation } from "aws-amplify";
 import * as Cookie from "js-cookie";
 import { COOKIE_USER_KEY } from "utilities/auth/constants";
 import User, { UserDto } from "models/User";
-import { POSLayout, registerButtons } from "components/pos/types";
+import { POSLayout } from "components/pos/types";
 import { Action } from "typescript-fsa";
 import { DEFAULT_PREFERENCES } from "./types";
 // Not used?
@@ -23,8 +23,7 @@ export function* handleSetUser() {
         email: identity_user.attributes.email,
         first_name: identity_user.attributes.given_name,
         last_name: identity_user.attributes.family_name,
-        email_verified: identity_user.attributes.email_verified,
-        preferences: JSON.stringify(registerButtons)
+        email_verified: identity_user.attributes.email_verified
       };
       // Set User
       yield API.graphql(graphqlOperation(mutations.createUser, { input })).then(
@@ -37,7 +36,7 @@ export function* handleSetUser() {
       );
       // Set Preferences
       const prefs = {
-        preferences: JSON.stringify(DEFAULT_PREFERENCES)
+        pos_preferences: JSON.stringify(DEFAULT_PREFERENCES.pos)
       };
       console.log(prefs);
       yield API.graphql(

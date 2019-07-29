@@ -15,7 +15,14 @@ import {
   Divider
 } from "@material-ui/core";
 import { Add, Save, Cancel, Edit } from "@material-ui/icons";
-import { POSProps, POSState, ReceiptItem } from "./types";
+import {
+  POSProps,
+  POSState,
+  ReceiptItem,
+  SM_COL,
+  LG_COL,
+  MD_COL
+} from "./types";
 import { Responsive, WidthProvider } from "react-grid-layout";
 // import WidthProvider = RGL.WidthProvider;
 // import Layout = RGL.Layout
@@ -30,7 +37,7 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 class POS extends React.Component<POSProps, POSState> {
   static defaultProps = {
     className: "layout",
-    cols: { lg: 10, md: 8, sm: 6 },
+    cols: { lg: LG_COL, md: MD_COL, sm: SM_COL },
     breakpoints: { lg: 1200, md: 800, sm: 400 },
     rowHeight: BUTTON_HEIGHT
   };
@@ -42,7 +49,7 @@ class POS extends React.Component<POSProps, POSState> {
       cols: null,
       breakpoint: null,
       layouts: this.props.layouts,
-      layout: this.props.layouts.lg,
+      layout: this.props.layouts.md,
       isEditing: false,
       amount: "",
       total: 0.0,
@@ -205,7 +212,7 @@ class POS extends React.Component<POSProps, POSState> {
   onLayoutChange(layout: any, layouts: any) {
     // this.props.onLayoutChange(layout);
     console.log("ON CHANGE\nLayout", layout, "\nLAYOUTS", layouts);
-    this.setState({ layout });
+    this.setState({ layout, layouts });
   }
   onBreakpointChange(breakpoint: any, cols: any) {
     console.log("BREAKPOINT");
@@ -229,9 +236,18 @@ class POS extends React.Component<POSProps, POSState> {
     });
   }
   async saveLayout() {
+    const { cols, layouts } = this.state;
+    const newLayouts = layouts;
+    if (cols === SM_COL) {
+      newLayouts.sm = this.state.layout;
+    } else if (cols === MD_COL) {
+      newLayouts.md = this.state.layout;
+    } else {
+      newLayouts.lg = this.state.layout;
+    }
     try {
-      this.props.savePOSPreferences(this.state.layouts);
-      this.props.setLoading(true);
+      console.log("NEW", newLayouts);
+      this.props.savePOSPreferences(newLayouts);
       this.setState({ isEditing: false });
     } catch {
       console.log("Error saving");
@@ -303,6 +319,9 @@ class POS extends React.Component<POSProps, POSState> {
                   onBreakpointChange={this.onBreakpointChange}
                   breakpoints={{ lg: 1200, md: 800, sm: 400 }}
                   cols={{ lg: 10, md: 8, sm: 6 }}
+                  isDraggable={this.state.isEditing}
+                  isRearrangeable={this.state.isEditing}
+                  isResizable={this.state.isEditing}
                   {...this.props}
                 >
                   {_.map(this.state.items, el => this.createElement(el))}

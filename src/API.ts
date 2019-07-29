@@ -42,7 +42,6 @@ export type CreateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
-  preferences?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -53,7 +52,6 @@ export type UpdateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
-  preferences?: string | null,
 };
 
 export type DeleteUserInput = {
@@ -62,11 +60,11 @@ export type DeleteUserInput = {
 
 export type CreatePreferencesInput = {
   user_id?: string | null,
-  preferences?: string | null,
+  pos_preferences?: string | null,
 };
 
 export type UpdatePreferencesInput = {
-  preferences?: string | null,
+  pos_preferences?: string | null,
 };
 
 export type DeletePreferencesInput = {
@@ -210,7 +208,6 @@ export type CreateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -229,7 +226,6 @@ export type UpdateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -248,7 +244,6 @@ export type DeleteUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -260,7 +255,7 @@ export type CreatePreferencesMutation = {
   createPreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -272,7 +267,7 @@ export type UpdatePreferencesMutation = {
   updatePreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -284,7 +279,7 @@ export type DeletePreferencesMutation = {
   deletePreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -299,7 +294,6 @@ export type GetUserQuery = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -307,7 +301,7 @@ export type GetPreferencesQuery = {
   getPreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -440,7 +434,6 @@ export type OnCreateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -455,7 +448,6 @@ export type OnUpdateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -470,7 +462,6 @@ export type OnDeleteUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -478,7 +469,7 @@ export type OnCreatePreferencesSubscription = {
   onCreatePreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -486,7 +477,7 @@ export type OnUpdatePreferencesSubscription = {
   onUpdatePreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -494,6 +485,6 @@ export type OnDeletePreferencesSubscription = {
   onDeletePreferences:  {
     __typename: "Preferences",
     user_id: string | null,
-    preferences: string | null,
+    pos_preferences: string | null,
   } | null,
 };

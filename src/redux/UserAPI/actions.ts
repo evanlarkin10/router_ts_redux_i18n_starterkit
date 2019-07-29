@@ -1,7 +1,7 @@
 import actionCreatorFactory from "typescript-fsa";
 import { USER_REDUCER_NAME } from "./constants";
 import { POSLayout } from "components/pos/types";
-import User, { UserPreferenceDto } from "models/User";
+import User from "models/User";
 const actionCreator = actionCreatorFactory(USER_REDUCER_NAME);
 export enum ActionType {
   SET_LOADING_USER = "SET_LOADING_USER",
@@ -20,6 +20,6 @@ export const savePOSPreferences = actionCreator.async<POSLayout, User, string>(
   ActionType.SAVE_POS_PREFERENCES
 );
 
-export const setUserPreferences = actionCreator<UserPreferenceDto>(
+export const setUserPreferences = actionCreator<string>(
   ActionType.SET_USER_PREFERENCES
 );

@@ -1,12 +1,12 @@
 import { connects } from "utilities/commonHocs";
-// import { ApplicationState } from 'reducer';
+import { ApplicationState } from "reducer";
 import { MyAccountStateProps, MyAccountDispatchProps } from "./types";
 import myAccountStyles from "./myAccountStyles";
 import MyAccount from "./MyAccount";
 import { setFalse, setTrue } from "./actions";
-const mapStateToProps = (/* state: ApplicationState */): MyAccountStateProps => ({
-  myBool: false
-  // var : selectSomething(state)
+import { selectUser } from "redux/UserAPI/selectors";
+const mapStateToProps = (state: ApplicationState): MyAccountStateProps => ({
+  user: selectUser(state)
 });
 
 const mapDispatchToProps: MyAccountDispatchProps = {

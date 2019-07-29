@@ -32,7 +32,6 @@ type User
   email_verified: Boolean
   org_id: Int
   org_name: String
-  preferences: String
 }
 
 input UpdateUserInput {
@@ -43,7 +42,6 @@ input UpdateUserInput {
   email_verified: Boolean
   org_id: Int
   org_name: String
-  preferences: String
 }
 
 type Preferences
@@ -53,11 +51,11 @@ type Preferences
   @key(name: "user_id", fields: ["user_id"])
 {
   user_id: ID
-  preferences: String
+  pos_preferences: String
 }
 
 input UpdatePreferencesInput {
-  preferences: String
+  pos_preferences: String
 }
 
 type Query { 
