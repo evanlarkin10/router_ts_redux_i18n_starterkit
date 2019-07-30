@@ -55,23 +55,16 @@ export function* handleSetUser() {
     const newUser = new User(JSON.parse(
       Cookie.get(COOKIE_USER_KEY)
     ) as UserDto);
-    console.log("prelaod");
     yield handleLoadUserPreferences();
-    console.log("postlaod", newUser);
     yield put(setUser.done({ result: newUser }));
-    console.log("postparse");
   } catch (error) {
-    console.log("error", error, Cookie.get(COOKIE_USER_KEY));
     yield put(setUser.failed({ params: null, error: "Failed getting user" }));
   }
 }
 
 function* handleLoadUserPreferences() {
-  console.log("handle");
   const result = yield User.loadPreferences();
-  console.log("result", result);
   if (result) {
-    console.log("SET USER PASSED=", result);
     yield put(setUserPreferences(result));
   }
 }

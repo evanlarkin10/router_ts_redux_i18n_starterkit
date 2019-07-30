@@ -7,22 +7,10 @@ import reducerRegistry from "reducer/reducerRegistry";
 import { USER_REDUCER_NAME } from "./constants";
 import { DEFAULT_PREFERENCES } from "./types";
 
-let userModal: any = null;
-const userCookie = Cookie.get(COOKIE_USER_KEY);
-try {
-  userModal = Cookie.get(COOKIE_USER_KEY)
-    ? new User(JSON.parse(userCookie) as UserDto)
-    : null;
-  console.log("Cookie", userModal);
-} catch (e) {
-  console.log(e);
-}
-
 const preferencesLocalStorage = localStorage.getItem(PREFERENCES_KEY);
 let preferences = DEFAULT_PREFERENCES;
 try {
   if (preferencesLocalStorage) {
-    console.log("get local storage", preferencesLocalStorage);
     preferences = { pos: JSON.parse(JSON.parse(preferencesLocalStorage).pos) };
   }
 } catch (e) {
@@ -49,9 +37,9 @@ export const userReducer = (
 ): UserState => {
   switch (action.type) {
     case "userReducer/SET_USER_STARTED":
-      return { ...state };
+      return { ...state, isSettingUser: true };
     case "userReducer/SET_USER_DONE":
-      return { ...state, user: action.payload.result };
+      return { ...state, user: action.payload.result, isSettingUser: false };
     case "userReducer/SET_USER_FAILED":
       console.log(action.payload);
 
@@ -63,7 +51,6 @@ export const userReducer = (
       return state;
 
     case "userReducer/SET_USER_PREFERENCES":
-      console.log(action);
       return {
         ...state,
         preferences: { pos: JSON.parse(JSON.parse(action.payload).pos) }

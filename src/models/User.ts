@@ -12,7 +12,6 @@ export interface UserDto {
   last_name: string;
   org_id: number;
   org_name: string;
-  preferences: string;
 }
 
 export interface UserPreferenceDto {
@@ -33,7 +32,6 @@ export default class User implements UserDto {
   public last_name: string;
   public org_id: number;
   public org_name: string;
-  public preferences: string;
 
   constructor(user?: UserDto) {
     if (user) {
@@ -43,7 +41,6 @@ export default class User implements UserDto {
       this.org_id = user.org_id;
       this.org_name = user.org_name;
       this.identity_id = user.identity_id;
-      this.preferences = user.preferences;
     }
   }
   get dto(): UserDto {
