@@ -9,16 +9,20 @@ import { UserState, userReducer } from "redux/UserAPI/reducer";
 import { USER_REDUCER_NAME } from "redux/UserAPI/constants";
 import { POSState, posReducer } from "components/pos/reducer";
 import { POS_REDUCER_NAME } from "components/pos/constants";
+import { TransactionState, transactionReducer } from "redux/TransactionAPI/reducer";
+import { TRANSACTION_REDUCER_NAME } from "redux/TransactionAPI/constants";
 export interface ApplicationState {
   [EXAMPLE_REDUCER_NAME]: ExampleState;
   [DRAWER_REDUCER_NAME]: DrawerState;
   [USER_REDUCER_NAME]: UserState;
   [POS_REDUCER_NAME]: POSState;
+  [TRANSACTION_REDUCER_NAME]: TransactionState;
 }
 
 export const rootReducer = {
   [EXAMPLE_REDUCER_NAME]: exampleReducer,
   [DRAWER_REDUCER_NAME]: drawerReducer,
   [USER_REDUCER_NAME]: userReducer,
-  [POS_REDUCER_NAME]: posReducer
+  [POS_REDUCER_NAME]: posReducer,
+  [TRANSACTION_REDUCER_NAME]: transactionReducer
 };

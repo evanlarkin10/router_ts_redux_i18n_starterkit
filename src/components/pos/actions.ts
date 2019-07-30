@@ -9,7 +9,8 @@ export enum ActionType {
   CLOSE_PAYMENT_TYPE_MODAL = "CLOSE_PAYMENT_TYPE_MODAL",
   OPEN_ADD_MODAL_BUTTON = "OPEN_ADD_MODAL_BUTTON",
   CLOSE_ADD_MODAL_BUTTON = "CLOSE_ADD_MODAL_BUTTON",
-  SAVE_POS_PREFERENCES = "SAVE_POS_PREFERENCES"
+  SAVE_POS_PREFERENCES = "SAVE_POS_PREFERENCES",
+  PROCESS_TRANSACTION = "PROCESS_TRANSACTION"
 }
 
 export const setLoadingPOS = actionCreator<Boolean>(ActionType.SET_LOADING_POS);
@@ -29,4 +30,8 @@ export const closeAddButtonModal = actionCreator<void>(
 
 export const savePOSPreferences = actionCreator<POSLayouts>(
   ActionType.SAVE_POS_PREFERENCES
+);
+
+export const processTransaction = actionCreator<Object>(
+  ActionType.PROCESS_TRANSACTION
 );

@@ -109,3 +109,42 @@ export const deletePreferences = `mutation DeletePreferences($input: DeletePrefe
   }
 }
 `;
+export const createTransaction = `mutation CreateTransaction($input: CreateTransactionInput!) {
+  createTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const updateTransaction = `mutation UpdateTransaction($input: UpdateTransactionInput!) {
+  updateTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const deleteTransaction = `mutation DeleteTransaction($input: DeleteTransactionInput!) {
+  deleteTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;

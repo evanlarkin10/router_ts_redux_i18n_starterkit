@@ -7,4 +7,4 @@ export interface LoadingIndicatorOwnProps {
 }
 
 export type LoadingIndicatorProps = LoadingIndicatorOwnProps &
-  WithStyles<typeof loadingIndicatorStyles>;
+  WithStyles<typeof loadingIndicatorStyles> & {};

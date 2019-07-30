@@ -16,21 +16,25 @@ import {
   closeAddButtonModal,
   openPaymentTypeModal,
   closePaymentTypeModal,
-  savePOSPreferences
+  savePOSPreferences,
+  processTransaction
 } from "./actions";
+import { selectUser } from "redux/UserAPI/selectors";
 // import { savePOSPreferences } from 'redux/UserAPI/actions'
 
 const mapStateToProps = (state: ApplicationState): POSStateProps => ({
   isLoadingPOS: selectIsLoadingPOS(state),
   layouts: selectLayouts(state),
   addModalOpen: selectAddModalOpen(state),
-  paymentTypeModalOpen: selectPaymentTypeModal(state)
+  paymentTypeModalOpen: selectPaymentTypeModal(state),
+  user: selectUser(state)
 });
 
 const mapDispatchToProps: POSDispatchProps = {
   openPaymentTypeModal,
   savePOSPreferences,
   closePaymentTypeModal,
+  processTransaction,
   setEditing: setEditingPOS,
   setLoading: setLoadingPOS,
   openAddModal: openAddButtonModal,

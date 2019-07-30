@@ -225,7 +225,16 @@ class POS extends React.Component<POSProps, POSState> {
   }
   onProcessTransaction(paymentMethod: any) {
     const total = this.state.total + calculateHST(this.state.total);
-    console.log("total", total, "method", paymentMethod);
+    const user = this.props.user
+    const input = {
+        total,
+        org_id: user.org_id,
+        payment_method:paymentMethod,
+        subtotal: this.state.total,
+        tax: calculateHST(this.state.total),
+        receipt_items: JSON.stringify(this.state.receiptItems)
+    }
+    this.props.processTransaction(input)
     this.setState({
       total: 0,
       amount: "",

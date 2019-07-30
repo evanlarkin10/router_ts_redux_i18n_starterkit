@@ -67,3 +67,36 @@ export const listPrivateNotes = `query ListPrivateNotes(
   }
 }
 `;
+export const getTransaction = `query GetTransaction($id: ID!) {
+  getTransaction(id: $id) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const listTransactions = `query ListTransactions(
+  $filter: ModelTransactionFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      org_id
+      payment_method
+      subtotal
+      tax
+      total
+      createdAt
+      receipt_items
+    }
+    nextToken
+  }
+}
+`;

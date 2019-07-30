@@ -109,3 +109,42 @@ export const onDeletePreferences = `subscription OnDeletePreferences {
   }
 }
 `;
+export const onCreateTransaction = `subscription OnCreateTransaction {
+  onCreateTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const onUpdateTransaction = `subscription OnUpdateTransaction {
+  onUpdateTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const onDeleteTransaction = `subscription OnDeleteTransaction {
+  onDeleteTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;

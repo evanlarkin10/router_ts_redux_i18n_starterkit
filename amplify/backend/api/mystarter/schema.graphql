@@ -58,7 +58,30 @@ input UpdatePreferencesInput {
   pos_preferences: String
 }
 
+type Transaction @model
+  @key(name: "org", fields: ["org_id"])
+  @auth(
+    rules: [
+      {
+        allow: owner,
+        identityField: "sub"
+      }
+    ]
+  )
+{
+  id: ID!
+  org_id: Float
+  payment_method: String
+  subtotal: Float
+  tax: Float 
+  total: Float
+  createdAt: String
+  receipt_items: String
+}
+
+
 type Query { 
   getUser: User
   getPreferences: Preferences
 }
+

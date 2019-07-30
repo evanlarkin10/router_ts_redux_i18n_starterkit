@@ -13,8 +13,10 @@ import {
   closeAddButtonModal,
   openPaymentTypeModal,
   closePaymentTypeModal,
-  savePOSPreferences
+  savePOSPreferences,
+  processTransaction
 } from "./actions";
+import User from 'models/User'
 export const SM_COL = 6;
 export const MD_COL = 8;
 export const LG_COL = 10;
@@ -46,6 +48,7 @@ export interface POSStateProps {
   layouts: POSLayouts;
   addModalOpen: boolean;
   paymentTypeModalOpen: boolean;
+  user: User;
 }
 export interface POSDispatchProps {
   setEditing: typeof setEditingPOS;
@@ -55,6 +58,7 @@ export interface POSDispatchProps {
   openPaymentTypeModal: typeof openPaymentTypeModal;
   closePaymentTypeModal: typeof closePaymentTypeModal;
   savePOSPreferences: typeof savePOSPreferences;
+  processTransaction: typeof processTransaction;
 }
 
 interface customLayout {
