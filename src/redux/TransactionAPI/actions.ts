@@ -1,5 +1,6 @@
 import actionCreatorFactory from "typescript-fsa";
 import { TRANSACTION_REDUCER_NAME } from "./constants";
+import Transaction from "models/Transaction";
 const actionCreator = actionCreatorFactory(TRANSACTION_REDUCER_NAME);
 export enum ActionType {
   SET_LOADING_TRANSACTIONS = "SET_LOADING_TRANSACTIONS",
@@ -9,6 +10,6 @@ export enum ActionType {
 export const setLoadingTransactions = actionCreator<Boolean>(
   ActionType.SET_LOADING_TRANSACTIONS
 );
-export const loadTransactions = actionCreator.async<void, Object, string>(
+export const loadTransactions = actionCreator.async<void, Transaction, string>(
   ActionType.LOAD_TRANSACTIONS
 );

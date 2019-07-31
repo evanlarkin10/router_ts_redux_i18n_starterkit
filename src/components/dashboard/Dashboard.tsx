@@ -4,14 +4,16 @@ import { loadTransactions } from "redux/TransactionAPI/actions";
 import dashboardStyles from "./dashboardStyles";
 import StyledElement from "components/common/StyledElement";
 import LoadingIndicator from "@common/loadingIndicator";
-import { Typography } from "@material-ui/core";
-
+import { Container, Grid, Paper } from "@material-ui/core";
+import Orders from "./recentOrders";
+import Transaction from "models/Transaction";
+import clsx from "clsx";
 interface DashboardState {
   stateItem: string;
 }
 
 export interface DashboardStateProps {
-  transactions: Array<Object>;
+  transactions: Array<Transaction>;
   isLoadingTransactions: boolean;
   user: User;
 }
@@ -29,14 +31,32 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     this.props.loadTransactions();
   }
   render() {
+    const { classes } = this.props;
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
     return (
       <>
         {this.props.isLoadingTransactions && <LoadingIndicator />}
 
-        {!this.props.isLoadingTransactions &&
-          this.props.transactions.map((item, i) => (
-            <Typography key={i}>{item.toString()}</Typography>
-          ))}
+        {!this.props.isLoadingTransactions && (
+          <Container maxWidth="lg" className={classes.container}>
+            <Grid container spacing={3}>
+              {/* Chart */}
+              <Grid item xs={12} md={8} lg={9}>
+                <Paper className={fixedHeightPaper}>Chart</Paper>
+              </Grid>
+              {/* Recent Deposits */}
+              <Grid item xs={12} md={4} lg={3}>
+                <Paper className={fixedHeightPaper}>Deposits</Paper>
+              </Grid>
+              {/* Recent Orders */}
+              <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                  <Orders transactions={this.props.transactions} />
+                </Paper>
+              </Grid>
+            </Grid>
+          </Container>
+        )}
       </>
     );
   }

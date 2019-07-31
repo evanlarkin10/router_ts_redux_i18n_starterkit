@@ -1,8 +1,12 @@
-import { createStyles } from "@material-ui/core/styles";
-import { Theme } from "@material-ui/core";
-const dashboardStyles = (theme: Theme) =>
+import { createStyles, Theme } from "@material-ui/core/styles";
+const ordersStyles = (theme: Theme) =>
   //  (theme: Theme) =>
   createStyles({
+    content: {
+      flexGrow: 1,
+      height: "100vh",
+      overflow: "auto"
+    },
     container: {
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(4)
@@ -15,6 +19,9 @@ const dashboardStyles = (theme: Theme) =>
     },
     fixedHeight: {
       height: 240
+    },
+    seeMore: {
+      marginTop: theme.spacing(3)
     }
   });
-export default dashboardStyles;
+export default ordersStyles;

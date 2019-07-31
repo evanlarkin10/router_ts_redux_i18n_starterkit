@@ -6,7 +6,7 @@
     "@hot-loader/react-dom": "^16.7.0",
     "@types/react-grid-layout": "^0.16.7",
     "@types/redux-saga": "^0.10.5",
-    "aws-amplify": "^1.1.32",
+    "aws-amplify": "^1.1.33",
     "aws-amplify-react": "^2.3.9",
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.14",
