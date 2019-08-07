@@ -32,7 +32,7 @@ export const posReducer = (
     case "posReducer/CLOSE_PAYMENT_TYPE_MODAL":
       return { ...state, paymentTypeModalOpen: false };
     default:
-      return initialState;
+      return { ...state };
   }
 };
 

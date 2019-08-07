@@ -59,7 +59,7 @@ export const userReducer = (
     case "userReducer/SET_LOADING_USER":
       return { ...state, isSettingUser: action.payload };
     default:
-      return initialState;
+      return { ...state };
   }
 };
 

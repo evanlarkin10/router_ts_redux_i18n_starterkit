@@ -1,5 +1,6 @@
 import { Action } from "typescript-fsa";
 import Transaction from "models/Transaction";
+
 export interface TransactionState {
   isLoadingTransactions: boolean;
   transactions: Array<Transaction> | [];
@@ -30,6 +31,6 @@ export const transactionReducer = (
       return { ...state, isLoadingTransactions: action.payload };
 
     default:
-      return initialState;
+      return { ...state };
   }
 };
