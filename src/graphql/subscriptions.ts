@@ -59,7 +59,6 @@ export const onCreateUser = `subscription OnCreateUser {
     email_verified
     org_id
     org_name
-    preferences
   }
 }
 `;
@@ -73,7 +72,6 @@ export const onUpdateUser = `subscription OnUpdateUser {
     email_verified
     org_id
     org_name
-    preferences
   }
 }
 `;
@@ -87,7 +85,66 @@ export const onDeleteUser = `subscription OnDeleteUser {
     email_verified
     org_id
     org_name
-    preferences
+  }
+}
+`;
+export const onCreatePreferences = `subscription OnCreatePreferences {
+  onCreatePreferences {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const onUpdatePreferences = `subscription OnUpdatePreferences {
+  onUpdatePreferences {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const onDeletePreferences = `subscription OnDeletePreferences {
+  onDeletePreferences {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const onCreateTransaction = `subscription OnCreateTransaction {
+  onCreateTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const onUpdateTransaction = `subscription OnUpdateTransaction {
+  onUpdateTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const onDeleteTransaction = `subscription OnDeleteTransaction {
+  onDeleteTransaction {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
   }
 }
 `;

@@ -42,7 +42,6 @@ export type CreateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
-  preferences?: string | null,
 };
 
 export type UpdateUserInput = {
@@ -53,10 +52,48 @@ export type UpdateUserInput = {
   email_verified?: boolean | null,
   org_id?: number | null,
   org_name?: string | null,
-  preferences?: string | null,
 };
 
 export type DeleteUserInput = {
+  id?: string | null,
+};
+
+export type CreatePreferencesInput = {
+  user_id?: string | null,
+  pos_preferences?: string | null,
+};
+
+export type UpdatePreferencesInput = {
+  pos_preferences?: string | null,
+};
+
+export type DeletePreferencesInput = {
+  id?: string | null,
+};
+
+export type CreateTransactionInput = {
+  id?: string | null,
+  org_id?: number | null,
+  payment_method?: string | null,
+  subtotal?: number | null,
+  tax?: number | null,
+  total?: number | null,
+  createdAt?: string | null,
+  receipt_items?: string | null,
+};
+
+export type UpdateTransactionInput = {
+  id: string,
+  org_id?: number | null,
+  payment_method?: string | null,
+  subtotal?: number | null,
+  tax?: number | null,
+  total?: number | null,
+  createdAt?: string | null,
+  receipt_items?: string | null,
+};
+
+export type DeleteTransactionInput = {
   id?: string | null,
 };
 
@@ -102,6 +139,32 @@ export type ModelPrivateNoteFilterInput = {
   and?: Array< ModelPrivateNoteFilterInput | null > | null,
   or?: Array< ModelPrivateNoteFilterInput | null > | null,
   not?: ModelPrivateNoteFilterInput | null,
+};
+
+export type ModelTransactionFilterInput = {
+  id?: ModelIDFilterInput | null,
+  org_id?: ModelFloatFilterInput | null,
+  payment_method?: ModelStringFilterInput | null,
+  subtotal?: ModelFloatFilterInput | null,
+  tax?: ModelFloatFilterInput | null,
+  total?: ModelFloatFilterInput | null,
+  createdAt?: ModelStringFilterInput | null,
+  receipt_items?: ModelStringFilterInput | null,
+  and?: Array< ModelTransactionFilterInput | null > | null,
+  or?: Array< ModelTransactionFilterInput | null > | null,
+  not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelFloatFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type CreateTaskMutationVariables = {
@@ -197,7 +260,6 @@ export type CreateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -216,7 +278,6 @@ export type UpdateUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -235,7 +296,96 @@ export type DeleteUserMutation = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
+  } | null,
+};
+
+export type CreatePreferencesMutationVariables = {
+  input: CreatePreferencesInput,
+};
+
+export type CreatePreferencesMutation = {
+  createPreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type UpdatePreferencesMutationVariables = {
+  input: UpdatePreferencesInput,
+};
+
+export type UpdatePreferencesMutation = {
+  updatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type DeletePreferencesMutationVariables = {
+  input: DeletePreferencesInput,
+};
+
+export type DeletePreferencesMutation = {
+  deletePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type CreateTransactionMutationVariables = {
+  input: CreateTransactionInput,
+};
+
+export type CreateTransactionMutation = {
+  createTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null,
+};
+
+export type UpdateTransactionMutationVariables = {
+  input: UpdateTransactionInput,
+};
+
+export type UpdateTransactionMutation = {
+  updateTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null,
+};
+
+export type DeleteTransactionMutationVariables = {
+  input: DeleteTransactionInput,
+};
+
+export type DeleteTransactionMutation = {
+  deleteTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
   } | null,
 };
 
@@ -250,7 +400,14 @@ export type GetUserQuery = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
+  } | null,
+};
+
+export type GetPreferencesQuery = {
+  getPreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
   } | null,
 };
 
@@ -313,6 +470,48 @@ export type ListPrivateNotesQuery = {
       __typename: "PrivateNote",
       id: string,
       content: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetTransactionQueryVariables = {
+  id: string,
+};
+
+export type GetTransactionQuery = {
+  getTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null,
+};
+
+export type ListTransactionsQueryVariables = {
+  filter?: ModelTransactionFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListTransactionsQuery = {
+  listTransactions:  {
+    __typename: "ModelTransactionConnection",
+    items:  Array< {
+      __typename: "Transaction",
+      id: string,
+      org_id: number | null,
+      payment_method: string | null,
+      subtotal: number | null,
+      tax: number | null,
+      total: number | null,
+      createdAt: string | null,
+      receipt_items: string | null,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -383,7 +582,6 @@ export type OnCreateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -398,7 +596,6 @@ export type OnUpdateUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
   } | null,
 };
 
@@ -413,6 +610,71 @@ export type OnDeleteUserSubscription = {
     email_verified: boolean | null,
     org_id: number | null,
     org_name: string | null,
-    preferences: string | null,
+  } | null,
+};
+
+export type OnCreatePreferencesSubscription = {
+  onCreatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type OnUpdatePreferencesSubscription = {
+  onUpdatePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type OnDeletePreferencesSubscription = {
+  onDeletePreferences:  {
+    __typename: "Preferences",
+    user_id: string | null,
+    pos_preferences: string | null,
+  } | null,
+};
+
+export type OnCreateTransactionSubscription = {
+  onCreateTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null,
+};
+
+export type OnUpdateTransactionSubscription = {
+  onUpdateTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null,
+};
+
+export type OnDeleteTransactionSubscription = {
+  onDeleteTransaction:  {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
   } | null,
 };

@@ -11,6 +11,7 @@
       true,
       "warning"
     ],
+    "prefer-array-literal": [true, { "allow-type-parameters": true }],
     "variable-name": [
       false,
       "check-format",

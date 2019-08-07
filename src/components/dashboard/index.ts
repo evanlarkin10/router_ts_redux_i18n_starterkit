@@ -1,8 +1,37 @@
 import { connects } from "utilities/commonHocs";
-import Dashboard from "./Dashboard";
+import Dashboard, {
+  DashboardStateProps,
+  DashboardDispatchProps
+} from "./Dashboard";
+import { ApplicationState } from "reducer";
+import { selectUser } from "redux/UserAPI/selectors";
+import {
+  selectTransactions,
+  selectLoadingTransactions
+} from "redux/TransactionAPI/selectors";
+import { loadTransactions } from "redux/TransactionAPI/actions";
+import dashboardStyles from "./dashboardStyles";
 
-const hocs = {
-  i18n: ["common"]
+const mapStateToProps = (state: ApplicationState): DashboardStateProps => ({
+  transactions: selectTransactions(state),
+  isLoadingTransactions: selectLoadingTransactions(state),
+  user: selectUser(state)
+});
+
+const mapDispatchToProps: DashboardDispatchProps = {
+  loadTransactions: loadTransactions.started
 };
 
-export default connects<{}>(Dashboard, hocs);
+const hocs = {
+  redux: {
+    mapStateToProps,
+    mapDispatchToProps
+  },
+  i18n: ["common"],
+  styles: dashboardStyles
+};
+
+export default connects<{}, DashboardStateProps, DashboardDispatchProps>(
+  Dashboard,
+  hocs
+);

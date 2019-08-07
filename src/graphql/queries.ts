@@ -11,7 +11,13 @@ export const getUser = `query GetUser {
     email_verified
     org_id
     org_name
-    preferences
+  }
+}
+`;
+export const getPreferences = `query GetPreferences {
+  getPreferences {
+    user_id
+    pos_preferences
   }
 }
 `;
@@ -56,6 +62,39 @@ export const listPrivateNotes = `query ListPrivateNotes(
     items {
       id
       content
+    }
+    nextToken
+  }
+}
+`;
+export const getTransaction = `query GetTransaction($id: ID!) {
+  getTransaction(id: $id) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const listTransactions = `query ListTransactions(
+  $filter: ModelTransactionFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listTransactions(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      org_id
+      payment_method
+      subtotal
+      tax
+      total
+      createdAt
+      receipt_items
     }
     nextToken
   }

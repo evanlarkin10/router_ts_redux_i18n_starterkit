@@ -25,11 +25,15 @@ class MyAccount extends React.Component<MyAccountProps, MyAccountState> {
   }
   render() {
     const { value } = this.state;
+    const { user, classes } = this.props;
     return (
       <div style={{ display: "flex" }}>
         <div style={{ flex: 1 }}>
-          <Paper square elevation={0}>
-            {I18n.get("my_account")}
+          <Paper square elevation={0} className={classes.accountPane}>
+            <Typography variant="h6">{I18n.get("my_account")}</Typography>
+            <Typography variant="button">{user.first_name}</Typography>
+            <Typography variant="button">{" " + user.last_name}</Typography>
+            <Typography variant="body1">{user.email}</Typography>
           </Paper>
         </div>
         <div style={{ flex: 5 }}>

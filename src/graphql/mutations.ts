@@ -59,7 +59,6 @@ export const createUser = `mutation CreateUser($input: CreateUserInput!) {
     email_verified
     org_id
     org_name
-    preferences
   }
 }
 `;
@@ -73,7 +72,6 @@ export const updateUser = `mutation UpdateUser($input: UpdateUserInput!) {
     email_verified
     org_id
     org_name
-    preferences
   }
 }
 `;
@@ -87,7 +85,66 @@ export const deleteUser = `mutation DeleteUser($input: DeleteUserInput!) {
     email_verified
     org_id
     org_name
-    preferences
+  }
+}
+`;
+export const createPreferences = `mutation CreatePreferences($input: CreatePreferencesInput!) {
+  createPreferences(input: $input) {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const updatePreferences = `mutation UpdatePreferences($input: UpdatePreferencesInput!) {
+  updatePreferences(input: $input) {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const deletePreferences = `mutation DeletePreferences($input: DeletePreferencesInput!) {
+  deletePreferences(input: $input) {
+    user_id
+    pos_preferences
+  }
+}
+`;
+export const createTransaction = `mutation CreateTransaction($input: CreateTransactionInput!) {
+  createTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const updateTransaction = `mutation UpdateTransaction($input: UpdateTransactionInput!) {
+  updateTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
+export const deleteTransaction = `mutation DeleteTransaction($input: DeleteTransactionInput!) {
+  deleteTransaction(input: $input) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
   }
 }
 `;

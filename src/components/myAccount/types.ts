@@ -1,9 +1,10 @@
 import { setTrue, setFalse } from "./actions";
 import myAccountStyles from "./myAccountStyles";
 import StyledElement from "../common/StyledElement";
+import User from "models/User";
 
 export interface MyAccountStateProps {
-  myBool: boolean;
+  user: User;
 }
 export interface MyAccountDispatchProps {
   setTrue: typeof setTrue;

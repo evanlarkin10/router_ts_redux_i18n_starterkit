@@ -15,9 +15,16 @@ import {
   Divider
 } from "@material-ui/core";
 import { Add, Save, Cancel, Edit } from "@material-ui/icons";
-import { POSProps, POSState, ReceiptItem } from "./types";
-import * as RGL from "react-grid-layout";
-import WidthProvider = RGL.WidthProvider;
+import {
+  POSProps,
+  POSState,
+  ReceiptItem,
+  SM_COL,
+  LG_COL,
+  MD_COL
+} from "./types";
+import { Responsive, WidthProvider } from "react-grid-layout";
+// import WidthProvider = RGL.WidthProvider;
 // import Layout = RGL.Layout
 import { floatToCurrency, calculateHST } from "utilities/helpers";
 import LoadingIndicator from "@common/loadingIndicator";
@@ -25,22 +32,24 @@ import { BUTTON_HEIGHT, CASH_TEND_BTN, CUSTOM_CHARGE_BTN } from "./constants";
 import AddButtonModal from "./addButtonModal";
 import PaymentTypeModal from "./paymentTypeModal";
 
-const ReactGridLayout = WidthProvider(RGL);
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class POS extends React.Component<POSProps, POSState> {
   static defaultProps = {
     className: "layout",
-    cols: 10,
+    cols: { lg: LG_COL, md: MD_COL, sm: SM_COL },
+    breakpoints: { lg: 1200, md: 800, sm: 400 },
     rowHeight: BUTTON_HEIGHT
   };
 
   constructor(props: any) {
     super(props);
     this.state = {
-      items: this.props.layout,
+      items: this.props.layouts.md,
       cols: null,
       breakpoint: null,
-      layout: this.props.layout,
+      layouts: this.props.layouts,
+      layout: this.props.layouts.md,
       isEditing: false,
       amount: "",
       total: 0.0,
@@ -51,13 +60,13 @@ class POS extends React.Component<POSProps, POSState> {
     this.onProcessTransaction = this.onProcessTransaction.bind(this);
     this.onLayoutChange = this.onLayoutChange.bind(this);
     this.onRemoveItem = this.onRemoveItem.bind(this);
+    this.onBreakpointChange = this.onBreakpointChange.bind(this);
   }
-
   createElement(el: any) {
     const i = el.add ? "+" : el.i;
     const { classes } = this.props;
     return (
-      <div key={i} className={classes.gridItem}>
+      <div key={i} data-grid={el} className={classes.gridItem}>
         {el.static ? this.renderStaticButton(el) : this.renderMobileButton(el)}
       </div>
     );
@@ -200,18 +209,32 @@ class POS extends React.Component<POSProps, POSState> {
       </div>
     );
   }
-  onLayoutChange(layout: any[]) {
-    if (this.state.isEditing) {
-      this.setState({ layout });
-    }
+  onLayoutChange(layout: any, layouts: any) {
+    this.setState({ layout, layouts });
   }
+  onBreakpointChange(breakpoint: any, cols: any) {
+    this.setState({
+      breakpoint,
+      cols
+    });
+  }
+
   amountTendered() {
     console.log("Total", this.state.total);
     this.props.openPaymentTypeModal();
   }
   onProcessTransaction(paymentMethod: any) {
     const total = this.state.total + calculateHST(this.state.total);
-    console.log("total", total, "method", paymentMethod);
+    const user = this.props.user
+    const input = {
+        total,
+        org_id: user.org_id,
+        payment_method:paymentMethod,
+        subtotal: this.state.total,
+        tax: calculateHST(this.state.total),
+        receipt_items: JSON.stringify(this.state.receiptItems)
+    }
+    this.props.processTransaction(input)
     this.setState({
       total: 0,
       amount: "",
@@ -219,9 +242,17 @@ class POS extends React.Component<POSProps, POSState> {
     });
   }
   async saveLayout() {
+    const { cols, layouts } = this.state;
+    const newLayouts = layouts;
+    if (cols === SM_COL) {
+      newLayouts.sm = this.state.layout;
+    } else if (cols === MD_COL) {
+      newLayouts.md = this.state.layout;
+    } else {
+      newLayouts.lg = this.state.layout;
+    }
     try {
-      this.props.savePOSPreferences(this.state.layout);
-      this.props.setLoading(true);
+      this.props.savePOSPreferences(newLayouts);
       this.setState({ isEditing: false });
     } catch {
       console.log("Error saving");
@@ -242,7 +273,6 @@ class POS extends React.Component<POSProps, POSState> {
 
   render() {
     const { classes } = this.props;
-    console.log(this.state.layout);
     return (
       <>
         {!this.props.isLoadingPOS && (
@@ -287,20 +317,20 @@ class POS extends React.Component<POSProps, POSState> {
                 </Paper>
               </div>
               <div style={{ flex: 9 }}>
-                <ReactGridLayout
-                  {...this.props}
-                  className={"layout"}
-                  layout={this.state.layout}
-                  onLayoutChange={(layout: any[]) =>
-                    this.onLayoutChange(layout)
+                <ResponsiveGridLayout
+                  onLayoutChange={(layout, layouts) =>
+                    this.onLayoutChange(layout, layouts)
                   }
+                  onBreakpointChange={this.onBreakpointChange}
+                  breakpoints={{ lg: 1200, md: 800, sm: 400 }}
+                  cols={{ lg: 10, md: 8, sm: 6 }}
                   isDraggable={this.state.isEditing}
                   isRearrangeable={this.state.isEditing}
                   isResizable={this.state.isEditing}
-                  autoSize={true}
+                  {...this.props}
                 >
                   {_.map(this.state.items, el => this.createElement(el))}
-                </ReactGridLayout>
+                </ResponsiveGridLayout>
                 <AddButtonModal
                   addToPOS={(label: string, amount: number) =>
                     this.onAddItem(label, amount)
