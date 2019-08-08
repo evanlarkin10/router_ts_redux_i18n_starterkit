@@ -166,14 +166,16 @@ class POS extends React.Component<POSProps, POSState> {
     const receipt = this.state.receiptItems;
     console.log(item);
     const subtotal = this.state.total;
-    // Override button price if one is entered
-    if (this.state.amount !== "") {
-      receipt.push({
-        amount: parseFloat(this.state.amount),
-        title: item.label
-      });
-    } else {
-      receipt.push({ amount: item.amount, title: item.label });
+    if (!this.state.isEditing) {
+      // Override button price if one is entered
+      if (this.state.amount !== "") {
+        receipt.push({
+          amount: parseFloat(this.state.amount),
+          title: item.label
+        });
+      } else {
+        receipt.push({ amount: item.amount, title: item.label });
+      }
     }
     this.setState({
       total: subtotal,
@@ -225,16 +227,16 @@ class POS extends React.Component<POSProps, POSState> {
   }
   onProcessTransaction(paymentMethod: any) {
     const total = this.state.total + calculateHST(this.state.total);
-    const user = this.props.user
+    const user = this.props.user;
     const input = {
-        total,
-        org_id: user.org_id,
-        payment_method:paymentMethod,
-        subtotal: this.state.total,
-        tax: calculateHST(this.state.total),
-        receipt_items: JSON.stringify(this.state.receiptItems)
-    }
-    this.props.processTransaction(input)
+      total,
+      org_id: user.org_id,
+      payment_method: paymentMethod,
+      subtotal: this.state.total,
+      tax: calculateHST(this.state.total),
+      receipt_items: JSON.stringify(this.state.receiptItems)
+    };
+    this.props.processTransaction(input);
     this.setState({
       total: 0,
       amount: "",

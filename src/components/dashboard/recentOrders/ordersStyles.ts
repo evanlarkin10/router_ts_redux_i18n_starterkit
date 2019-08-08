@@ -22,6 +22,20 @@ const ordersStyles = (theme: Theme) =>
     },
     seeMore: {
       marginTop: theme.spacing(3)
+    },
+    heading: {
+      fontSize: theme.typography.pxToRem(15),
+      fontWeight: theme.typography.fontWeightRegular
+    },
+    orderDetail: {
+      flex: 1,
+      flexDirection: "row"
+    },
+    root: {
+      flexShrink: 0,
+      color: theme.palette.text.secondary,
+      marginLeft: theme.spacing(2.5),
+      float: "right"
     }
   });
 export default ordersStyles;
