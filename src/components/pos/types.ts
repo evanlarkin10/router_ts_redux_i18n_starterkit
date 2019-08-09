@@ -16,7 +16,7 @@ import {
   savePOSPreferences,
   processTransaction
 } from "./actions";
-import User from 'models/User'
+import User from "models/User";
 export const SM_COL = 6;
 export const MD_COL = 8;
 export const LG_COL = 10;
@@ -27,7 +27,6 @@ export type POSProps = ReactGridLayoutProps &
   any &
   POSStateProps &
   POSDispatchProps & {};
-
 export interface POSState {
   items: POSLayout[];
   cols: any;

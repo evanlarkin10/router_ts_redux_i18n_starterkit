@@ -14,7 +14,7 @@ const dashboardStyles = (theme: Theme) =>
       flexDirection: "column"
     },
     fixedHeight: {
-      height: 240
+      height: 360
     }
   });
 export default dashboardStyles;

@@ -1,0 +1,7 @@
+#set($myResults = [])
+#foreach($item in $ctx.result.items)
+    #if($item.owner == $ctx.identity.username)
+        #set($added = $myResults.add($item))
+    #end
+#end
+$utils.toJson($myResults)

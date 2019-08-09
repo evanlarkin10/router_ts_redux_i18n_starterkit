@@ -28,27 +28,6 @@ export const onDeleteTask = `subscription OnDeleteTask {
   }
 }
 `;
-export const onCreatePrivateNote = `subscription OnCreatePrivateNote {
-  onCreatePrivateNote {
-    id
-    content
-  }
-}
-`;
-export const onUpdatePrivateNote = `subscription OnUpdatePrivateNote {
-  onUpdatePrivateNote {
-    id
-    content
-  }
-}
-`;
-export const onDeletePrivateNote = `subscription OnDeletePrivateNote {
-  onDeletePrivateNote {
-    id
-    content
-  }
-}
-`;
 export const onCreateUser = `subscription OnCreateUser {
   onCreateUser {
     id

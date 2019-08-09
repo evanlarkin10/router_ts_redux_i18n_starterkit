@@ -28,27 +28,6 @@ export const deleteTask = `mutation DeleteTask($input: DeleteTaskInput!) {
   }
 }
 `;
-export const createPrivateNote = `mutation CreatePrivateNote($input: CreatePrivateNoteInput!) {
-  createPrivateNote(input: $input) {
-    id
-    content
-  }
-}
-`;
-export const updatePrivateNote = `mutation UpdatePrivateNote($input: UpdatePrivateNoteInput!) {
-  updatePrivateNote(input: $input) {
-    id
-    content
-  }
-}
-`;
-export const deletePrivateNote = `mutation DeletePrivateNote($input: DeletePrivateNoteInput!) {
-  deletePrivateNote(input: $input) {
-    id
-    content
-  }
-}
-`;
 export const createUser = `mutation CreateUser($input: CreateUserInput!) {
   createUser(input: $input) {
     id

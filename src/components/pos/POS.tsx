@@ -46,7 +46,7 @@ class POS extends React.Component<POSProps, POSState> {
     super(props);
     this.state = {
       items: this.props.layouts.md,
-      cols: null,
+      cols: MD_COL,
       breakpoint: null,
       layouts: this.props.layouts,
       layout: this.props.layouts.md,
@@ -164,8 +164,7 @@ class POS extends React.Component<POSProps, POSState> {
   }
   addButtonCharge(item: { label: string; amount: number }) {
     const receipt = this.state.receiptItems;
-    console.log(item);
-    const subtotal = this.state.total;
+    const subtotal = this.state.total + parseFloat(this.state.amount);
     if (!this.state.isEditing) {
       // Override button price if one is entered
       if (this.state.amount !== "") {
@@ -243,6 +242,7 @@ class POS extends React.Component<POSProps, POSState> {
       receiptItems: []
     });
   }
+
   async saveLayout() {
     const { cols, layouts } = this.state;
     const newLayouts = layouts;
@@ -319,6 +319,9 @@ class POS extends React.Component<POSProps, POSState> {
                 </Paper>
               </div>
               <div style={{ flex: 9 }}>
+                <Typography>
+                  {"Layout:" + this.state.cols + " Columns"}
+                </Typography>
                 <ResponsiveGridLayout
                   onLayoutChange={(layout, layouts) =>
                     this.onLayoutChange(layout, layouts)

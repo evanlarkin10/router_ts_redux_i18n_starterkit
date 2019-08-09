@@ -6,6 +6,8 @@ import StyledElement from "components/common/StyledElement";
 import LoadingIndicator from "@common/loadingIndicator";
 import { Container, Grid, Paper } from "@material-ui/core";
 import Orders from "./recentOrders";
+import Chart from "./chart";
+import TotalSales from "./totalSales";
 import Transaction from "models/Transaction";
 import clsx from "clsx";
 interface DashboardState {
@@ -42,11 +44,15 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
             <Grid container spacing={3}>
               {/* Chart */}
               <Grid item xs={12} md={8} lg={9}>
-                <Paper className={fixedHeightPaper}>Chart</Paper>
+                <Paper className={fixedHeightPaper}>
+                  <Chart transactions={this.props.transactions} />
+                </Paper>
               </Grid>
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
-                <Paper className={fixedHeightPaper}>Deposits</Paper>
+                <Paper className={fixedHeightPaper}>
+                  <TotalSales transactions={this.props.transactions} />
+                </Paper>
               </Grid>
               {/* Recent Orders */}
               <Grid item xs={12}>

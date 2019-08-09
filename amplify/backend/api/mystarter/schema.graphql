@@ -10,13 +10,6 @@ type Task
   description: String
   status: String
 }
-type PrivateNote
-  @model
-  @auth(rules: [{allow: owner}])
-{
-  id: ID!
-  content: String!
-}
 
 type User
   @model(
@@ -59,7 +52,7 @@ input UpdatePreferencesInput {
 }
 
 type Transaction @model
-  @key(name: "org", fields: ["org_id"])
+  @key(name: "org_date", fields: ["org_id", "createdAt"])
   @auth(
     rules: [
       {
@@ -70,7 +63,7 @@ type Transaction @model
   )
 {
   id: ID!
-  org_id: Float
+  org_id: Int
   payment_method: String
   subtotal: Float
   tax: Float 
@@ -79,9 +72,9 @@ type Transaction @model
   receipt_items: String
 }
 
-
 type Query { 
   getUser: User
   getPreferences: Preferences
+  listTransactionsByOrg(org_id: Int): [Transaction]
 }
 

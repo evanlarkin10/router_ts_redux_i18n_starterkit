@@ -21,6 +21,19 @@ export const getPreferences = `query GetPreferences {
   }
 }
 `;
+export const listTransactionsByOrg = `query ListTransactionsByOrg($org_id: Int) {
+  listTransactionsByOrg(org_id: $org_id) {
+    id
+    org_id
+    payment_method
+    subtotal
+    tax
+    total
+    createdAt
+    receipt_items
+  }
+}
+`;
 export const getTask = `query GetTask($id: ID!) {
   getTask(id: $id) {
     id
@@ -41,27 +54,6 @@ export const listTasks = `query ListTasks(
       title
       description
       status
-    }
-    nextToken
-  }
-}
-`;
-export const getPrivateNote = `query GetPrivateNote($id: ID!) {
-  getPrivateNote(id: $id) {
-    id
-    content
-  }
-}
-`;
-export const listPrivateNotes = `query ListPrivateNotes(
-  $filter: ModelPrivateNoteFilterInput
-  $limit: Int
-  $nextToken: String
-) {
-  listPrivateNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
-    items {
-      id
-      content
     }
     nextToken
   }

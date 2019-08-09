@@ -19,20 +19,6 @@ export type DeleteTaskInput = {
   id?: string | null,
 };
 
-export type CreatePrivateNoteInput = {
-  id?: string | null,
-  content: string,
-};
-
-export type UpdatePrivateNoteInput = {
-  id: string,
-  content?: string | null,
-};
-
-export type DeletePrivateNoteInput = {
-  id?: string | null,
-};
-
 export type CreateUserInput = {
   id?: string | null,
   identity_id?: string | null,
@@ -133,17 +119,9 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
-export type ModelPrivateNoteFilterInput = {
-  id?: ModelIDFilterInput | null,
-  content?: ModelStringFilterInput | null,
-  and?: Array< ModelPrivateNoteFilterInput | null > | null,
-  or?: Array< ModelPrivateNoteFilterInput | null > | null,
-  not?: ModelPrivateNoteFilterInput | null,
-};
-
 export type ModelTransactionFilterInput = {
   id?: ModelIDFilterInput | null,
-  org_id?: ModelFloatFilterInput | null,
+  org_id?: ModelIntFilterInput | null,
   payment_method?: ModelStringFilterInput | null,
   subtotal?: ModelFloatFilterInput | null,
   tax?: ModelFloatFilterInput | null,
@@ -153,6 +131,18 @@ export type ModelTransactionFilterInput = {
   and?: Array< ModelTransactionFilterInput | null > | null,
   or?: Array< ModelTransactionFilterInput | null > | null,
   not?: ModelTransactionFilterInput | null,
+};
+
+export type ModelIntFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
 };
 
 export type ModelFloatFilterInput = {
@@ -206,42 +196,6 @@ export type DeleteTaskMutation = {
     title: string,
     description: string | null,
     status: string | null,
-  } | null,
-};
-
-export type CreatePrivateNoteMutationVariables = {
-  input: CreatePrivateNoteInput,
-};
-
-export type CreatePrivateNoteMutation = {
-  createPrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
-  } | null,
-};
-
-export type UpdatePrivateNoteMutationVariables = {
-  input: UpdatePrivateNoteInput,
-};
-
-export type UpdatePrivateNoteMutation = {
-  updatePrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
-  } | null,
-};
-
-export type DeletePrivateNoteMutationVariables = {
-  input: DeletePrivateNoteInput,
-};
-
-export type DeletePrivateNoteMutation = {
-  deletePrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
   } | null,
 };
 
@@ -411,6 +365,24 @@ export type GetPreferencesQuery = {
   } | null,
 };
 
+export type ListTransactionsByOrgQueryVariables = {
+  org_id?: number | null,
+};
+
+export type ListTransactionsByOrgQuery = {
+  listTransactionsByOrg:  Array< {
+    __typename: "Transaction",
+    id: string,
+    org_id: number | null,
+    payment_method: string | null,
+    subtotal: number | null,
+    tax: number | null,
+    total: number | null,
+    createdAt: string | null,
+    receipt_items: string | null,
+  } | null > | null,
+};
+
 export type GetTaskQueryVariables = {
   id: string,
 };
@@ -440,36 +412,6 @@ export type ListTasksQuery = {
       title: string,
       description: string | null,
       status: string | null,
-    } | null > | null,
-    nextToken: string | null,
-  } | null,
-};
-
-export type GetPrivateNoteQueryVariables = {
-  id: string,
-};
-
-export type GetPrivateNoteQuery = {
-  getPrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
-  } | null,
-};
-
-export type ListPrivateNotesQueryVariables = {
-  filter?: ModelPrivateNoteFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListPrivateNotesQuery = {
-  listPrivateNotes:  {
-    __typename: "ModelPrivateNoteConnection",
-    items:  Array< {
-      __typename: "PrivateNote",
-      id: string,
-      content: string,
     } | null > | null,
     nextToken: string | null,
   } | null,
@@ -544,30 +486,6 @@ export type OnDeleteTaskSubscription = {
     title: string,
     description: string | null,
     status: string | null,
-  } | null,
-};
-
-export type OnCreatePrivateNoteSubscription = {
-  onCreatePrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
-  } | null,
-};
-
-export type OnUpdatePrivateNoteSubscription = {
-  onUpdatePrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
-  } | null,
-};
-
-export type OnDeletePrivateNoteSubscription = {
-  onDeletePrivateNote:  {
-    __typename: "PrivateNote",
-    id: string,
-    content: string,
   } | null,
 };
 

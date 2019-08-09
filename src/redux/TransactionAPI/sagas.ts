@@ -6,12 +6,16 @@ import { API, graphqlOperation } from "aws-amplify";
 export function* handleLoadTransactions() {
   try {
     const results = yield API.graphql(
-      graphqlOperation(queries.listTransactions)
+      graphqlOperation(queries.listTransactionsByOrg, { org_id: 1 })
     );
+    console.log(results);
     yield put(
-      loadTransactions.done({ result: results.data.listTransactions.items })
+      loadTransactions.done({
+        result: results.data.listTransactionsByOrg
+      })
     );
   } catch (error) {
+    console.log(error);
     yield put(
       loadTransactions.failed({ params: null, error: "Failed getting user" })
     );

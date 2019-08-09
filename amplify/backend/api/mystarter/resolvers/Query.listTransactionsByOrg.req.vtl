@@ -1,0 +1,14 @@
+{
+    "version" : "2017-02-28",
+    "operation" : "Query",
+    "index" : "org_date",
+    "query" : {
+        "expression": "org_id = :org_id",
+        "expressionValues" : {
+            ":org_id" : {
+                "N" : "$context.args.org_id"
+            }
+        }
+    },
+    "select":"ALL_ATTRIBUTES"
+}

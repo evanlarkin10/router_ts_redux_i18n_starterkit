@@ -15,3 +15,7 @@ export function calculateHST(input: number): number {
 export function momentToReadable(input: string): string {
   return moment(input).format("MMMM Do YYYY, h:mm:ss a");
 }
+
+export function momentToReadableDateOnly(input: string): string {
+  return moment(input).format("MMMM Do YYYY");
+}

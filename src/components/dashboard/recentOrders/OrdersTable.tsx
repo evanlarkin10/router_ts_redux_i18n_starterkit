@@ -26,6 +26,7 @@ import StyledElement from "@common/StyledElement";
 import ordersStyles from "./ordersStyles";
 import { momentToReadable, floatToCurrency } from "utilities/helpers";
 import { ReceiptItem } from "../../pos/types";
+import { I18n } from "aws-amplify";
 
 export type OrdersProps = OrdersOwnProps & StyledElement<typeof ordersStyles>;
 export interface OrdersState {
@@ -42,7 +43,7 @@ export default class Orders extends React.Component<OrdersProps, OrdersState> {
       rows: [],
       rowsPerPage: 5,
       page: 0,
-      count: 7
+      count: this.props.transactions.length
     };
   }
 
@@ -89,17 +90,17 @@ export default class Orders extends React.Component<OrdersProps, OrdersState> {
     return (
       <React.Fragment>
         <Typography component="h2" variant="h6" color="primary" gutterBottom>
-          Recent Transactions
+          {I18n.get("recent_transactions")}
         </Typography>
         <Table size="small">
           <TableHead>
             <TableRow>
-              <TableCell>Time</TableCell>
-              <TableCell>Payment Method</TableCell>
-              <TableCell>Items</TableCell>
-              <TableCell>Subtotal</TableCell>
-              <TableCell>Tax</TableCell>
-              <TableCell align="right">Total</TableCell>
+              <TableCell>{I18n.get("time")}</TableCell>
+              <TableCell>{I18n.get("payment_method")}</TableCell>
+              <TableCell>{I18n.get("items")}</TableCell>
+              <TableCell>{I18n.get("subtotal")}</TableCell>
+              <TableCell>{I18n.get("tax")}</TableCell>
+              <TableCell align="right">{I18n.get("total")}</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -118,7 +119,7 @@ export default class Orders extends React.Component<OrdersProps, OrdersState> {
                           id="panel1a-header"
                         >
                           <Typography className={classes.heading}>
-                            Order Details
+                            {I18n.get("order_details")}
                           </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
