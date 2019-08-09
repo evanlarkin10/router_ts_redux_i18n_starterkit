@@ -38,7 +38,6 @@ export function* handleSetUser() {
       const prefs = {
         pos_preferences: JSON.stringify(DEFAULT_PREFERENCES.pos)
       };
-      console.log(prefs);
       yield API.graphql(
         graphqlOperation(mutations.createPreferences, { input: prefs })
       )

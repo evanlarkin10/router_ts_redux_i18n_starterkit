@@ -71,7 +71,6 @@ export default class Chart extends React.Component<ChartProps, ChartState> {
     return data;
   }
   onWeekChange(start: Date, end: Date) {
-    console.log("cahgne from chart", start, end);
     const data = this.setData(start, end);
     this.setState({ data });
   }

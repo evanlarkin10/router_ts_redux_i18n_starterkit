@@ -54,7 +54,6 @@ class PaymentTypeModal extends React.Component<
   handleSubmit() {
     this.props.closePaymentTypeModal();
     let selection = "";
-    console.log(this.state.selected);
     switch (this.state.selected) {
       case 0:
         selection = "Visa";

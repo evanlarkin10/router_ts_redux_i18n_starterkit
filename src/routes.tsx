@@ -49,8 +49,6 @@ class Routes extends React.Component<RouterProps, {}> {
     };
   }
   componentDidMount() {
-    console.log("Routes mounted");
-    // Do I need to? initial state is cookie
     this.props.setUser();
   }
   render() {

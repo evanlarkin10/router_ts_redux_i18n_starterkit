@@ -221,7 +221,6 @@ class POS extends React.Component<POSProps, POSState> {
   }
 
   amountTendered() {
-    console.log("Total", this.state.total);
     this.props.openPaymentTypeModal();
   }
   onProcessTransaction(paymentMethod: any) {
