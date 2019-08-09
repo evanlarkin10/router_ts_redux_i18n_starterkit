@@ -6,7 +6,10 @@ import { API, graphqlOperation } from "aws-amplify";
 export function* handleLoadTransactions() {
   try {
     const results = yield API.graphql(
-      graphqlOperation(queries.listTransactionsByOrg, { org_id: 1 })
+      graphqlOperation(queries.listTransactionsByOrg, {
+        org_id: 1,
+        sort: "DESC"
+      })
     );
     console.log(results);
     yield put(

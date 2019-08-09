@@ -21,8 +21,12 @@ export const getPreferences = `query GetPreferences {
   }
 }
 `;
-export const listTransactionsByOrg = `query ListTransactionsByOrg($org_id: Int) {
-  listTransactionsByOrg(org_id: $org_id) {
+export const listTransactionsByOrg = `query ListTransactionsByOrg(
+  $org_id: Int
+  $filter: ModelTransactionFilterInput
+  $sort: ModelSortDirection
+) {
+  listTransactionsByOrg(org_id: $org_id, filter: $filter, sort: $sort) {
     id
     org_id
     payment_method

@@ -83,14 +83,18 @@ export type DeleteTransactionInput = {
   id?: string | null,
 };
 
-export type ModelTaskFilterInput = {
+export type ModelTransactionFilterInput = {
   id?: ModelIDFilterInput | null,
-  title?: ModelStringFilterInput | null,
-  description?: ModelStringFilterInput | null,
-  status?: ModelStringFilterInput | null,
-  and?: Array< ModelTaskFilterInput | null > | null,
-  or?: Array< ModelTaskFilterInput | null > | null,
-  not?: ModelTaskFilterInput | null,
+  org_id?: ModelIntFilterInput | null,
+  payment_method?: ModelStringFilterInput | null,
+  subtotal?: ModelFloatFilterInput | null,
+  tax?: ModelFloatFilterInput | null,
+  total?: ModelFloatFilterInput | null,
+  createdAt?: ModelStringFilterInput | null,
+  receipt_items?: ModelStringFilterInput | null,
+  and?: Array< ModelTransactionFilterInput | null > | null,
+  or?: Array< ModelTransactionFilterInput | null > | null,
+  not?: ModelTransactionFilterInput | null,
 };
 
 export type ModelIDFilterInput = {
@@ -106,6 +110,18 @@ export type ModelIDFilterInput = {
   beginsWith?: string | null,
 };
 
+export type ModelIntFilterInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  contains?: number | null,
+  notContains?: number | null,
+  between?: Array< number | null > | null,
+};
+
 export type ModelStringFilterInput = {
   ne?: string | null,
   eq?: string | null,
@@ -119,32 +135,6 @@ export type ModelStringFilterInput = {
   beginsWith?: string | null,
 };
 
-export type ModelTransactionFilterInput = {
-  id?: ModelIDFilterInput | null,
-  org_id?: ModelIntFilterInput | null,
-  payment_method?: ModelStringFilterInput | null,
-  subtotal?: ModelFloatFilterInput | null,
-  tax?: ModelFloatFilterInput | null,
-  total?: ModelFloatFilterInput | null,
-  createdAt?: ModelStringFilterInput | null,
-  receipt_items?: ModelStringFilterInput | null,
-  and?: Array< ModelTransactionFilterInput | null > | null,
-  or?: Array< ModelTransactionFilterInput | null > | null,
-  not?: ModelTransactionFilterInput | null,
-};
-
-export type ModelIntFilterInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  contains?: number | null,
-  notContains?: number | null,
-  between?: Array< number | null > | null,
-};
-
 export type ModelFloatFilterInput = {
   ne?: number | null,
   eq?: number | null,
@@ -155,6 +145,22 @@ export type ModelFloatFilterInput = {
   contains?: number | null,
   notContains?: number | null,
   between?: Array< number | null > | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type ModelTaskFilterInput = {
+  id?: ModelIDFilterInput | null,
+  title?: ModelStringFilterInput | null,
+  description?: ModelStringFilterInput | null,
+  status?: ModelStringFilterInput | null,
+  and?: Array< ModelTaskFilterInput | null > | null,
+  or?: Array< ModelTaskFilterInput | null > | null,
+  not?: ModelTaskFilterInput | null,
 };
 
 export type CreateTaskMutationVariables = {
@@ -367,6 +373,8 @@ export type GetPreferencesQuery = {
 
 export type ListTransactionsByOrgQueryVariables = {
   org_id?: number | null,
+  filter?: ModelTransactionFilterInput | null,
+  sort?: ModelSortDirection | null,
 };
 
 export type ListTransactionsByOrgQuery = {
