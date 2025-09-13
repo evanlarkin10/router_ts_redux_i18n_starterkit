@@ -9,7 +9,7 @@
     "@types/date-fns": "^2.6.0",
     "@types/react-grid-layout": "^0.16.7",
     "@types/redux-saga": "^0.10.5",
-    "aws-amplify": "^1.1.36",
+    "aws-amplify": "^6.15.6",
     "aws-amplify-react": "^2.3.9",
     "babel-loader": "^8.0.6",
     "babel-plugin-emotion": "^10.0.14",
