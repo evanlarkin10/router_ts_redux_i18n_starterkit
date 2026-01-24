@@ -21,7 +21,7 @@
     "i18next-xhr-backend": "^3.0.0",
     "immutable": "^3.8.2",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.23",
     "moment": "^2.24.0",
     "querystring": "^0.2.0",
     "randomcolor": "^0.5.3",
